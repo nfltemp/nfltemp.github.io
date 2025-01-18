@@ -121,6 +121,7 @@
         width: 250px;
         height: 100vh;
         background: rgba(30, 41, 59, 0.8);
+        padding-top: 80px;
         border-right: 1px solid rgba(148, 163, 184, 0.1);
         transition: width 0.3s ease;
         z-index: 1000;
@@ -415,6 +416,10 @@
         }, [trailId]);
 
         const handleBuyClick = (productName, price) => {
+          // Prevent default behavior and event bubbling
+          event.preventDefault();
+          event.stopPropagation();
+
           // Facebook Pixel tracking
           if (window.fbq) {
             fbq('track', 'InitiateCheckout', {
@@ -424,6 +429,7 @@
               value: price
             });
             
+            // Also track as AddToCart event
             fbq('track', 'AddToCart', {
               content_name: productName,
               content_type: 'product',
@@ -447,6 +453,17 @@
               }]
             });
           }
+
+          // Log to console for debugging
+          console.log('Purchase click tracked:', {
+            pixel: window.fbq ? 'Meta Pixel loaded' : 'Meta Pixel not loaded',
+            analytics: typeof gtag === 'function' ? 'Google Analytics loaded' : 'Google Analytics not loaded',
+            product: productName,
+            price: price
+          });
+
+          // Navigate to the purchase URL
+          window.location.href = 'https://ko-fi.com/nfltemp/shop';
         };
 
         const features = [
@@ -548,20 +565,11 @@
                 <Toolbar sx={{ 
                   justifyContent: 'space-between',
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                  display: 'flex',
-                  alignItems: 'center'
+                  '& img': {
+                    marginLeft: 'auto',
+                    marginRight: '24px'
+                  }
                 }}>
-                  <Typography 
-                    variant="h6" 
-                    sx={{
-                      background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                      backgroundClip: 'text',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                    }}
-                  >
-                    Enhance your server today
-                  </Typography>
                   <img 
                     src="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/logo.png?raw=true" 
                     alt="NFL Temp Logo" 
@@ -591,34 +599,23 @@
               </AppBar>
 
               <div className={`left-panel ${isSidebarCollapsed ? 'collapsed' : ''}`}>
-                <Box sx={{ 
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '50px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderBottom: '1px solid rgba(148, 163, 184, 0.1)',
-                  background: 'rgba(30, 41, 59, 0.9)',
-                }}>
-                  <IconButton 
-                    onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-                    sx={{ 
-                      color: 'white',
-                      '&:hover': {
-                        backgroundColor: 'rgba(58, 236, 248, 0.1)',
-                      }
-                    }}
-                  >
-                    <Icon>{isSidebarCollapsed ? 'menu' : 'menu_open'}</Icon>
-                  </IconButton>
-                </Box>
-
-                <div className={`panel-content ${isSidebarCollapsed ? 'hidden' : ''}`} 
-                     style={{ paddingTop: '60px' }}
+                <IconButton 
+                  onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                  sx={{ 
+                    position: 'absolute',
+                    top: 20,
+                    right: -20,
+                    backgroundColor: 'rgba(30, 41, 59, 0.8)',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                    }
+                  }}
                 >
+                  <Icon>{isSidebarCollapsed ? 'menu' : 'menu_open'}</Icon>
+                </IconButton>
+
+                <div className={`panel-content ${isSidebarCollapsed ? 'hidden' : ''}`}>
                   <div className="panel-item" onClick={() => window.location.href = '/'}>Home</div>
                   <div className="panel-item" onClick={() => window.location.href = '/packages.html'}>Packages</div>
                   <div className="panel-item" onClick={() => window.location.href = '/esx-scripts.html'}>ESX Scripts</div>
