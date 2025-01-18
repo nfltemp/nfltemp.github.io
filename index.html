@@ -288,15 +288,15 @@
                     href="https://discord.gg/r8RKJGz4hk"
                     target="_blank"
                     size="large"
-                    startIcon={<i className="fab fa-discord" style={{ fontSize: '1.5rem' }} />}
+                    startIcon={<i className="fab fa-discord" style={{ fontSize: '1.8rem' }} />}
                     sx={{
                       backgroundColor: '#5865F2',
                       '&:hover': {
                         backgroundColor: '#4752C4',
                       },
-                      fontSize: '1.2rem',
-                      py: 1.5,
-                      px: 4,
+                      fontSize: '1.3rem',
+                      py: 1.8,
+                      px: 5,
                     }}
                   >
                     Join our Discord
@@ -304,245 +304,221 @@
                 </Toolbar>
               </AppBar>
 
-              <Box
-                sx={{
-                  position: 'relative',
-                  minHeight: '100vh',
-                  display: 'flex',
-                  alignItems: 'center',
-                  pt: 8,
-                }}
-              >
+              <Box sx={{ pt: 10, pb: 4, position: 'relative' }}>
                 <div className="hero-background" />
                 <Container maxWidth="lg">
-                  <Grid container spacing={4} alignItems="center">
-                    <Grid item xs={12} md={6}>
-                      <Typography variant="h1" gutterBottom>
-                        NFL Temp Scripts
-                      </Typography>
-                      <Typography variant="h5" color="text.secondary" paragraph sx={{ fontSize: '1.5rem', mb: 4 }}>
-                        Premium FiveM Resources to Enhance Your Server Experience
-                      </Typography>
-                      <Button
-                        variant="contained"
-                        size="large"
-                        href="#packages"
-                        sx={{
-                          mt: 2,
-                          backgroundColor: 'primary.main',
-                          color: 'background.default',
-                          fontSize: '1.3rem',
-                          '&:hover': {
-                            backgroundColor: '#00cccc',
-                          },
-                        }}
-                      >
-                        View Our Packages
-                      </Button>
+                  <Box sx={{ textAlign: 'center', mb: 4 }}>
+                    <Typography variant="h1" gutterBottom sx={{ fontSize: { xs: '2.5rem', md: '3.5rem' } }}>
+                      NFL Temp Scripts
+                    </Typography>
+                    <Typography variant="h5" color="text.secondary" sx={{ mb: 2 }}>
+                      Premium FiveM Resources to Enhance Your Server Experience
+                    </Typography>
+                  </Box>
+
+                  <Grid container spacing={3} sx={{ mb: 6 }}>
+                    {features.map((feature) => (
+                      <Grid item xs={6} md={3} key={feature.title}>
+                        <Paper
+                          elevation={0}
+                          sx={{
+                            p: 2,
+                            textAlign: 'center',
+                            background: 'rgba(30, 30, 30, 0.8)',
+                            backdropFilter: 'blur(10px)',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            borderRadius: 2,
+                            height: '100%',
+                          }}
+                        >
+                          <Icon className="feature-icon">{feature.icon}</Icon>
+                          <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold' }}>
+                            {feature.title}
+                          </Typography>
+                        </Paper>
+                      </Grid>
+                    ))}
+                  </Grid>
+
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      p: 2,
+                      mb: 6,
+                      background: 'linear-gradient(45deg, rgba(255,68,68,0.15), rgba(255,68,68,0.05))',
+                      border: '1px solid rgba(255,68,68,0.2)',
+                      borderRadius: 2,
+                      textAlign: 'center',
+                    }}
+                  >
+                    <Typography variant="h5" color="error.main" sx={{ fontWeight: 'bold' }}>
+                      🔥 FLASH SALE: 25% OFF ALL PACKAGES - LIMITED TIME ONLY! 🔥
+                    </Typography>
+                  </Paper>
+
+                  <Grid container spacing={4}>
+                    <Grid item xs={12} md={4}>
+                      <Card sx={{ 
+                        height: '100%', 
+                        display: 'flex', 
+                        flexDirection: 'column',
+                        transform: 'scale(1.02)',
+                        zIndex: 1,
+                        '&::before': {
+                          content: '""',
+                          position: 'absolute',
+                          top: -2,
+                          left: -2,
+                          right: -2,
+                          bottom: -2,
+                          background: 'linear-gradient(45deg, #00ffff, #00cccc)',
+                          borderRadius: '14px',
+                          zIndex: -1,
+                        }
+                      }}>
+                        <Box className="script-card-media">
+                          <CardMedia
+                            component="img"
+                            height="200"
+                            image="https://via.placeholder.com/300x200"
+                            alt="Complete Package"
+                          />
+                          <Box sx={{
+                            position: 'absolute',
+                            top: 16,
+                            right: 16,
+                            zIndex: 2,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 1,
+                          }}>
+                            <Chip
+                              label="BEST SELLER"
+                              color="primary"
+                              sx={{ fontWeight: 'bold' }}
+                            />
+                            <Chip
+                              label="25% OFF"
+                              sx={{ 
+                                bgcolor: '#ff4444',
+                                color: 'white',
+                                fontWeight: 'bold',
+                              }}
+                            />
+                          </Box>
+                        </Box>
+                        <CardContent sx={{ flexGrow: 1 }}>
+                          <Typography variant="h5" component="h2" gutterBottom color="primary" sx={{ fontWeight: 'bold' }}>
+                            Complete Package
+                          </Typography>
+                          <Typography variant="body1" color="text.secondary" paragraph>
+                            Get access to all our premium scripts in one comprehensive package. 
+                            Perfect for server owners looking for a complete solution.
+                          </Typography>
+                          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                            <Chip size="small" label="ESX Compatible" />
+                            <Chip size="small" label="QB Core Ready" />
+                            <Chip size="small" label="Regular Updates" />
+                          </Stack>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                            <Typography variant="h6" color="error.main" sx={{ textDecoration: 'line-through' }}>
+                              $99.99
+                            </Typography>
+                            <Typography variant="h5" color="primary.main" sx={{ fontWeight: 'bold' }}>
+                              $74.99
+                            </Typography>
+                          </Box>
+                        </CardContent>
+                        <CardActions sx={{ p: 2, pt: 0 }}>
+                          <Button
+                            variant="contained"
+                            fullWidth
+                            href="https://ko-fi.com/nfltemp/shop"
+                            onClick={handleBuyClick}
+                            sx={{ fontSize: '1.1rem' }}
+                          >
+                            Purchase Now
+                          </Button>
+                        </CardActions>
+                      </Card>
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Box
-                        component="img"
-                        src="https://via.placeholder.com/600x400"
-                        alt="Hero"
-                        sx={{
-                          width: '100%',
-                          borderRadius: 2,
-                          boxShadow: '0 0 40px rgba(0, 255, 255, 0.2)',
-                        }}
-                      />
+
+                    <Grid item xs={12} md={4}>
+                      <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                        <Box className="script-card-media">
+                          <CardMedia
+                            component="img"
+                            height="200"
+                            image="https://via.placeholder.com/300x200"
+                            alt="ESX Bundle"
+                          />
+                        </Box>
+                        <CardContent sx={{ flexGrow: 1 }}>
+                          <Typography variant="h5" component="h2" gutterBottom color="primary">
+                            ESX Bundle
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary" paragraph>
+                            A curated collection of our best ESX framework scripts. 
+                            Enhance your ESX server with our premium solutions.
+                          </Typography>
+                          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                            <Chip size="small" label="ESX Only" />
+                            <Chip size="small" label="Optimized" />
+                            <Chip size="small" label="Easy Setup" />
+                          </Stack>
+                        </CardContent>
+                        <CardActions sx={{ p: 2, pt: 0 }}>
+                          <Button
+                            variant="outlined"
+                            fullWidth
+                            href="https://ko-fi.com/nfltemp/shop"
+                            onClick={handleBuyClick}
+                          >
+                            View Details
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+
+                    <Grid item xs={12} md={4}>
+                      <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                        <Box className="script-card-media">
+                          <CardMedia
+                            component="img"
+                            height="200"
+                            image="https://via.placeholder.com/300x200"
+                            alt="QB Core Bundle"
+                          />
+                        </Box>
+                        <CardContent sx={{ flexGrow: 1 }}>
+                          <Typography variant="h5" component="h2" gutterBottom color="primary">
+                            QB Core Bundle
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary" paragraph>
+                            Premium QB Core framework scripts bundled together. 
+                            Take your QB Core server to the next level.
+                          </Typography>
+                          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                            <Chip size="small" label="QB Core Only" />
+                            <Chip size="small" label="High Performance" />
+                            <Chip size="small" label="Documentation" />
+                          </Stack>
+                        </CardContent>
+                        <CardActions sx={{ p: 2, pt: 0 }}>
+                          <Button
+                            variant="outlined"
+                            fullWidth
+                            href="https://ko-fi.com/nfltemp/shop"
+                            onClick={handleBuyClick}
+                          >
+                            View Details
+                          </Button>
+                        </CardActions>
+                      </Card>
                     </Grid>
                   </Grid>
                 </Container>
               </Box>
-
-              <Container maxWidth="lg" sx={{ py: 8 }}>
-                <Box sx={{ 
-                  textAlign: 'center', 
-                  mb: 8,
-                  position: 'relative',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: '-20px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '100px',
-                    height: '4px',
-                    background: 'linear-gradient(45deg, #00ffff, #00cccc)',
-                    borderRadius: '2px',
-                  }
-                }}>
-                  <Typography variant="h3" gutterBottom>
-                    Featured Packages
-                  </Typography>
-                  <Typography variant="h6" color="error.main" sx={{ fontWeight: 'bold' }}>
-                    🔥 FLASH SALE: 25% OFF ALL PACKAGES - LIMITED TIME ONLY! 🔥
-                  </Typography>
-                </Box>
-                
-                <Grid container spacing={4}>
-                  <Grid item xs={12} md={4}>
-                    <Card sx={{ 
-                      height: '100%', 
-                      display: 'flex', 
-                      flexDirection: 'column',
-                      transform: 'scale(1.02)',
-                      zIndex: 1,
-                      '&::before': {
-                        content: '""',
-                        position: 'absolute',
-                        top: -2,
-                        left: -2,
-                        right: -2,
-                        bottom: -2,
-                        background: 'linear-gradient(45deg, #00ffff, #00cccc)',
-                        borderRadius: '14px',
-                        zIndex: -1,
-                      }
-                    }}>
-                      <Box className="script-card-media">
-                        <CardMedia
-                          component="img"
-                          height="200"
-                          image="https://via.placeholder.com/300x200"
-                          alt="Complete Package"
-                        />
-                        <Box sx={{
-                          position: 'absolute',
-                          top: 16,
-                          right: 16,
-                          zIndex: 2,
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: 1,
-                        }}>
-                          <Chip
-                            label="BEST SELLER"
-                            color="primary"
-                            sx={{ fontWeight: 'bold' }}
-                          />
-                          <Chip
-                            label="25% OFF"
-                            sx={{ 
-                              bgcolor: '#ff4444',
-                              color: 'white',
-                              fontWeight: 'bold',
-                            }}
-                          />
-                        </Box>
-                      </Box>
-                      <CardContent sx={{ flexGrow: 1 }}>
-                        <Typography variant="h5" component="h2" gutterBottom color="primary" sx={{ fontWeight: 'bold' }}>
-                          Complete Package
-                        </Typography>
-                        <Typography variant="body1" color="text.secondary" paragraph>
-                          Get access to all our premium scripts in one comprehensive package. 
-                          Perfect for server owners looking for a complete solution.
-                        </Typography>
-                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                          <Chip size="small" label="ESX Compatible" />
-                          <Chip size="small" label="QB Core Ready" />
-                          <Chip size="small" label="Regular Updates" />
-                        </Stack>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                          <Typography variant="h6" color="error.main" sx={{ textDecoration: 'line-through' }}>
-                            $99.99
-                          </Typography>
-                          <Typography variant="h5" color="primary.main" sx={{ fontWeight: 'bold' }}>
-                            $74.99
-                          </Typography>
-                        </Box>
-                      </CardContent>
-                      <CardActions sx={{ p: 2, pt: 0 }}>
-                        <Button
-                          variant="contained"
-                          fullWidth
-                          href="https://ko-fi.com/nfltemp/shop"
-                          onClick={handleBuyClick}
-                          sx={{ fontSize: '1.1rem' }}
-                        >
-                          Purchase Now
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
-
-                  <Grid item xs={12} md={4}>
-                    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                      <Box className="script-card-media">
-                        <CardMedia
-                          component="img"
-                          height="200"
-                          image="https://via.placeholder.com/300x200"
-                          alt="ESX Bundle"
-                        />
-                      </Box>
-                      <CardContent sx={{ flexGrow: 1 }}>
-                        <Typography variant="h5" component="h2" gutterBottom color="primary">
-                          ESX Bundle
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" paragraph>
-                          A curated collection of our best ESX framework scripts. 
-                          Enhance your ESX server with our premium solutions.
-                        </Typography>
-                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                          <Chip size="small" label="ESX Only" />
-                          <Chip size="small" label="Optimized" />
-                          <Chip size="small" label="Easy Setup" />
-                        </Stack>
-                      </CardContent>
-                      <CardActions sx={{ p: 2, pt: 0 }}>
-                        <Button
-                          variant="outlined"
-                          fullWidth
-                          href="https://ko-fi.com/nfltemp/shop"
-                          onClick={handleBuyClick}
-                        >
-                          View Details
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
-
-                  <Grid item xs={12} md={4}>
-                    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                      <Box className="script-card-media">
-                        <CardMedia
-                          component="img"
-                          height="200"
-                          image="https://via.placeholder.com/300x200"
-                          alt="QB Core Bundle"
-                        />
-                      </Box>
-                      <CardContent sx={{ flexGrow: 1 }}>
-                        <Typography variant="h5" component="h2" gutterBottom color="primary">
-                          QB Core Bundle
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" paragraph>
-                          Premium QB Core framework scripts bundled together. 
-                          Take your QB Core server to the next level.
-                        </Typography>
-                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                          <Chip size="small" label="QB Core Only" />
-                          <Chip size="small" label="High Performance" />
-                          <Chip size="small" label="Documentation" />
-                        </Stack>
-                      </CardContent>
-                      <CardActions sx={{ p: 2, pt: 0 }}>
-                        <Button
-                          variant="outlined"
-                          fullWidth
-                          href="https://ko-fi.com/nfltemp/shop"
-                          onClick={handleBuyClick}
-                        >
-                          View Details
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
-                </Grid>
-              </Container>
 
               <ScrollTop>
                 <Fab color="primary" size="small" aria-label="scroll back to top">
