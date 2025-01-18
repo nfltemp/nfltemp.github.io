@@ -32,14 +32,24 @@
 
       .trail {
         position: fixed;
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
-        background: #00ffff;
         pointer-events: none;
-        opacity: 0.5;
         z-index: 9999;
-        transition: transform 0.1s ease;
+        opacity: 0;
+        animation: fadeOut 0.5s ease forwards;
+      }
+
+      @keyframes fadeOut {
+        0% {
+          opacity: 0.8;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(0.3);
+        }
       }
 
       .hero-background {
@@ -308,25 +318,44 @@
       function App() {
         const [trails, setTrails] = React.useState([]);
         const [trailId, setTrailId] = React.useState(0);
+        const lastMousePos = React.useRef({ x: 0, y: 0 });
+        const frameRef = React.useRef();
 
         React.useEffect(() => {
           const handleMouseMove = (e) => {
-            const newTrail = {
-              id: trailId,
-              x: e.clientX,
-              y: e.clientY
-            };
+            lastMousePos.current = { x: e.clientX, y: e.clientY };
+          };
 
-            setTrails(prev => [...prev, newTrail]);
+          const createTrail = () => {
+            const { x, y } = lastMousePos.current;
+            
+            setTrails(prev => [
+              ...prev, 
+              {
+                id: trailId,
+                x,
+                y,
+                color: `hsl(${Math.random() * 60 + 180}, 100%, 70%)` // Cyan-blue variations
+              }
+            ]);
+            
             setTrailId(prev => prev + 1);
 
+            // Clean up old trails
             setTimeout(() => {
-              setTrails(prev => prev.filter(trail => trail.id !== newTrail.id));
+              setTrails(prev => prev.filter(trail => trail.id !== trailId));
             }, 500);
+
+            frameRef.current = requestAnimationFrame(createTrail);
           };
 
           document.addEventListener('mousemove', handleMouseMove);
-          return () => document.removeEventListener('mousemove', handleMouseMove);
+          frameRef.current = requestAnimationFrame(createTrail);
+
+          return () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            cancelAnimationFrame(frameRef.current);
+          };
         }, [trailId]);
 
         const handleBuyClick = () => {
@@ -342,6 +371,70 @@
           { icon: 'support_agent', title: '24/7 Support', description: 'Dedicated support team ready to help you' },
         ];
 
+        React.useEffect(() => {
+          if (window.kofiWidgetOverlay) {
+            window.kofiWidgetOverlay.draw('nfltemp', {
+              'type': 'floating-chat',
+              'floating-chat.donateButton.text': 'Support Me',
+              'floating-chat.donateButton.background-color': '#3AECF8',
+              'floating-chat.donateButton.text-color': '#fff'
+            });
+          }
+        }, []);
+
+        function RecentPayments() {
+          const recentBuyers = [
+            {
+              name: "AB",
+              amount: "$20.00",
+              purchase: "[QB/ESX]Advanced Drug Farming & Dealing w/Battle Pass System",
+              timestamp: new Date().toISOString(),
+              avatar: "/images/logo.png" // Your logo as placeholder
+            },
+            // Placeholder entries
+            ...Array(4).fill({
+              name: "---",
+              amount: "$--.--",
+              purchase: "No recent purchase",
+              timestamp: null,
+              avatar: "/images/placeholder.png" // Your placeholder image
+            })
+          ];
+
+          return (
+            <div className="panel-section">
+              <div className="panel-section-title">Recent Payments</div>
+              {recentBuyers.map((buyer, index) => (
+                <div 
+                  key={index} 
+                  className="recent-payment"
+                  title={buyer.name !== "---" ? `Recently purchased: ${buyer.purchase}` : ""}
+                  style={{ cursor: buyer.name !== "---" ? 'help' : 'default' }}
+                >
+                  <div className="avatar">
+                    <img 
+                      src={buyer.avatar} 
+                      alt="" 
+                      style={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        objectFit: 'cover',
+                        borderRadius: '50%',
+                        opacity: buyer.name !== "---" ? 1 : 0.5
+                      }} 
+                    />
+                  </div>
+                  <div style={{ 
+                    color: buyer.name !== "---" ? '#fff' : '#94A3B8'
+                  }}>
+                    {buyer.name}
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        }
+
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -353,7 +446,7 @@
                   style={{ 
                     left: trail.x + 'px',
                     top: trail.y + 'px',
-                    background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                    background: trail.color,
                   }}
                 />
               ))}
@@ -413,29 +506,7 @@
                   </div>
                 </div>
 
-                <div className="panel-section">
-                  <div className="panel-section-title">Recent Payments</div>
-                  <div className="recent-payment">
-                    <div className="avatar" style={{ background: '#EC4899' }}>C</div>
-                    <div>Chase_Moola</div>
-                  </div>
-                  <div className="recent-payment">
-                    <div className="avatar" style={{ background: '#F59E0B' }}>M</div>
-                    <div>Chefmigo</div>
-                  </div>
-                  <div className="recent-payment">
-                    <div className="avatar" style={{ background: '#3B82F6' }}>G</div>
-                    <div>gflord</div>
-                  </div>
-                  <div className="recent-payment">
-                    <div className="avatar" style={{ background: '#10B981' }}>K</div>
-                    <div>KevinDFWU</div>
-                  </div>
-                  <div className="recent-payment">
-                    <div className="avatar" style={{ background: '#8B5CF6' }}>S</div>
-                    <div>Shapilol63</div>
-                  </div>
-                </div>
+                <RecentPayments />
               </div>
 
               <Container 
