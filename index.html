@@ -176,7 +176,11 @@
       /* Adjust main content margin when sidebar is collapsed */
       .MuiContainer-root {
         transition: margin-left 0.3s ease;
-        margin-left: ${isSidebarCollapsed ? '60px' : '250px'};
+        margin-left: 250px;
+      }
+
+      .MuiContainer-root.sidebar-collapsed {
+        margin-left: 60px;
       }
     </style>
 
@@ -712,7 +716,7 @@
                           <CardMedia
                             component="img"
                             height="200"
-                            image="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/complete.jpg?raw=true"
+                            image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg"
                             alt="Ambulance Job"
                           />
                           <Box sx={{
@@ -775,7 +779,7 @@
                           <CardMedia
                             component="img"
                             height="200"
-                            image="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/battlepass.png?raw=true"
+                            image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG"
                             alt="Battle Pass System"
                           />
                         </Box>
@@ -812,7 +816,7 @@
                           <CardMedia
                             component="img"
                             height="200"
-                            image="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/policejob.png?raw=true"
+                            image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/policejob.PNG"
                             alt="Police Job"
                           />
                         </Box>
