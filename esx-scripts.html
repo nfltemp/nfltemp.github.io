@@ -163,7 +163,7 @@
         const scripts = [
           {
             title: "Advanced Drug & Battle Pass System",
-            description: "Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration. The Drug System includes detailed mechanics for harvesting, crafting, and distributing various substances, adding depth to criminal roleplay.",
+            description: "Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration.",
             images: [
               "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG",
             ],
@@ -176,27 +176,30 @@
             ],
             price: "20.00"
           },
+          {
+            title: "Advanced Ambulance Job",
+            description: "Complete ambulance and medical system with advanced features for your ESX server.",
+            images: [
+              "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg"
+            ],
+            features: [
+              "Advanced Medical System",
+              "Interactive Missions",
+              "Vehicle Management",
+              "Equipment System",
+              "Patient Care Features"
+            ],
+            price: "20.00"
+          }
         ];
 
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Container maxWidth="lg" sx={{ pt: 12, pb: 8 }}>
-              <Typography variant="h3" gutterBottom sx={{
-                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}>
-                ESX Scripts
-              </Typography>
-              <Typography variant="h5" color="text.secondary" paragraph>
-                Premium ESX framework scripts for your FiveM server
-              </Typography>
-              
-              <Grid container spacing={4}>
+            <Container maxWidth="lg" sx={{ pt: 8, pb: 8 }}>
+              <Grid container spacing={3}>
                 {scripts.map((script, index) => (
-                  <Grid item xs={12} key={index}>
+                  <Grid item xs={12} md={6} key={index}>
                     <ScriptCard {...script} />
                   </Grid>
                 ))}
