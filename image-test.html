@@ -65,17 +65,29 @@
             if (!response.ok) throw new Error('Failed to fetch issue data');
             
             const issueData = await response.json();
-            const purchaseData = JSON.parse(issueData.body);
             
-            setLastWebhook(purchaseData);
-            setSuccess('Successfully fetched latest purchase data!');
+            // Clean up the issue body to get valid JSON
+            const bodyText = issueData.body
+              .replace(/```json\n/g, '') // Remove ```json
+              .replace(/```/g, '')       // Remove closing ```
+              .trim();                   // Remove extra whitespace
+            
+            try {
+              const purchaseData = JSON.parse(bodyText);
+              setLastWebhook(purchaseData);
+              setSuccess('Successfully fetched latest purchase data!');
 
-            // Update the recent buyers list
-            if (window.updateRecentBuyers && purchaseData.recentBuyers?.[0]) {
-              window.updateRecentBuyers(purchaseData.recentBuyers[0]);
+              // Update the recent buyers list
+              if (window.updateRecentBuyers && purchaseData.recentBuyers?.[0]) {
+                window.updateRecentBuyers(purchaseData.recentBuyers[0]);
+              }
+            } catch (jsonError) {
+              console.error('JSON Parse Error:', bodyText);
+              setError('Failed to parse purchase data. Check console for details.');
             }
           } catch (err) {
             setError(err.message);
+            console.error('Fetch Error:', err);
           } finally {
             setLoading(false);
           }
