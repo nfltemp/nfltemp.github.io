@@ -200,6 +200,46 @@
       .MuiContainer-root.sidebar-collapsed {
         margin-left: 60px;
       }
+
+      @media (max-width: 768px) {
+        .left-panel {
+          transition: transform 0.3s ease;
+          width: 250px !important;
+        }
+        
+        .MuiContainer-root {
+          margin-left: 0 !important;
+          padding-left: 16px !important;
+          padding-right: 16px !important;
+        }
+        
+        .hero-background {
+          height: 50vh;
+        }
+      }
+      
+      .show-menu-button {
+        position: fixed;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 999;
+        background-color: rgba(30, 41, 59, 0.8);
+        color: white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .show-menu-button:hover {
+        background-color: rgba(30, 41, 59, 0.9);
+        transform: translateY(-50%) scale(1.1);
+      }
     </style>
 
     <!-- Meta Pixel Code -->
@@ -531,6 +571,8 @@
           );
         }
 
+        const isMobile = () => window.innerWidth <= 768;
+
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -559,16 +601,35 @@
                 <Toolbar sx={{ 
                   justifyContent: 'space-between',
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                  '& img': {
-                    marginLeft: 'auto',
-                    marginRight: '24px'
-                  }
+                  position: 'relative',
                 }}>
-                  <img 
-                    src="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/logo.png?raw=true" 
-                    alt="NFL Temp Logo" 
-                    style={{ height: 40 }} 
-                  />
+                  {isSidebarCollapsed && (
+                    <IconButton
+                      onClick={() => setIsSidebarCollapsed(false)}
+                      sx={{
+                        color: 'white',
+                        display: { xs: 'flex', md: 'none' },
+                        position: 'absolute',
+                        left: 16,
+                      }}
+                    >
+                      <Icon>menu</Icon>
+                    </IconButton>
+                  )}
+                  <Box sx={{ 
+                    position: 'absolute', 
+                    left: '50%', 
+                    transform: 'translateX(-50%)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    width: '100%',
+                  }}>
+                    <img 
+                      src="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/logo.png?raw=true" 
+                      alt="NFL Temp Logo" 
+                      style={{ height: 40 }} 
+                    />
+                  </Box>
                   <Button
                     variant="contained"
                     href="https://discord.gg/r8RKJGz4hk"
@@ -582,9 +643,10 @@
                         transform: 'translateY(-2px)',
                         boxShadow: '0 10px 20px rgba(88, 101, 242, 0.2)',
                       },
-                      fontSize: '1.3rem',
-                      py: 1.8,
-                      px: 5,
+                      fontSize: { xs: '1rem', md: '1.3rem' },
+                      py: { xs: 1, md: 1.8 },
+                      px: { xs: 2, md: 5 },
+                      ml: 'auto',
                     }}
                   >
                     Join our Discord
@@ -592,7 +654,11 @@
                 </Toolbar>
               </AppBar>
 
-              <div className={`left-panel ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+              <div className={`left-panel ${isSidebarCollapsed ? 'collapsed' : ''}`}
+                style={{
+                  transform: isMobile() && isSidebarCollapsed ? 'translateX(-100%)' : 'translateX(0)',
+                }}
+              >
                 <IconButton 
                   onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
                   sx={{ 
@@ -668,8 +734,10 @@
                 sx={{ 
                   pt: 6,
                   pb: 8,
-                  pl: '280px',
+                  pl: { xs: '16px', md: isSidebarCollapsed ? '76px' : '280px' },
+                  pr: { xs: '16px', md: '24px' },
                   maxWidth: '1100px !important',
+                  transition: 'padding-left 0.3s ease',
                 }}
               >
                 <Paper
