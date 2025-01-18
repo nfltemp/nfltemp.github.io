@@ -65,8 +65,8 @@
               `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues/${ISSUE_NUMBER}`,
               {
                 headers: {
-                  'Authorization': `Bearer ${GITHUB_TOKEN}`,
-                  'Accept': 'application/vnd.github+json',
+                  'Authorization': `token ${GITHUB_TOKEN}`,
+                  'Accept': 'application/vnd.github.v3+json',
                   'X-GitHub-Api-Version': '2022-11-28'
                 }
               }
@@ -127,8 +127,8 @@
               `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues/${ISSUE_NUMBER}`,
               {
                 headers: {
-                  'Authorization': `Bearer ${GITHUB_TOKEN}`,
-                  'Accept': 'application/vnd.github+json',
+                  'Authorization': `token ${GITHUB_TOKEN}`,
+                  'Accept': 'application/vnd.github.v3+json',
                   'X-GitHub-Api-Version': '2022-11-28'
                 }
               }
@@ -152,8 +152,8 @@
               {
                 method: 'PATCH',
                 headers: {
-                  'Authorization': `Bearer ${GITHUB_TOKEN}`,
-                  'Accept': 'application/vnd.github+json',
+                  'Authorization': `token ${GITHUB_TOKEN}`,
+                  'Accept': 'application/vnd.github.v3+json',
                   'X-GitHub-Api-Version': '2022-11-28',
                   'Content-Type': 'application/json',
                 },
