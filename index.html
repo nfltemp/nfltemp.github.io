@@ -13,20 +13,12 @@
     <!-- Material UI -->
     <script src="https://unpkg.com/@mui/material@5.15.5/umd/material-ui.development.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     
     <!-- Discord Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-      :root {
-        --primary-color: #1976d2;
-        --background-dark: #121212;
-        --card-bg: #1e1e1e;
-        --text-primary: #ffffff;
-        --text-secondary: #888888;
-        --accent-color: #00ffff;
-      }
-
       * {
         margin: 0;
         padding: 0;
@@ -34,14 +26,8 @@
       }
 
       body {
-        font-family: 'Roboto', sans-serif;
-        background-color: var(--background-dark);
-        color: var(--text-primary);
         min-height: 100vh;
         overflow-x: hidden;
-        background-image: 
-          radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 60%),
-          linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
       }
 
       .trail {
@@ -49,173 +35,55 @@
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: var(--accent-color);
+        background: #00ffff;
         pointer-events: none;
         opacity: 0.5;
         z-index: 9999;
         transition: transform 0.1s ease;
       }
 
-      .header {
-        background-color: transparent;
-        padding: 1rem;
-        position: fixed;
-        width: 100%;
+      .hero-background {
+        position: absolute;
         top: 0;
-        z-index: 1000;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .logo {
-        width: 120px;
-        height: auto;
-      }
-
-      .nav-right {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-      }
-
-      .discord-button {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background-color: transparent;
-        color: var(--accent-color);
-        padding: 0.75rem 1.5rem;
-        border: 1px solid var(--accent-color);
-        border-radius: 4px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-
-      .discord-button:hover {
-        background-color: var(--accent-color);
-        color: var(--background-dark);
-      }
-
-      .discord-text {
-        font-size: 0.9rem;
-        font-weight: 500;
-      }
-
-      .main-content {
-        margin-top: 80px;
-        padding: 2rem;
-        max-width: 1400px;
-        margin: 80px auto 0;
-      }
-
-      .sidebar {
-        position: fixed;
         left: 0;
-        top: 80px;
-        width: 250px;
-        height: calc(100vh - 80px);
-        background-color: rgba(30, 30, 30, 0.8);
-        padding: 2rem;
-      }
-
-      .sidebar-nav {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .sidebar-link {
-        color: var(--text-primary);
-        text-decoration: none;
-        padding: 0.75rem 1rem;
-        border-radius: 4px;
-        transition: all 0.3s ease;
-      }
-
-      .sidebar-link:hover {
-        background-color: rgba(0, 255, 255, 0.1);
-        color: var(--accent-color);
-      }
-
-      .content-area {
-        margin-left: 250px;
-        padding: 2rem;
-      }
-
-      .welcome-section {
-        text-align: left;
-        margin-bottom: 4rem;
-      }
-
-      .welcome-section h1 {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        color: var(--accent-color);
-      }
-
-      .welcome-section p {
-        font-size: 1.1rem;
-        color: var(--text-secondary);
-        max-width: 600px;
-        line-height: 1.6;
-      }
-
-      .scripts-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 2rem;
-      }
-
-      .script-card {
-        background: rgba(30, 30, 30, 0.8);
-        border-radius: 8px;
-        overflow: hidden;
-        transition: transform 0.3s ease;
-        border: 1px solid rgba(0, 255, 255, 0.1);
-      }
-
-      .script-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--accent-color);
-      }
-
-      .script-image {
         width: 100%;
-        height: 200px;
-        object-fit: cover;
+        height: 100%;
+        background: 
+          linear-gradient(45deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3)),
+          radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 60%);
+        z-index: -1;
       }
 
-      .script-content {
-        padding: 1.5rem;
+      .script-card-media {
+        position: relative;
+        overflow: hidden;
       }
 
-      .script-title {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-        color: var(--accent-color);
+      .script-card-media::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, rgba(0,0,0,0.6), rgba(0,0,0,0.3));
+        z-index: 1;
       }
 
-      .script-description {
-        color: var(--text-secondary);
+      .script-card-media img {
+        transition: transform 0.3s ease;
+      }
+
+      .script-card:hover .script-card-media img {
+        transform: scale(1.1);
+      }
+
+      .feature-icon {
+        font-size: 2.5rem !important;
         margin-bottom: 1rem;
-        line-height: 1.5;
-      }
-
-      .view-script-btn {
-        display: inline-block;
-        background-color: transparent;
-        color: var(--accent-color);
-        padding: 0.5rem 1rem;
-        border: 1px solid var(--accent-color);
-        border-radius: 4px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-
-      .view-script-btn:hover {
-        background-color: var(--accent-color);
-        color: var(--background-dark);
+        background: linear-gradient(45deg, #00ffff, #00cccc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
     </style>
 
@@ -242,14 +110,29 @@
 
     <script type="text/babel">
       const {
+        AppBar,
+        Box,
         Button,
         Card,
+        CardActions,
         CardContent,
         CardMedia,
+        Chip,
+        Container,
+        Divider,
+        Grid,
+        Icon,
+        IconButton,
+        Paper,
+        Stack,
+        Toolbar,
         Typography,
         createTheme,
         ThemeProvider,
-        CssBaseline
+        CssBaseline,
+        useScrollTrigger,
+        Zoom,
+        Fab
       } = MaterialUI;
 
       const theme = createTheme({
@@ -259,24 +142,68 @@
             main: '#00ffff',
           },
           background: {
-            default: '#121212',
-            paper: 'rgba(30, 30, 30, 0.8)',
+            default: '#0a0a0a',
+            paper: 'rgba(20, 20, 20, 0.8)',
+          },
+        },
+        typography: {
+          fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+          h1: {
+            fontSize: '3.5rem',
+            fontWeight: 700,
+            backgroundImage: 'linear-gradient(45deg, #00ffff, #00cccc)',
+            backgroundClip: 'text',
+            textFillColor: 'transparent',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
           },
         },
         components: {
           MuiButton: {
             styleOverrides: {
               root: {
-                borderColor: '#00ffff',
-                '&:hover': {
-                  backgroundColor: '#00ffff',
-                  color: '#121212',
-                },
+                borderRadius: '8px',
+                textTransform: 'none',
+                fontSize: '1rem',
+                padding: '0.5rem 1.5rem',
+              },
+            },
+          },
+          MuiCard: {
+            styleOverrides: {
+              root: {
+                borderRadius: '12px',
+                background: 'rgba(30, 30, 30, 0.8)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
               },
             },
           },
         },
       });
+
+      function ScrollTop(props) {
+        const { children } = props;
+        const trigger = useScrollTrigger({
+          disableHysteresis: true,
+          threshold: 100,
+        });
+
+        const handleClick = () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        return (
+          <Zoom in={trigger}>
+            <Box
+              onClick={handleClick}
+              sx={{ position: 'fixed', bottom: 16, right: 16, zIndex: 1000 }}
+            >
+              {children}
+            </Box>
+          </Zoom>
+        );
+      }
 
       function App() {
         const [trails, setTrails] = React.useState([]);
@@ -308,6 +235,13 @@
           }
         };
 
+        const features = [
+          { icon: 'speed', title: 'High Performance', description: 'Optimized scripts that won\'t impact your server\'s performance' },
+          { icon: 'security', title: 'Secure', description: 'Built with security in mind to protect your server and players' },
+          { icon: 'update', title: 'Regular Updates', description: 'Constant updates and improvements to ensure compatibility' },
+          { icon: 'support_agent', title: '24/7 Support', description: 'Dedicated support team ready to help you' },
+        ];
+
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -323,157 +257,245 @@
                 />
               ))}
               
-              <header className="header">
-                <img src="https://via.placeholder.com/120x60" alt="NFL Temp Logo" className="logo" />
-                <div className="nav-right">
-                  <Button
-                    variant="outlined"
-                    href="https://discord.gg/r8RKJGz4hk"
-                    target="_blank"
-                    startIcon={<i className="fab fa-discord" />}
-                    sx={{
-                      borderColor: 'primary.main',
-                      color: 'primary.main',
-                      '&:hover': {
-                        backgroundColor: 'primary.main',
-                        color: 'background.default',
-                      },
-                    }}
-                  >
-                    Join our Discord
-                  </Button>
-                </div>
-              </header>
+              <AppBar position="fixed" color="transparent" sx={{ backdropFilter: 'blur(10px)' }}>
+                <Toolbar sx={{ justifyContent: 'space-between' }}>
+                  <img src="https://via.placeholder.com/120x60" alt="NFL Temp Logo" style={{ height: 40 }} />
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    <Button
+                      variant="outlined"
+                      href="https://discord.gg/r8RKJGz4hk"
+                      target="_blank"
+                      startIcon={<i className="fab fa-discord" />}
+                      sx={{
+                        borderColor: 'primary.main',
+                        color: 'primary.main',
+                        '&:hover': {
+                          backgroundColor: 'primary.main',
+                          color: 'background.default',
+                        },
+                      }}
+                    >
+                      Join Discord
+                    </Button>
+                  </Stack>
+                </Toolbar>
+              </AppBar>
 
-              <div className="sidebar">
-                <nav className="sidebar-nav">
-                  <a href="#" className="sidebar-link">Home</a>
-                  <a href="#packages" className="sidebar-link">Packages</a>
-                  <a href="#esx-scripts" className="sidebar-link">ESX Scripts</a>
-                  <a href="#qb-scripts" className="sidebar-link">QB Core Scripts</a>
-                  <a href="#about" className="sidebar-link">About</a>
-                </nav>
-              </div>
-
-              <main className="content-area">
-                <section className="welcome-section">
-                  <Typography variant="h1" component="h1" sx={{ color: 'primary.main', mb: 2, fontSize: '2.5rem' }}>
-                    Welcome to NFL Temp
-                  </Typography>
-                  <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: 600, lineHeight: 1.6 }}>
-                    Explore our collection of top-tier FiveM scripts and enhance your server with our innovative solutions. 
-                    Whether you're looking to purchase individual scripts or bundled packages, we have everything you need 
-                    to elevate your FiveM experience.
-                  </Typography>
-                </section>
-
-                <section id="packages" className="scripts-grid">
-                  <Card sx={{ 
-                    bgcolor: 'background.paper',
-                    borderRadius: 2,
-                    border: '1px solid rgba(0, 255, 255, 0.1)',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-5px)',
-                      borderColor: 'primary.main',
-                    }
-                  }}>
-                    <CardMedia
-                      component="img"
-                      height="200"
-                      image="https://via.placeholder.com/300x200"
-                      alt="Complete Package"
-                    />
-                    <CardContent>
-                      <Typography variant="h5" component="h2" sx={{ color: 'primary.main', mb: 1 }}>
-                        Complete Package
+              <Box
+                sx={{
+                  position: 'relative',
+                  minHeight: '100vh',
+                  display: 'flex',
+                  alignItems: 'center',
+                  pt: 8,
+                }}
+              >
+                <div className="hero-background" />
+                <Container maxWidth="lg">
+                  <Grid container spacing={4} alignItems="center">
+                    <Grid item xs={12} md={6}>
+                      <Typography variant="h1" gutterBottom>
+                        Premium FiveM Scripts
                       </Typography>
-                      <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-                        Get access to all our premium scripts in one comprehensive package. 
-                        Perfect for server owners looking for a complete solution.
+                      <Typography variant="h5" color="text.secondary" paragraph>
+                        Elevate your server with our high-quality scripts and packages
                       </Typography>
                       <Button
-                        variant="outlined"
-                        href="https://ko-fi.com/nfltemp/shop"
-                        onClick={handleBuyClick}
-                        fullWidth
+                        variant="contained"
+                        size="large"
+                        href="#packages"
+                        sx={{
+                          mt: 2,
+                          backgroundColor: 'primary.main',
+                          color: 'background.default',
+                          '&:hover': {
+                            backgroundColor: '#00cccc',
+                          },
+                        }}
                       >
-                        View Details
+                        Explore Packages
                       </Button>
-                    </CardContent>
-                  </Card>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <Box
+                        component="img"
+                        src="https://via.placeholder.com/600x400"
+                        alt="Hero"
+                        sx={{
+                          width: '100%',
+                          borderRadius: 2,
+                          boxShadow: '0 0 40px rgba(0, 255, 255, 0.2)',
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                </Container>
+              </Box>
 
-                  <Card sx={{ 
-                    bgcolor: 'background.paper',
-                    borderRadius: 2,
-                    border: '1px solid rgba(0, 255, 255, 0.1)',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-5px)',
-                      borderColor: 'primary.main',
-                    }
-                  }}>
-                    <CardMedia
-                      component="img"
-                      height="200"
-                      image="https://via.placeholder.com/300x200"
-                      alt="ESX Bundle"
-                    />
-                    <CardContent>
-                      <Typography variant="h5" component="h2" sx={{ color: 'primary.main', mb: 1 }}>
-                        ESX Bundle
-                      </Typography>
-                      <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-                        A curated collection of our best ESX framework scripts. 
-                        Enhance your ESX server with our premium solutions.
-                      </Typography>
-                      <Button
-                        variant="outlined"
-                        href="https://ko-fi.com/nfltemp/shop"
-                        onClick={handleBuyClick}
-                        fullWidth
+              <Container maxWidth="lg" sx={{ py: 8 }}>
+                <Typography variant="h3" align="center" gutterBottom sx={{ mb: 6 }}>
+                  Why Choose Our Scripts?
+                </Typography>
+                <Grid container spacing={4}>
+                  {features.map((feature) => (
+                    <Grid item xs={12} sm={6} md={3} key={feature.title}>
+                      <Paper
+                        elevation={0}
+                        sx={{
+                          p: 3,
+                          textAlign: 'center',
+                          background: 'rgba(30, 30, 30, 0.8)',
+                          backdropFilter: 'blur(10px)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)',
+                          borderRadius: 2,
+                        }}
                       >
-                        View Details
-                      </Button>
-                    </CardContent>
-                  </Card>
+                        <Icon className="feature-icon">{feature.icon}</Icon>
+                        <Typography variant="h6" gutterBottom>
+                          {feature.title}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {feature.description}
+                        </Typography>
+                      </Paper>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Container>
 
-                  <Card sx={{ 
-                    bgcolor: 'background.paper',
-                    borderRadius: 2,
-                    border: '1px solid rgba(0, 255, 255, 0.1)',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-5px)',
-                      borderColor: 'primary.main',
-                    }
-                  }}>
-                    <CardMedia
-                      component="img"
-                      height="200"
-                      image="https://via.placeholder.com/300x200"
-                      alt="QB Core Bundle"
-                    />
-                    <CardContent>
-                      <Typography variant="h5" component="h2" sx={{ color: 'primary.main', mb: 1 }}>
-                        QB Core Bundle
-                      </Typography>
-                      <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-                        Premium QB Core framework scripts bundled together. 
-                        Take your QB Core server to the next level.
-                      </Typography>
-                      <Button
-                        variant="outlined"
-                        href="https://ko-fi.com/nfltemp/shop"
-                        onClick={handleBuyClick}
-                        fullWidth
-                      >
-                        View Details
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </section>
-              </main>
+              <Container maxWidth="lg" sx={{ py: 8 }}>
+                <Typography variant="h3" align="center" gutterBottom sx={{ mb: 6 }}>
+                  Our Packages
+                </Typography>
+                <Grid container spacing={4}>
+                  <Grid item xs={12} md={4}>
+                    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                      <Box className="script-card-media">
+                        <CardMedia
+                          component="img"
+                          height="200"
+                          image="https://via.placeholder.com/300x200"
+                          alt="Complete Package"
+                        />
+                        <Chip
+                          label="Best Value"
+                          color="primary"
+                          sx={{
+                            position: 'absolute',
+                            top: 16,
+                            right: 16,
+                            zIndex: 2,
+                          }}
+                        />
+                      </Box>
+                      <CardContent sx={{ flexGrow: 1 }}>
+                        <Typography variant="h5" component="h2" gutterBottom color="primary">
+                          Complete Package
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" paragraph>
+                          Get access to all our premium scripts in one comprehensive package. 
+                          Perfect for server owners looking for a complete solution.
+                        </Typography>
+                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                          <Chip size="small" label="ESX Compatible" />
+                          <Chip size="small" label="QB Core Ready" />
+                          <Chip size="small" label="Regular Updates" />
+                        </Stack>
+                      </CardContent>
+                      <CardActions sx={{ p: 2, pt: 0 }}>
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          href="https://ko-fi.com/nfltemp/shop"
+                          onClick={handleBuyClick}
+                        >
+                          View Details
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+
+                  <Grid item xs={12} md={4}>
+                    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                      <Box className="script-card-media">
+                        <CardMedia
+                          component="img"
+                          height="200"
+                          image="https://via.placeholder.com/300x200"
+                          alt="ESX Bundle"
+                        />
+                      </Box>
+                      <CardContent sx={{ flexGrow: 1 }}>
+                        <Typography variant="h5" component="h2" gutterBottom color="primary">
+                          ESX Bundle
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" paragraph>
+                          A curated collection of our best ESX framework scripts. 
+                          Enhance your ESX server with our premium solutions.
+                        </Typography>
+                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                          <Chip size="small" label="ESX Only" />
+                          <Chip size="small" label="Optimized" />
+                          <Chip size="small" label="Easy Setup" />
+                        </Stack>
+                      </CardContent>
+                      <CardActions sx={{ p: 2, pt: 0 }}>
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          href="https://ko-fi.com/nfltemp/shop"
+                          onClick={handleBuyClick}
+                        >
+                          View Details
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+
+                  <Grid item xs={12} md={4}>
+                    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                      <Box className="script-card-media">
+                        <CardMedia
+                          component="img"
+                          height="200"
+                          image="https://via.placeholder.com/300x200"
+                          alt="QB Core Bundle"
+                        />
+                      </Box>
+                      <CardContent sx={{ flexGrow: 1 }}>
+                        <Typography variant="h5" component="h2" gutterBottom color="primary">
+                          QB Core Bundle
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" paragraph>
+                          Premium QB Core framework scripts bundled together. 
+                          Take your QB Core server to the next level.
+                        </Typography>
+                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                          <Chip size="small" label="QB Core Only" />
+                          <Chip size="small" label="High Performance" />
+                          <Chip size="small" label="Documentation" />
+                        </Stack>
+                      </CardContent>
+                      <CardActions sx={{ p: 2, pt: 0 }}>
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          href="https://ko-fi.com/nfltemp/shop"
+                          onClick={handleBuyClick}
+                        >
+                          View Details
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                </Grid>
+              </Container>
+
+              <ScrollTop>
+                <Fab color="primary" size="small" aria-label="scroll back to top">
+                  <Icon>keyboard_arrow_up</Icon>
+                </Fab>
+              </ScrollTop>
             </div>
           </ThemeProvider>
         );
