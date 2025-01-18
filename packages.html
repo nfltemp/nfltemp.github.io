@@ -51,6 +51,41 @@
       });
 
       function PackageCard({ title, description, image, features, price, compatibility, isBestSeller }) {
+        const handleBuyClick = (productName, price) => {
+          // Facebook Pixel tracking
+          if (window.fbq) {
+            fbq('track', 'InitiateCheckout', {
+              content_name: productName,
+              content_type: 'product',
+              currency: 'USD',
+              value: price
+            });
+            
+            fbq('track', 'AddToCart', {
+              content_name: productName,
+              content_type: 'product',
+              currency: 'USD',
+              value: price
+            });
+          }
+          
+          // Google Analytics tracking
+          if (typeof gtag === 'function') {
+            gtag('event', 'purchase_click', {
+              'event_category': 'ecommerce',
+              'event_label': productName,
+              'value': price,
+              'currency': 'USD',
+              'items': [{
+                'item_id': productName.toLowerCase().replace(/\s+/g, '_'),
+                'item_name': productName,
+                'price': price,
+                'quantity': 1
+              }]
+            });
+          }
+        };
+
         return (
           <Card sx={{ 
             height: '100%',
@@ -143,6 +178,7 @@
                 variant="contained"
                 fullWidth
                 href="https://ko-fi.com/nfltemp/shop"
+                onClick={() => handleBuyClick(title, price)}
                 sx={{ 
                   fontSize: '1.1rem',
                   py: 1.5
