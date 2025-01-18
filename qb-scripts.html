@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QB Core Scripts - NFL Temp</title>
+    
+    <!-- React -->
+    <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.22.5/babel.min.js"></script>
+
+    <!-- Material UI -->
+    <script src="https://unpkg.com/@mui/material@5.15.5/umd/material-ui.development.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    
+    <!-- Swiper for Carousel -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const {
+        Container,
+        Typography,
+        Grid,
+        Card,
+        CardContent,
+        CardMedia,
+        CardActions,
+        Button,
+        Chip,
+        Stack,
+        Box,
+        Icon,
+        IconButton,
+        createTheme,
+        ThemeProvider,
+        CssBaseline,
+        Accordion,
+        AccordionSummary,
+        AccordionDetails
+      } = MaterialUI;
+
+      const theme = createTheme({
+        palette: {
+          mode: 'dark',
+          primary: {
+            main: '#3AECF8',
+          },
+          background: {
+            default: '#0F172A',
+            paper: 'rgba(30, 41, 59, 0.8)',
+          },
+        },
+      });
+
+      function FeatureList({ features }) {
+        return (
+          <Stack spacing={2}>
+            {features.map((category, index) => (
+              <Accordion key={index} sx={{ background: 'rgba(30, 41, 59, 0.6)' }}>
+                <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
+                  <Typography variant="h6">{category.title}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Stack spacing={1}>
+                    {category.items.map((item, idx) => (
+                      <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Icon sx={{ color: 'primary.main', fontSize: '1rem' }}>check_circle</Icon>
+                        <Typography variant="body2">{item}</Typography>
+                      </Box>
+                    ))}
+                  </Stack>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </Stack>
+        );
+      }
+
+      function ScriptCard({ title, description, images, features, price }) {
+        const [currentImage, setCurrentImage] = React.useState(0);
+
+        return (
+          <Card sx={{ 
+            background: 'rgba(30, 41, 59, 0.8)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(148, 163, 184, 0.1)',
+          }}>
+            <Box sx={{ position: 'relative', paddingTop: '56.25%' }}>
+              {images.map((image, index) => (
+                <CardMedia
+                  key={index}
+                  component="img"
+                  image={image}
+                  alt={title}
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    opacity: currentImage === index ? 1 : 0,
+                    transition: 'opacity 0.5s ease',
+                  }}
+                />
+              ))}
+              <Box sx={{
+                position: 'absolute',
+                bottom: 16,
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                gap: 1
+              }}>
+                {images.map((_, index) => (
+                  <Box
+                    key={index}
+                    onClick={() => setCurrentImage(index)}
+                    sx={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: '50%',
+                      backgroundColor: currentImage === index ? 'primary.main' : 'rgba(255,255,255,0.5)',
+                      cursor: 'pointer'
+                    }}
+                  />
+                ))}
+              </Box>
+            </Box>
+            <CardContent>
+              <Typography variant="h4" gutterBottom sx={{ 
+                fontWeight: 'bold',
+                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                {title}
+              </Typography>
+              <Typography variant="body1" color="text.secondary" paragraph>
+                {description}
+              </Typography>
+              
+              <FeatureList features={features} />
+
+              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 3 }}>
+                <Chip 
+                  size="small" 
+                  label="QB Core Only" 
+                  sx={{ 
+                    background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                    color: 'white'
+                  }}
+                />
+                <Chip size="small" label="Open Source" />
+                <Chip size="small" label="Regular Updates" />
+              </Stack>
+            </CardContent>
+            <CardActions sx={{ p: 3 }}>
+              <Button
+                variant="contained"
+                fullWidth
+                href="https://ko-fi.com/nfltemp/shop"
+                sx={{ 
+                  fontSize: '1.2rem',
+                  py: 1.5
+                }}
+              >
+                Purchase Now - ${price}
+              </Button>
+            </CardActions>
+          </Card>
+        );
+      }
+
+      function QBScripts() {
+        const scripts = [
+          {
+            title: "Advanced Police Job",
+            description: "Transform your server's law enforcement experience with our comprehensive police job script, featuring advanced mechanics and immersive features.",
+            images: [
+              "https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/policejob.png?raw=true"
+            ],
+            features: [
+              {
+                title: "🚔 Core Features",
+                items: [
+                  "Vehicle Management System",
+                  "Advanced Arrest System",
+                  "Tactical Takedowns",
+                  "Police Object Placement",
+                  "Ticket Issuance System"
+                ]
+              },
+              {
+                title: "🛡️ Advanced Mechanics",
+                items: [
+                  "GSR Testing",
+                  "Evidence Handling",
+                  "Taser Auto-Jail",
+                  "Advanced Jail System",
+                  "SWAT Mode"
+                ]
+              },
+              {
+                title: "🎮 Gameplay Elements",
+                items: [
+                  "CPR & 911 System",
+                  "Resisting Arrest Minigame",
+                  "Interactive Police Garage",
+                  "Evidence Management System"
+                ]
+              }
+            ],
+            price: "20.00"
+          },
+          {
+            title: "Advanced Hitman Script",
+            description: "Dive into the thrilling world of FiveM with this professional Hitman Script. Perfect for enhancing your roleplay experience with unique missions and challenges.",
+            images: [
+              "https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/hitman.png?raw=true"
+            ],
+            features: [
+              {
+                title: "🎯 Core Features",
+                items: [
+                  "Professional Contract System",
+                  "Dynamic Mission Generation",
+                  "Advanced Target Tracking",
+                  "Stealth Mechanics"
+                ]
+              },
+              {
+                title: "💰 Rewards & Progression",
+                items: [
+                  "Reputation System",
+                  "Skill Tree Progression",
+                  "Custom Weapon Unlocks",
+                  "Mission Rewards"
+                ]
+              }
+            ],
+            price: "15.00"
+          }
+        ];
+
+        return (
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Container maxWidth="lg" sx={{ pt: 12, pb: 8 }}>
+              <Typography variant="h3" gutterBottom sx={{
+                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                QB Core Scripts
+              </Typography>
+              <Typography variant="h5" color="text.secondary" paragraph>
+                Premium QB Core framework scripts for your FiveM server
+              </Typography>
+              
+              <Grid container spacing={4}>
+                {scripts.map((script, index) => (
+                  <Grid item xs={12} key={index}>
+                    <ScriptCard {...script} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Container>
+          </ThemeProvider>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <React.StrictMode>
+          <QBScripts />
+        </React.StrictMode>
+      );
+    </script>
+  </body>
+</html> 

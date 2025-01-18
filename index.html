@@ -105,6 +105,20 @@
         background: rgba(30, 41, 59, 0.8);
         padding-top: 80px;
         border-right: 1px solid rgba(148, 163, 184, 0.1);
+        transition: width 0.3s ease;
+      }
+
+      .left-panel.collapsed {
+        width: 60px;
+      }
+
+      .panel-content {
+        transition: opacity 0.3s ease;
+      }
+
+      .panel-content.collapsed {
+        opacity: 0;
+        pointer-events: none;
       }
 
       .panel-item {
@@ -320,6 +334,7 @@
         const [trailId, setTrailId] = React.useState(0);
         const lastMousePos = React.useRef({ x: 0, y: 0 });
         const frameRef = React.useRef();
+        const [isPanelCollapsed, setIsPanelCollapsed] = React.useState(false);
 
         React.useEffect(() => {
           const handleMouseMove = (e) => {
@@ -497,42 +512,56 @@
               </AppBar>
 
               <div className="left-panel">
-                <div className="panel-item">Home</div>
-                <div className="panel-item">Packages</div>
-                <div className="panel-item">ESX Scripts</div>
-                <div className="panel-item">QB Core Scripts</div>
-                <div className="panel-item">About</div>
-                <div 
-                  className="panel-item"
-                  onClick={() => window.location.href = '/image-test.html'}
-                  style={{ cursor: 'pointer' }}
+                <IconButton 
+                  sx={{ 
+                    position: 'absolute', 
+                    top: 20, 
+                    right: 10,
+                    color: 'white'
+                  }}
+                  onClick={() => setIsPanelCollapsed(!isPanelCollapsed)}
                 >
-                  Image Tests
-                </div>
+                  <Icon>menu</Icon>
+                </IconButton>
+                
+                <div className={`panel-content ${isPanelCollapsed ? 'collapsed' : ''}`}>
+                  <div className="panel-item">Home</div>
+                  <div className="panel-item">Packages</div>
+                  <div className="panel-item">ESX Scripts</div>
+                  <div className="panel-item">QB Core Scripts</div>
+                  <div className="panel-item">About</div>
+                  <div 
+                    className="panel-item"
+                    onClick={() => window.location.href = '/image-test.html'}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    Image Tests
+                  </div>
 
-                <div className="panel-section">
-                  <div className="panel-section-title">Top Customer</div>
-                  <div className="recent-payment">
-                    <div className="avatar">
-                      <img 
-                        src="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/logo.png?raw=true"
-                        alt=""
-                        style={{ 
-                          width: '100%', 
-                          height: '100%', 
-                          objectFit: 'cover',
-                          borderRadius: '50%'
-                        }} 
-                      />
-                    </div>
-                    <div>
-                      <div style={{ color: '#fff' }}>AB</div>
-                      <div style={{ color: '#94A3B8', fontSize: '0.8rem' }}>$20.00</div>
+                  <div className="panel-section">
+                    <div className="panel-section-title">Top Customer</div>
+                    <div className="recent-payment">
+                      <div className="avatar">
+                        <img 
+                          src="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/logo.png?raw=true"
+                          alt=""
+                          style={{ 
+                            width: '100%', 
+                            height: '100%', 
+                            objectFit: 'cover',
+                            borderRadius: '50%'
+                          }} 
+                        />
+                      </div>
+                      <div>
+                        <div style={{ color: '#fff' }}>AB</div>
+                        <div style={{ color: '#94A3B8', fontSize: '0.8rem' }}>$20.00</div>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <RecentPayments />
+                  <RecentPayments />
+                </div>
               </div>
 
               <Container 
@@ -661,24 +690,15 @@
                   </Grid>
 
                   <Grid container spacing={4}>
+                    {/* Complete Package (Ambulance Job) */}
                     <Grid item xs={12} md={4}>
-                      <Card sx={{ 
-                      position: 'relative',
-                        '&::before': {
-                          content: '""',
-                          position: 'absolute',
-                        inset: -2,
-                        background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                        borderRadius: '18px',
-                          zIndex: -1,
-                      },
-                      }}>
+                      <Card>
                         <Box className="script-card-media">
                           <CardMedia
                             component="img"
                             height="200"
                             image="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/complete.jpg?raw=true"
-                            alt="Complete Package"
+                            alt="Ambulance Job"
                           />
                           <Box sx={{
                             position: 'absolute',
@@ -691,55 +711,34 @@
                           }}>
                             <Chip
                               label="BEST SELLER"
-                            sx={{
-                              background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                              color: 'white',
-                              fontWeight: 'bold',
-                            }}
+                              sx={{
+                                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                                color: 'white',
+                                fontWeight: 'bold',
+                              }}
                             />
                             <Chip
                               label="25% OFF"
                               sx={{ 
-                              background: 'linear-gradient(135deg, #F87171 0%, #EF4444 100%)',
+                                background: 'linear-gradient(135deg, #F87171 0%, #EF4444 100%)',
                                 color: 'white',
                                 fontWeight: 'bold',
                               }}
                             />
                           </Box>
                         </Box>
-                      <CardContent>
-                        <Typography variant="h5" gutterBottom sx={{ 
-                          fontWeight: 'bold',
-                          background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                          backgroundClip: 'text',
-                          WebkitBackgroundClip: 'text',
-                          WebkitTextFillColor: 'transparent',
-                        }}>
-                            Complete Package
+                        <CardContent>
+                          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                            Advanced Ambulance Job
                           </Typography>
-                          <Typography variant="body1" color="text.secondary" paragraph>
-                            Get access to all our premium scripts in one comprehensive package. 
-                            Perfect for server owners looking for a complete solution.
+                          <Typography variant="body2" color="text.secondary" paragraph>
+                            Complete ambulance and medical system with advanced features...
                           </Typography>
                           <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
                             <Chip size="small" label="ESX Compatible" />
                             <Chip size="small" label="QB Core Ready" />
                             <Chip size="small" label="Regular Updates" />
                           </Stack>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                          <Typography variant="h6" color="error" sx={{ textDecoration: 'line-through' }}>
-                              $99.99
-                            </Typography>
-                          <Typography variant="h5" sx={{ 
-                            fontWeight: 'bold',
-                            background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                            backgroundClip: 'text',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                          }}>
-                              $74.99
-                            </Typography>
-                          </Box>
                         </CardContent>
                         <CardActions sx={{ p: 2, pt: 0 }}>
                           <Button
@@ -747,7 +746,6 @@
                             fullWidth
                             href="https://ko-fi.com/nfltemp/shop"
                             onClick={handleBuyClick}
-                            sx={{ fontSize: '1.1rem' }}
                           >
                             Purchase Now
                           </Button>
@@ -755,75 +753,75 @@
                       </Card>
                     </Grid>
 
+                    {/* Battle Pass System */}
                     <Grid item xs={12} md={4}>
-                      <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                      <Card>
                         <Box className="script-card-media">
                           <CardMedia
                             component="img"
                             height="200"
-                            image="https://via.placeholder.com/300x200"
-                            alt="ESX Bundle"
+                            image="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/battlepass.png?raw=true"
+                            alt="Battle Pass System"
                           />
                         </Box>
-                        <CardContent sx={{ flexGrow: 1 }}>
-                          <Typography variant="h5" component="h2" gutterBottom color="primary">
-                            ESX Bundle
+                        <CardContent>
+                          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                            Advanced Drug & Battle Pass System
                           </Typography>
                           <Typography variant="body2" color="text.secondary" paragraph>
-                            A curated collection of our best ESX framework scripts. 
-                            Enhance your ESX server with our premium solutions.
+                            Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration...
                           </Typography>
                           <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                            <Chip size="small" label="ESX Only" />
-                            <Chip size="small" label="Optimized" />
-                            <Chip size="small" label="Easy Setup" />
+                            <Chip size="small" label="ESX Compatible" />
+                            <Chip size="small" label="QB Core Ready" />
+                            <Chip size="small" label="Open Source" />
                           </Stack>
                         </CardContent>
                         <CardActions sx={{ p: 2, pt: 0 }}>
                           <Button
-                            variant="outlined"
+                            variant="contained"
                             fullWidth
                             href="https://ko-fi.com/nfltemp/shop"
                             onClick={handleBuyClick}
                           >
-                            View Details
+                            Purchase Now
                           </Button>
                         </CardActions>
                       </Card>
                     </Grid>
 
+                    {/* Police Job */}
                     <Grid item xs={12} md={4}>
-                      <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                      <Card>
                         <Box className="script-card-media">
                           <CardMedia
                             component="img"
                             height="200"
-                            image="https://via.placeholder.com/300x200"
-                            alt="QB Core Bundle"
+                            image="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/policejob.png?raw=true"
+                            alt="Police Job"
                           />
                         </Box>
-                        <CardContent sx={{ flexGrow: 1 }}>
-                          <Typography variant="h5" component="h2" gutterBottom color="primary">
-                            QB Core Bundle
+                        <CardContent>
+                          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                            Advanced Police Job
                           </Typography>
                           <Typography variant="body2" color="text.secondary" paragraph>
-                            Premium QB Core framework scripts bundled together. 
-                            Take your QB Core server to the next level.
+                            Complete police system with vehicle management, arrest system, tactical takedowns...
                           </Typography>
                           <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
                             <Chip size="small" label="QB Core Only" />
                             <Chip size="small" label="High Performance" />
-                            <Chip size="small" label="Documentation" />
+                            <Chip size="small" label="Open Source" />
                           </Stack>
                         </CardContent>
                         <CardActions sx={{ p: 2, pt: 0 }}>
                           <Button
-                            variant="outlined"
+                            variant="contained"
                             fullWidth
                             href="https://ko-fi.com/nfltemp/shop"
                             onClick={handleBuyClick}
                           >
-                            View Details
+                            Purchase Now
                           </Button>
                         </CardActions>
                       </Card>

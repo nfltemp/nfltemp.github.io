@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ESX Scripts - NFL Temp</title>
+    
+    <!-- React -->
+    <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.22.5/babel.min.js"></script>
+
+    <!-- Material UI -->
+    <script src="https://unpkg.com/@mui/material@5.15.5/umd/material-ui.development.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    
+    <!-- Swiper for Carousel -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const {
+        Container,
+        Typography,
+        Grid,
+        Card,
+        CardContent,
+        CardMedia,
+        CardActions,
+        Button,
+        Chip,
+        Stack,
+        Box,
+        Icon,
+        IconButton,
+        createTheme,
+        ThemeProvider,
+        CssBaseline
+      } = MaterialUI;
+
+      function ScriptCard({ title, description, images, features, price }) {
+        const [currentImage, setCurrentImage] = React.useState(0);
+
+        return (
+          <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Box sx={{ position: 'relative', paddingTop: '56.25%' }}>
+              {images.map((image, index) => (
+                <CardMedia
+                  key={index}
+                  component="img"
+                  image={image}
+                  alt={title}
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    opacity: currentImage === index ? 1 : 0,
+                    transition: 'opacity 0.5s ease',
+                  }}
+                />
+              ))}
+              <Box sx={{
+                position: 'absolute',
+                bottom: 16,
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                gap: 1
+              }}>
+                {images.map((_, index) => (
+                  <Box
+                    key={index}
+                    onClick={() => setCurrentImage(index)}
+                    sx={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: '50%',
+                      backgroundColor: currentImage === index ? 'primary.main' : 'rgba(255,255,255,0.5)',
+                      cursor: 'pointer'
+                    }}
+                  />
+                ))}
+              </Box>
+            </Box>
+            <CardContent sx={{ flexGrow: 1 }}>
+              <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                {title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" paragraph>
+                {description}
+              </Typography>
+              <Typography variant="h6" gutterBottom>
+                Features:
+              </Typography>
+              <Stack spacing={1}>
+                {features.map((feature, index) => (
+                  <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Icon sx={{ color: 'primary.main' }}>check_circle</Icon>
+                    <Typography variant="body2">{feature}</Typography>
+                  </Box>
+                ))}
+              </Stack>
+              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 2 }}>
+                <Chip size="small" label="ESX Compatible" />
+                <Chip size="small" label="Open Source" />
+                <Chip size="small" label="Regular Updates" />
+              </Stack>
+            </CardContent>
+            <CardActions sx={{ p: 2, pt: 0 }}>
+              <Button
+                variant="contained"
+                fullWidth
+                href="https://ko-fi.com/nfltemp/shop"
+                sx={{ fontSize: '1.1rem' }}
+              >
+                Purchase Now - ${price}
+              </Button>
+            </CardActions>
+          </Card>
+        );
+      }
+
+      function ESXScripts() {
+        const scripts = [
+          {
+            title: "Advanced Drug & Battle Pass System",
+            description: "Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration. The Drug System includes detailed mechanics for harvesting, crafting, and distributing various substances, adding depth to criminal roleplay.",
+            images: [
+              "https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/battlepass.png?raw=true",
+              // Add more image URLs for carousel
+            ],
+            features: [
+              "Detailed Drug Farming System",
+              "Battle Pass Integration",
+              "Tiered Rewards System",
+              "Player Progress Tracking",
+              "Customizable Missions"
+            ],
+            price: "20.00"
+          },
+          // Add more ESX scripts here
+        ];
+
+        return (
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Container maxWidth="lg" sx={{ pt: 12, pb: 8 }}>
+              <Typography variant="h3" gutterBottom>
+                ESX Scripts
+              </Typography>
+              <Typography variant="h5" color="text.secondary" paragraph>
+                Premium ESX framework scripts for your FiveM server
+              </Typography>
+              
+              <Grid container spacing={4}>
+                {scripts.map((script, index) => (
+                  <Grid item xs={12} key={index}>
+                    <ScriptCard {...script} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Container>
+          </ThemeProvider>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <React.StrictMode>
+          <ESXScripts />
+        </React.StrictMode>
+      );
+    </script>
+  </body>
+</html> 
