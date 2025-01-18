@@ -85,6 +85,60 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+
+      .left-panel {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        height: 100vh;
+        background: rgba(30, 41, 59, 0.8);
+        padding-top: 80px;
+        border-right: 1px solid rgba(148, 163, 184, 0.1);
+      }
+
+      .panel-item {
+        padding: 12px 24px;
+        color: #94A3B8;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .panel-item:hover {
+        background: rgba(58, 236, 248, 0.1);
+        color: #fff;
+      }
+
+      .panel-section {
+        margin-top: 24px;
+        padding: 12px 24px;
+        border-top: 1px solid rgba(148, 163, 184, 0.1);
+      }
+
+      .panel-section-title {
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 12px;
+      }
+
+      .recent-payment {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 0;
+      }
+
+      .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        color: #fff;
+      }
     </style>
 
     <!-- Meta Pixel Code -->
@@ -345,7 +399,54 @@
                 </Toolbar>
               </AppBar>
 
-              <Container maxWidth="lg" sx={{ pt: 8, pb: 8 }}>
+              <div className="left-panel">
+                <div className="panel-item">Home</div>
+                <div className="panel-item">Packages</div>
+                <div className="panel-item">ESX Scripts</div>
+                <div className="panel-item">QB Core Scripts</div>
+                <div className="panel-item">About</div>
+
+                <div className="panel-section">
+                  <div className="panel-section-title">Top Customer</div>
+                  <div style={{ color: '#94A3B8', fontSize: '0.9rem' }}>
+                    No recent top purchaser to display
+                  </div>
+                </div>
+
+                <div className="panel-section">
+                  <div className="panel-section-title">Recent Payments</div>
+                  <div className="recent-payment">
+                    <div className="avatar" style={{ background: '#EC4899' }}>C</div>
+                    <div>Chase_Moola</div>
+                  </div>
+                  <div className="recent-payment">
+                    <div className="avatar" style={{ background: '#F59E0B' }}>M</div>
+                    <div>Chefmigo</div>
+                  </div>
+                  <div className="recent-payment">
+                    <div className="avatar" style={{ background: '#3B82F6' }}>G</div>
+                    <div>gflord</div>
+                  </div>
+                  <div className="recent-payment">
+                    <div className="avatar" style={{ background: '#10B981' }}>K</div>
+                    <div>KevinDFWU</div>
+                  </div>
+                  <div className="recent-payment">
+                    <div className="avatar" style={{ background: '#8B5CF6' }}>S</div>
+                    <div>Shapilol63</div>
+                  </div>
+                </div>
+              </div>
+
+              <Container 
+                maxWidth="lg" 
+                sx={{ 
+                  pt: 8, 
+                  pb: 8,
+                  pl: '280px',
+                  maxWidth: '1100px !important',
+                }}
+              >
                 <Paper
                   elevation={0}
                   sx={{
