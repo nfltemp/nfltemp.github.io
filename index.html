@@ -9,6 +9,10 @@
     <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone@7.22.5/babel.min.js"></script>
+
+    <!-- Material UI -->
+    <script src="https://unpkg.com/@mui/material@5.15.5/umd/material-ui.development.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     
     <!-- Discord Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -237,6 +241,43 @@
     <div id="root"></div>
 
     <script type="text/babel">
+      const {
+        Button,
+        Card,
+        CardContent,
+        CardMedia,
+        Typography,
+        createTheme,
+        ThemeProvider,
+        CssBaseline
+      } = MaterialUI;
+
+      const theme = createTheme({
+        palette: {
+          mode: 'dark',
+          primary: {
+            main: '#00ffff',
+          },
+          background: {
+            default: '#121212',
+            paper: 'rgba(30, 30, 30, 0.8)',
+          },
+        },
+        components: {
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                borderColor: '#00ffff',
+                '&:hover': {
+                  backgroundColor: '#00ffff',
+                  color: '#121212',
+                },
+              },
+            },
+          },
+        },
+      });
+
       function App() {
         const [trails, setTrails] = React.useState([]);
         const [trailId, setTrailId] = React.useState(0);
@@ -268,93 +309,173 @@
         };
 
         return (
-          <div>
-            {trails.map(trail => (
-              <div 
-                key={trail.id}
-                className="trail" 
-                style={{ 
-                  left: trail.x + 'px',
-                  top: trail.y + 'px'
-                }}
-              />
-            ))}
-            
-            <header className="header">
-              <img src="https://via.placeholder.com/120x60" alt="NFL Temp Logo" className="logo" />
-              <div className="nav-right">
-                <a href="https://discord.gg/r8RKJGz4hk" className="discord-button" target="_blank">
-                  <i className="fab fa-discord"></i>
-                  <span className="discord-text">Join our Discord</span>
-                </a>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <div>
+              {trails.map(trail => (
+                <div 
+                  key={trail.id}
+                  className="trail" 
+                  style={{ 
+                    left: trail.x + 'px',
+                    top: trail.y + 'px'
+                  }}
+                />
+              ))}
+              
+              <header className="header">
+                <img src="https://via.placeholder.com/120x60" alt="NFL Temp Logo" className="logo" />
+                <div className="nav-right">
+                  <Button
+                    variant="outlined"
+                    href="https://discord.gg/r8RKJGz4hk"
+                    target="_blank"
+                    startIcon={<i className="fab fa-discord" />}
+                    sx={{
+                      borderColor: 'primary.main',
+                      color: 'primary.main',
+                      '&:hover': {
+                        backgroundColor: 'primary.main',
+                        color: 'background.default',
+                      },
+                    }}
+                  >
+                    Join our Discord
+                  </Button>
+                </div>
+              </header>
+
+              <div className="sidebar">
+                <nav className="sidebar-nav">
+                  <a href="#" className="sidebar-link">Home</a>
+                  <a href="#packages" className="sidebar-link">Packages</a>
+                  <a href="#esx-scripts" className="sidebar-link">ESX Scripts</a>
+                  <a href="#qb-scripts" className="sidebar-link">QB Core Scripts</a>
+                  <a href="#about" className="sidebar-link">About</a>
+                </nav>
               </div>
-            </header>
 
-            <div className="sidebar">
-              <nav className="sidebar-nav">
-                <a href="#" className="sidebar-link">Home</a>
-                <a href="#packages" className="sidebar-link">Packages</a>
-                <a href="#esx-scripts" className="sidebar-link">ESX Scripts</a>
-                <a href="#qb-scripts" className="sidebar-link">QB Core Scripts</a>
-                <a href="#about" className="sidebar-link">About</a>
-              </nav>
+              <main className="content-area">
+                <section className="welcome-section">
+                  <Typography variant="h1" component="h1" sx={{ color: 'primary.main', mb: 2, fontSize: '2.5rem' }}>
+                    Welcome to NFL Temp
+                  </Typography>
+                  <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: 600, lineHeight: 1.6 }}>
+                    Explore our collection of top-tier FiveM scripts and enhance your server with our innovative solutions. 
+                    Whether you're looking to purchase individual scripts or bundled packages, we have everything you need 
+                    to elevate your FiveM experience.
+                  </Typography>
+                </section>
+
+                <section id="packages" className="scripts-grid">
+                  <Card sx={{ 
+                    bgcolor: 'background.paper',
+                    borderRadius: 2,
+                    border: '1px solid rgba(0, 255, 255, 0.1)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      borderColor: 'primary.main',
+                    }
+                  }}>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image="https://via.placeholder.com/300x200"
+                      alt="Complete Package"
+                    />
+                    <CardContent>
+                      <Typography variant="h5" component="h2" sx={{ color: 'primary.main', mb: 1 }}>
+                        Complete Package
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
+                        Get access to all our premium scripts in one comprehensive package. 
+                        Perfect for server owners looking for a complete solution.
+                      </Typography>
+                      <Button
+                        variant="outlined"
+                        href="https://ko-fi.com/nfltemp/shop"
+                        onClick={handleBuyClick}
+                        fullWidth
+                      >
+                        View Details
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  <Card sx={{ 
+                    bgcolor: 'background.paper',
+                    borderRadius: 2,
+                    border: '1px solid rgba(0, 255, 255, 0.1)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      borderColor: 'primary.main',
+                    }
+                  }}>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image="https://via.placeholder.com/300x200"
+                      alt="ESX Bundle"
+                    />
+                    <CardContent>
+                      <Typography variant="h5" component="h2" sx={{ color: 'primary.main', mb: 1 }}>
+                        ESX Bundle
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
+                        A curated collection of our best ESX framework scripts. 
+                        Enhance your ESX server with our premium solutions.
+                      </Typography>
+                      <Button
+                        variant="outlined"
+                        href="https://ko-fi.com/nfltemp/shop"
+                        onClick={handleBuyClick}
+                        fullWidth
+                      >
+                        View Details
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  <Card sx={{ 
+                    bgcolor: 'background.paper',
+                    borderRadius: 2,
+                    border: '1px solid rgba(0, 255, 255, 0.1)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      borderColor: 'primary.main',
+                    }
+                  }}>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image="https://via.placeholder.com/300x200"
+                      alt="QB Core Bundle"
+                    />
+                    <CardContent>
+                      <Typography variant="h5" component="h2" sx={{ color: 'primary.main', mb: 1 }}>
+                        QB Core Bundle
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
+                        Premium QB Core framework scripts bundled together. 
+                        Take your QB Core server to the next level.
+                      </Typography>
+                      <Button
+                        variant="outlined"
+                        href="https://ko-fi.com/nfltemp/shop"
+                        onClick={handleBuyClick}
+                        fullWidth
+                      >
+                        View Details
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </section>
+              </main>
             </div>
-
-            <main className="content-area">
-              <section className="welcome-section">
-                <h1>Welcome to NFL Temp</h1>
-                <p>
-                  Explore our collection of top-tier FiveM scripts and enhance your server with our innovative solutions. 
-                  Whether you're looking to purchase individual scripts or bundled packages, we have everything you need 
-                  to elevate your FiveM experience.
-                </p>
-              </section>
-
-              <section id="packages" className="scripts-grid">
-                <div className="script-card">
-                  <img src="https://via.placeholder.com/300x200" alt="Complete Package" className="script-image" />
-                  <div className="script-content">
-                    <h2 className="script-title">Complete Package</h2>
-                    <p className="script-description">
-                      Get access to all our premium scripts in one comprehensive package. 
-                      Perfect for server owners looking for a complete solution.
-                    </p>
-                    <a href="https://ko-fi.com/nfltemp/shop" className="view-script-btn" onClick={handleBuyClick}>
-                      View Details
-                    </a>
-                  </div>
-                </div>
-
-                <div className="script-card">
-                  <img src="https://via.placeholder.com/300x200" alt="ESX Bundle" className="script-image" />
-                  <div className="script-content">
-                    <h2 className="script-title">ESX Bundle</h2>
-                    <p className="script-description">
-                      A curated collection of our best ESX framework scripts. 
-                      Enhance your ESX server with our premium solutions.
-                    </p>
-                    <a href="https://ko-fi.com/nfltemp/shop" className="view-script-btn" onClick={handleBuyClick}>
-                      View Details
-                    </a>
-                  </div>
-                </div>
-
-                <div className="script-card">
-                  <img src="https://via.placeholder.com/300x200" alt="QB Core Bundle" className="script-image" />
-                  <div className="script-content">
-                    <h2 className="script-title">QB Core Bundle</h2>
-                    <p className="script-description">
-                      Premium QB Core framework scripts bundled together. 
-                      Take your QB Core server to the next level.
-                    </p>
-                    <a href="https://ko-fi.com/nfltemp/shop" className="view-script-btn" onClick={handleBuyClick}>
-                      View Details
-                    </a>
-                  </div>
-                </div>
-              </section>
-            </main>
-          </div>
+          </ThemeProvider>
         );
       }
 
