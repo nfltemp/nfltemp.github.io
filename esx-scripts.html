@@ -14,10 +14,6 @@
     <script src="https://unpkg.com/@mui/material@5.15.5/umd/material-ui.development.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    
-    <!-- Swiper for Carousel -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
   </head>
   <body>
     <div id="root"></div>
@@ -36,17 +32,36 @@
         Stack,
         Box,
         Icon,
-        IconButton,
         createTheme,
         ThemeProvider,
-        CssBaseline
+        CssBaseline,
+        Accordion,
+        AccordionSummary,
+        AccordionDetails
       } = MaterialUI;
+
+      const theme = createTheme({
+        palette: {
+          mode: 'dark',
+          primary: {
+            main: '#3AECF8',
+          },
+          background: {
+            default: '#0F172A',
+            paper: 'rgba(30, 41, 59, 0.8)',
+          },
+        },
+      });
 
       function ScriptCard({ title, description, images, features, price }) {
         const [currentImage, setCurrentImage] = React.useState(0);
 
         return (
-          <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+          <Card sx={{ 
+            background: 'rgba(30, 41, 59, 0.8)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(148, 163, 184, 0.1)',
+          }}>
             <Box sx={{ position: 'relative', paddingTop: '56.25%' }}>
               {images.map((image, index) => (
                 <CardMedia
@@ -88,13 +103,20 @@
                 ))}
               </Box>
             </Box>
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+            <CardContent>
+              <Typography variant="h4" gutterBottom sx={{ 
+                fontWeight: 'bold',
+                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
                 {title}
               </Typography>
-              <Typography variant="body2" color="text.secondary" paragraph>
+              <Typography variant="body1" color="text.secondary" paragraph>
                 {description}
               </Typography>
+              
               <Typography variant="h6" gutterBottom>
                 Features:
               </Typography>
@@ -106,18 +128,29 @@
                   </Box>
                 ))}
               </Stack>
-              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 2 }}>
-                <Chip size="small" label="ESX Compatible" />
+
+              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 3 }}>
+                <Chip 
+                  size="small" 
+                  label="ESX Compatible" 
+                  sx={{ 
+                    background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                    color: 'white'
+                  }}
+                />
                 <Chip size="small" label="Open Source" />
                 <Chip size="small" label="Regular Updates" />
               </Stack>
             </CardContent>
-            <CardActions sx={{ p: 2, pt: 0 }}>
+            <CardActions sx={{ p: 3 }}>
               <Button
                 variant="contained"
                 fullWidth
                 href="https://ko-fi.com/nfltemp/shop"
-                sx={{ fontSize: '1.1rem' }}
+                sx={{ 
+                  fontSize: '1.2rem',
+                  py: 1.5
+                }}
               >
                 Purchase Now - ${price}
               </Button>
@@ -133,7 +166,6 @@
             description: "Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration. The Drug System includes detailed mechanics for harvesting, crafting, and distributing various substances, adding depth to criminal roleplay.",
             images: [
               "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG",
-              // Add more image URLs for carousel
             ],
             features: [
               "Detailed Drug Farming System",
@@ -144,14 +176,18 @@
             ],
             price: "20.00"
           },
-          // Add more ESX scripts here
         ];
 
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <Container maxWidth="lg" sx={{ pt: 12, pb: 8 }}>
-              <Typography variant="h3" gutterBottom>
+              <Typography variant="h3" gutterBottom sx={{
+                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
                 ESX Scripts
               </Typography>
               <Typography variant="h5" color="text.secondary" paragraph>
