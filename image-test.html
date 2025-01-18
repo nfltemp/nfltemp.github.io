@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Tests - NFL Temp</title>
+    
+    <!-- React -->
+    <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.22.5/babel.min.js"></script>
+
+    <!-- Material UI -->
+    <script src="https://unpkg.com/@mui/material@5.15.5/umd/material-ui.development.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const {
+        Container,
+        Typography,
+        Grid,
+        Paper,
+        createTheme,
+        ThemeProvider,
+        CssBaseline,
+        Button
+      } = MaterialUI;
+
+      const theme = createTheme({
+        palette: {
+          mode: 'dark',
+          primary: {
+            main: '#3AECF8',
+          },
+          background: {
+            default: '#0F172A',
+            paper: 'rgba(30, 41, 59, 0.8)',
+          },
+        },
+      });
+
+      function ImageTests() {
+        return (
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Container maxWidth="lg" sx={{ pt: 4, pb: 8 }}>
+              <Button 
+                variant="outlined" 
+                onClick={() => window.location.href = '/'} 
+                sx={{ mb: 4 }}
+              >
+                Back to Home
+              </Button>
+              
+              <Typography variant="h3" gutterBottom>Image Loading Tests</Typography>
+              
+              <Grid container spacing={4}>
+                {/* Test 1: Absolute path from root */}
+                <Grid item xs={12} md={4}>
+                  <Paper sx={{ p: 2 }}>
+                    <Typography variant="h6">Test 1: Absolute from root</Typography>
+                    <img src="/images/logo.png" alt="Test 1" style={{ width: '100%' }} />
+                    <Typography variant="caption">src="/images/logo.png"</Typography>
+                  </Paper>
+                </Grid>
+
+                {/* Test 2: Relative path */}
+                <Grid item xs={12} md={4}>
+                  <Paper sx={{ p: 2 }}>
+                    <Typography variant="h6">Test 2: Relative path</Typography>
+                    <img src="./images/logo.png" alt="Test 2" style={{ width: '100%' }} />
+                    <Typography variant="caption">src="./images/logo.png"</Typography>
+                  </Paper>
+                </Grid>
+
+                {/* Test 3: Relative from current */}
+                <Grid item xs={12} md={4}>
+                  <Paper sx={{ p: 2 }}>
+                    <Typography variant="h6">Test 3: Relative from current</Typography>
+                    <img src="../images/logo.png" alt="Test 3" style={{ width: '100%' }} />
+                    <Typography variant="caption">src="../images/logo.png"</Typography>
+                  </Paper>
+                </Grid>
+
+                {/* Test 4: Full URL */}
+                <Grid item xs={12} md={4}>
+                  <Paper sx={{ p: 2 }}>
+                    <Typography variant="h6">Test 4: Full GitHub URL</Typography>
+                    <img src="https://nfltemp.github.io/images/logo.png" alt="Test 4" style={{ width: '100%' }} />
+                    <Typography variant="caption">src="https://nfltemp.github.io/images/logo.png"</Typography>
+                  </Paper>
+                </Grid>
+
+                {/* Test 5: Raw GitHub content */}
+                <Grid item xs={12} md={4}>
+                  <Paper sx={{ p: 2 }}>
+                    <Typography variant="h6">Test 5: Raw GitHub</Typography>
+                    <img src="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/main/images/logo.png" alt="Test 5" style={{ width: '100%' }} />
+                    <Typography variant="caption">Using raw.githubusercontent.com</Typography>
+                  </Paper>
+                </Grid>
+
+                {/* Test 6: Complete Package Image */}
+                <Grid item xs={12} md={4}>
+                  <Paper sx={{ p: 2 }}>
+                    <Typography variant="h6">Test 6: Package Image</Typography>
+                    <img src="./images/packages/complete-package.jpg" alt="Test 6" style={{ width: '100%' }} />
+                    <Typography variant="caption">src="./images/packages/complete-package.jpg"</Typography>
+                  </Paper>
+                </Grid>
+              </Grid>
+            </Container>
+          </ThemeProvider>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <React.StrictMode>
+          <ImageTests />
+        </React.StrictMode>
+      );
+    </script>
+  </body>
+</html> 
