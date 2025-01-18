@@ -6,15 +6,12 @@
     <title>NFL Temp - FiveM Scripts</title>
     
     <!-- React -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.22.5/babel.min.js"></script>
 
     <!-- Material UI -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-    <script crossorigin src="https://unpkg.com/@mui/material@latest/umd/material-ui.development.js"></script>
-    <script crossorigin src="https://unpkg.com/@emotion/react@latest/dist/emotion-react.umd.min.js"></script>
-    <script crossorigin src="https://unpkg.com/@emotion/styled@latest/dist/emotion-styled.umd.min.js"></script>
+    <script src="https://unpkg.com/@mui/material@5.14.0/umd/material-ui.development.js"></script>
     
     <!-- Discord Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -227,37 +224,12 @@
     <div id="root"></div>
 
     <script type="text/babel">
-      // Get Material-UI components from the global scope
-      const { 
+      const {
         AppBar, Toolbar, Typography, Button, Box, Container,
         Card, CardContent, CardMedia, createTheme, ThemeProvider, CssBaseline
-      } = MaterialUI;
+      } = window.MaterialUI;
 
-      const theme = createTheme({
-        palette: {
-          mode: 'dark',
-          primary: {
-            main: '#1976d2',
-          },
-          background: {
-            default: '#121212',
-            paper: '#1e1e1e',
-          },
-        },
-      });
-
-      function MouseTrail({ x, y }) {
-        return (
-          <div 
-            className="trail" 
-            style={{ 
-              left: x + 'px',
-              top: y + 'px'
-            }}
-          />
-        );
-      }
-
+      // Simple version without Material UI first to test React
       function App() {
         const [trails, setTrails] = React.useState([]);
         const [trailId, setTrailId] = React.useState(0);
@@ -282,147 +254,75 @@
           return () => document.removeEventListener('mousemove', handleMouseMove);
         }, [trailId]);
 
-        const handleBuyClick = () => {
-          if (window.fbq) {
-            window.fbq('track', 'InitiateCheckout');
-          }
-        };
-
-        const categories = [
-          {
-            id: 1,
-            title: 'Packages',
-            description: 'Complete script bundles for your server.',
-            image: 'https://via.placeholder.com/300x200'
-          },
-          {
-            id: 2,
-            title: 'ESX Scripts',
-            description: 'Premium ESX framework scripts.',
-            image: 'https://via.placeholder.com/300x200'
-          },
-          {
-            id: 3,
-            title: 'QB Core Scripts',
-            description: 'High-quality QB Core framework scripts.',
-            image: 'https://via.placeholder.com/300x200'
-          }
-        ];
-
         return (
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
+          <div>
             {trails.map(trail => (
-              <MouseTrail key={trail.id} x={trail.x} y={trail.y} />
+              <div 
+                key={trail.id}
+                className="trail" 
+                style={{ 
+                  left: trail.x + 'px',
+                  top: trail.y + 'px'
+                }}
+              />
             ))}
+            <header className="header">
+              <nav className="nav">
+                <a href="/" className="nav-brand">NFL Temp</a>
+                <div className="nav-links">
+                  <a href="/" className="nav-link">Home</a>
+                  <a href="https://ko-fi.com/nfltemp/shop" className="nav-link">Shop</a>
+                  <a href="https://ko-fi.com/nfltemp/shop" className="nav-link">Cart</a>
+                </div>
+              </nav>
+            </header>
 
-            <AppBar position="fixed">
-              <Toolbar>
-                <Typography variant="h6" component="a" href="/" sx={{ 
-                  flexGrow: 1, 
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  fontWeight: 'bold'
-                }}>
-                  NFL Temp
-                </Typography>
-                <Box sx={{ display: 'flex', gap: 2 }}>
-                  <Button color="inherit" href="/">Home</Button>
-                  <Button color="inherit" href="https://ko-fi.com/nfltemp/shop">Shop</Button>
-                  <Button color="inherit" href="https://ko-fi.com/nfltemp/shop">Cart</Button>
-                </Box>
-              </Toolbar>
-            </AppBar>
+            <main className="main-content">
+              <section className="hero">
+                <h1>Welcome to NFL Temp</h1>
+                <p>Your One-Stop Shop for Premium FiveM Scripts</p>
+                <a href="https://ko-fi.com/nfltemp/shop" className="button">Browse Scripts</a>
+              </section>
 
-            <Box sx={{ mt: '64px' }}>
-              <Box className="hero">
-                <Typography variant="h1" gutterBottom>
-                  Welcome to NFL Temp
-                </Typography>
-                <Typography variant="h5" color="text.secondary" paragraph>
-                  Your One-Stop Shop for Premium FiveM Scripts
-                </Typography>
-                <Button 
-                  variant="contained" 
-                  size="large"
-                  href="https://ko-fi.com/nfltemp/shop"
-                  onClick={handleBuyClick}
-                >
-                  Browse Scripts
-                </Button>
-              </Box>
+              <section className="categories">
+                <div className="category-card">
+                  <img src="https://via.placeholder.com/300x200" alt="Packages" />
+                  <div className="category-content">
+                    <h2 className="category-title">Packages</h2>
+                    <p className="category-description">Complete script bundles for your server.</p>
+                    <a href="https://ko-fi.com/nfltemp/shop" className="button">View Scripts</a>
+                  </div>
+                </div>
 
-              <Container maxWidth="lg">
-                <Box sx={{ 
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                  gap: 4,
-                  py: 4
-                }}>
-                  {categories.map(category => (
-                    <Card 
-                      key={category.id}
-                      sx={{ 
-                        height: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        transition: 'transform 0.3s',
-                        '&:hover': {
-                          transform: 'translateY(-5px)'
-                        }
-                      }}
-                    >
-                      <CardMedia
-                        component="img"
-                        height="200"
-                        image={category.image}
-                        alt={category.title}
-                      />
-                      <CardContent sx={{ flexGrow: 1 }}>
-                        <Typography gutterBottom variant="h5" component="h2">
-                          {category.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" paragraph>
-                          {category.description}
-                        </Typography>
-                        <Button 
-                          variant="contained"
-                          href="https://ko-fi.com/nfltemp/shop"
-                          onClick={handleBuyClick}
-                          fullWidth
-                        >
-                          View Scripts
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </Box>
+                <div className="category-card">
+                  <img src="https://via.placeholder.com/300x200" alt="ESX Scripts" />
+                  <div className="category-content">
+                    <h2 className="category-title">ESX Scripts</h2>
+                    <p className="category-description">Premium ESX framework scripts.</p>
+                    <a href="https://ko-fi.com/nfltemp/shop" className="button">View Scripts</a>
+                  </div>
+                </div>
 
-                <Box sx={{ 
-                  textAlign: 'center',
-                  py: 4,
-                  mt: 4,
-                  bgcolor: 'background.paper',
-                  borderRadius: 1
-                }}>
-                  <Typography variant="h4" gutterBottom>
-                    Join our Discord Community
-                  </Typography>
-                  <Typography variant="body1" paragraph>
-                    Get support, updates, and connect with other users
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    href="#"
-                    startIcon={<i className="fab fa-discord" />}
-                    sx={{ bgcolor: '#7289da', '&:hover': { bgcolor: '#5b73c7' } }}
-                  >
-                    Join Discord
-                  </Button>
-                </Box>
-              </Container>
-            </Box>
-          </ThemeProvider>
+                <div className="category-card">
+                  <img src="https://via.placeholder.com/300x200" alt="QB Core Scripts" />
+                  <div className="category-content">
+                    <h2 className="category-title">QB Core Scripts</h2>
+                    <p className="category-description">High-quality QB Core framework scripts.</p>
+                    <a href="https://ko-fi.com/nfltemp/shop" className="button">View Scripts</a>
+                  </div>
+                </div>
+              </section>
+
+              <section className="discord-section">
+                <h2>Join our Discord Community</h2>
+                <p>Get support, updates, and connect with other users</p>
+                <a href="#" className="discord-button">
+                  <i className="fab fa-discord discord-icon"></i>
+                  Join Discord
+                </a>
+              </section>
+            </main>
+          </div>
         );
       }
 
