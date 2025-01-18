@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ko-fi API Test - NFL Temp</title>
+    <title>Ko-fi Purchase Monitor - NFL Temp</title>
     
     <!-- React -->
     <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
@@ -31,9 +31,7 @@
         Alert,
         Snackbar,
         CircularProgress,
-        Stack,
-        TextField,
-        Divider
+        Stack
       } = MaterialUI;
 
       const theme = createTheme({
@@ -52,36 +50,30 @@
         const [loading, setLoading] = React.useState(false);
         const [error, setError] = React.useState(null);
         const [success, setSuccess] = React.useState(null);
+        const [autoRefresh, setAutoRefresh] = React.useState(false);
 
-        const API_KEY = 'KF_API_cbe95e81-4ada-4638-9ae1-8356ddfbbd1b';
-        const PAGE_ID = 'V7V817I0JD';
+        // Your GitHub issue details
+        const REPO_OWNER = 'nfltemp';
+        const REPO_NAME = 'nfltemp.github.io';
+        const ISSUE_NUMBER = '1';
 
-        // Function to test Ko-fi API through a proxy or serverless function
-        const testKofiAPI = async () => {
+        // Function to fetch data from GitHub Issue
+        const fetchIssueData = async () => {
           setLoading(true);
-          setError(null);
           try {
-            // Instead of direct API call, we'll simulate what data would look like
-            const mockData = {
-              data: {
-                page_id: PAGE_ID,
-                last_payment: {
-                  from_name: "Test User",
-                  amount: "20.00",
-                  message: "Test purchase",
-                  timestamp: new Date().toISOString()
-                }
-              },
-              message: "This is a simulated response. To get real data, you'll need to:",
-              note: [
-                "1. Set up a webhook in Ko-fi",
-                "2. Create a Zapier action to store the data",
-                "3. Use the stored data endpoint instead of direct API calls"
-              ]
-            };
+            const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues/${ISSUE_NUMBER}`);
+            if (!response.ok) throw new Error('Failed to fetch issue data');
+            
+            const issueData = await response.json();
+            const purchaseData = JSON.parse(issueData.body);
+            
+            setLastWebhook(purchaseData);
+            setSuccess('Successfully fetched latest purchase data!');
 
-            setLastWebhook(mockData);
-            setSuccess('Note: This is simulated data. See instructions below.');
+            // Update the recent buyers list
+            if (window.updateRecentBuyers && purchaseData.recentBuyers?.[0]) {
+              window.updateRecentBuyers(purchaseData.recentBuyers[0]);
+            }
           } catch (err) {
             setError(err.message);
           } finally {
@@ -89,38 +81,40 @@
           }
         };
 
-        // Function to simulate a new purchase webhook
+        // Auto-refresh setup
+        React.useEffect(() => {
+          let interval;
+          if (autoRefresh) {
+            interval = setInterval(fetchIssueData, 30000); // Check every 30 seconds
+          }
+          return () => clearInterval(interval);
+        }, [autoRefresh]);
+
+        // Function to simulate a purchase
         const simulatePurchase = async () => {
           setLoading(true);
           setError(null);
           try {
             const testData = {
-              type: "Shop Order",
-              from_name: "Test User",
-              amount: "20.00",
-              shop_items: [
+              recentBuyers: [
                 {
-                  direct_link_code: "TESTSCRIPT",
-                  variation_name: "Standard",
-                  quantity: 1
+                  name: "Test User",
+                  amount: "$20.00",
+                  purchase: "TESTSCRIPT",
+                  timestamp: new Date().toISOString(),
+                  avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
                 }
               ],
-              timestamp: new Date().toISOString()
+              topCustomer: {
+                name: "AB",
+                amount: "$20.00",
+                totalSpent: "$20.00"
+              },
+              lastUpdated: new Date().toISOString()
             };
 
-            // Update the recent buyers list if the function exists
-            if (window.updateRecentBuyers) {
-              window.updateRecentBuyers({
-                name: testData.from_name,
-                amount: `$${testData.amount}`,
-                purchase: testData.shop_items[0].direct_link_code,
-                timestamp: testData.timestamp,
-                avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
-              });
-            }
-
             setLastWebhook(testData);
-            setSuccess('Simulated new purchase!');
+            setSuccess('Simulated purchase! Check the GitHub issue for real purchase updates.');
           } catch (err) {
             setError(err.message);
           } finally {
@@ -146,25 +140,19 @@
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}>
-                Ko-fi API Test
+                Ko-fi Purchase Monitor
               </Typography>
 
               <Paper sx={{ p: 3, mb: 4 }}>
-                <Typography variant="h6" gutterBottom>API Configuration</Typography>
-                <Typography variant="body2" paragraph color="text.secondary">
-                  Using Ko-fi API Key: {API_KEY.slice(0, 10)}...
-                </Typography>
-                <Typography variant="body2" paragraph color="text.secondary">
-                  Page ID: {PAGE_ID}
-                </Typography>
+                <Typography variant="h6" gutterBottom>Monitor Controls</Typography>
                 <Stack direction="row" spacing={2}>
                   <Button
                     variant="contained"
-                    onClick={testKofiAPI}
+                    onClick={fetchIssueData}
                     disabled={loading}
                     startIcon={loading && <CircularProgress size={20} />}
                   >
-                    Test Ko-fi API
+                    Check Latest Purchases
                   </Button>
                   <Button
                     variant="outlined"
@@ -173,34 +161,19 @@
                   >
                     Simulate Purchase
                   </Button>
+                  <Button
+                    variant={autoRefresh ? "contained" : "outlined"}
+                    color={autoRefresh ? "success" : "primary"}
+                    onClick={() => setAutoRefresh(!autoRefresh)}
+                  >
+                    {autoRefresh ? "Auto-Refresh ON" : "Auto-Refresh OFF"}
+                  </Button>
                 </Stack>
-              </Paper>
-
-              <Paper sx={{ p: 3, mt: 4 }}>
-                <Typography variant="h6" gutterBottom>Setup Instructions</Typography>
-                <ol style={{ color: '#94A3B8' }}>
-                  <li>In Ko-fi:
-                    <ul>
-                      <li>Go to your Ko-fi settings</li>
-                      <li>Enable API/Webhooks</li>
-                      <li>Copy your webhook URL from Zapier</li>
-                      <li>Paste it in Ko-fi's webhook settings</li>
-                    </ul>
-                  </li>
-                  <li>In Zapier:
-                    <ul>
-                      <li>Create a new Zap with Ko-fi as trigger</li>
-                      <li>Add a "Store" action (like Storage by Zapier)</li>
-                      <li>Store the purchase data</li>
-                      <li>Use that stored data endpoint in this test page</li>
-                    </ul>
-                  </li>
-                </ol>
               </Paper>
 
               {lastWebhook && (
                 <Paper sx={{ p: 3 }}>
-                  <Typography variant="h6" gutterBottom>Latest Data</Typography>
+                  <Typography variant="h6" gutterBottom>Latest Purchase Data</Typography>
                   <Box 
                     component="pre"
                     sx={{ 
@@ -214,6 +187,19 @@
                   </Box>
                 </Paper>
               )}
+
+              <Paper sx={{ p: 3, mt: 4 }}>
+                <Typography variant="h6" gutterBottom>Current Setup</Typography>
+                <Typography variant="body2" paragraph>
+                  • Monitoring GitHub Issue: <a href="https://github.com/nfltemp/nfltemp.github.io/issues/1" target="_blank" style={{ color: '#3AECF8' }}>Issue #1</a>
+                </Typography>
+                <Typography variant="body2" paragraph>
+                  • Auto-refresh interval: 30 seconds
+                </Typography>
+                <Typography variant="body2">
+                  • Updates are handled by Zapier when Ko-fi purchases occur
+                </Typography>
+              </Paper>
 
               <Snackbar 
                 open={!!error} 
