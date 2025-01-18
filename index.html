@@ -584,7 +584,9 @@
                 sx={{ 
                   pt: 6,
                   pb: 8,
-                  pl: '280px',
+                  ml: isSidebarCollapsed ? '60px' : '250px',
+                  transition: 'margin-left 0.3s ease',
+                  width: `calc(100% - ${isSidebarCollapsed ? '60px' : '250px'})`,
                   maxWidth: '1100px !important',
                 }}
               >
