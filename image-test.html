@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Image Tests - NFL Temp</title>
+    <title>Ko-fi Webhook Test - NFL Temp</title>
     
     <!-- React -->
     <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
@@ -22,13 +22,16 @@
       const {
         Container,
         Typography,
-        Grid,
         Paper,
         createTheme,
         ThemeProvider,
         CssBaseline,
         Button,
-        Box
+        Box,
+        TextField,
+        Alert,
+        Snackbar,
+        CircularProgress
       } = MaterialUI;
 
       const theme = createTheme({
@@ -44,91 +47,28 @@
         },
       });
 
-      function ImageTest({ title, src, description }) {
-        const [error, setError] = React.useState(false);
-        const [loaded, setLoaded] = React.useState(false);
+      function WebhookTest() {
+        const [lastWebhook, setLastWebhook] = React.useState(null);
+        const [loading, setLoading] = React.useState(false);
+        const [error, setError] = React.useState(null);
+        const [success, setSuccess] = React.useState(null);
+        const [webhookUrl, setWebhookUrl] = React.useState('');
 
-        return (
-          <Grid item xs={12} md={4}>
-            <Paper sx={{ p: 2 }}>
-              <Typography variant="h6" gutterBottom>{title}</Typography>
-              <Box sx={{ 
-                height: 200, 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                border: '1px dashed rgba(255,255,255,0.2)',
-                position: 'relative'
-              }}>
-                <img 
-                  src={src} 
-                  alt={title}
-                  onError={() => setError(true)}
-                  onLoad={() => setLoaded(true)}
-                  style={{ 
-                    maxWidth: '100%', 
-                    maxHeight: '100%',
-                    display: error ? 'none' : 'block'
-                  }} 
-                />
-                {error && (
-                  <Typography color="error">
-                    Failed to load image
-                  </Typography>
-                )}
-                {loaded && (
-                  <Typography 
-                    color="success.main" 
-                    sx={{ position: 'absolute', bottom: 8, right: 8 }}
-                  >
-                    ✓ Loaded
-                  </Typography>
-                )}
-              </Box>
-              <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-                {description}
-              </Typography>
-              <Typography variant="caption" display="block" color={error ? "error" : "success.main"}>
-                Status: {error ? "Failed to load" : loaded ? "Successfully loaded" : "Loading..."}
-              </Typography>
-            </Paper>
-          </Grid>
-        );
-      }
-
-      function ImageTests() {
-        const tests = [
-          {
-            title: "Test 1: Direct Path",
-            src: "images/logo.png",
-            description: 'src="images/logo.png"'
-          },
-          {
-            title: "Test 2: Relative Path",
-            src: "./images/logo.png",
-            description: 'src="./images/logo.png"'
-          },
-          {
-            title: "Test 3: Root Path",
-            src: "/images/logo.png",
-            description: 'src="/images/logo.png"'
-          },
-          {
-            title: "Test 4: Full URL",
-            src: "https://nfltemp.github.io/images/logo.png",
-            description: "Using full GitHub Pages URL"
-          },
-          {
-            title: "Test 5: Package Image",
-            src: "images/packages/complete-package.jpg",
-            description: 'src="images/packages/complete-package.jpg"'
-          },
-          {
-            title: "Test 6: Debug Info",
-            src: "images/packages/complete-package.jpg",
-            description: `Current path: ${window.location.pathname}\nBase URL: ${window.location.origin}`
+        const checkWebhook = async () => {
+          setLoading(true);
+          setError(null);
+          try {
+            const response = await fetch(webhookUrl);
+            if (!response.ok) throw new Error('Failed to fetch webhook data');
+            const data = await response.json();
+            setLastWebhook(data);
+            setSuccess('Successfully fetched webhook data!');
+          } catch (err) {
+            setError(err.message);
+          } finally {
+            setLoading(false);
           }
-        ];
+        };
 
         return (
           <ThemeProvider theme={theme}>
@@ -142,16 +82,70 @@
                 Back to Home
               </Button>
               
-              <Typography variant="h3" gutterBottom>Image Loading Tests</Typography>
-              <Typography variant="body1" paragraph>
-                Current URL: {window.location.href}
+              <Typography variant="h3" gutterBottom sx={{
+                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                Ko-fi Webhook Test
               </Typography>
-              
-              <Grid container spacing={4}>
-                {tests.map((test, index) => (
-                  <ImageTest key={index} {...test} />
-                ))}
-              </Grid>
+
+              <Paper sx={{ p: 3, mb: 4 }}>
+                <Typography variant="h6" gutterBottom>Webhook Configuration</Typography>
+                <TextField
+                  fullWidth
+                  label="Webhook URL"
+                  value={webhookUrl}
+                  onChange={(e) => setWebhookUrl(e.target.value)}
+                  sx={{ mb: 2 }}
+                />
+                <Button
+                  variant="contained"
+                  onClick={checkWebhook}
+                  disabled={loading || !webhookUrl}
+                  startIcon={loading && <CircularProgress size={20} />}
+                >
+                  Check Latest Webhook
+                </Button>
+              </Paper>
+
+              {lastWebhook && (
+                <Paper sx={{ p: 3 }}>
+                  <Typography variant="h6" gutterBottom>Latest Webhook Data</Typography>
+                  <Box 
+                    component="pre"
+                    sx={{ 
+                      p: 2, 
+                      background: 'rgba(0,0,0,0.2)', 
+                      borderRadius: 1,
+                      overflow: 'auto'
+                    }}
+                  >
+                    {JSON.stringify(lastWebhook, null, 2)}
+                  </Box>
+                </Paper>
+              )}
+
+              <Snackbar 
+                open={!!error} 
+                autoHideDuration={6000} 
+                onClose={() => setError(null)}
+              >
+                <Alert severity="error" onClose={() => setError(null)}>
+                  {error}
+                </Alert>
+              </Snackbar>
+
+              <Snackbar 
+                open={!!success} 
+                autoHideDuration={6000} 
+                onClose={() => setSuccess(null)}
+              >
+                <Alert severity="success" onClose={() => setSuccess(null)}>
+                  {success}
+                </Alert>
+              </Snackbar>
             </Container>
           </ThemeProvider>
         );
@@ -160,7 +154,7 @@
       const root = ReactDOM.createRoot(document.getElementById('root'));
       root.render(
         <React.StrictMode>
-          <ImageTests />
+          <WebhookTest />
         </React.StrictMode>
       );
     </script>
