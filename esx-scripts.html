@@ -35,9 +35,6 @@
         createTheme,
         ThemeProvider,
         CssBaseline,
-        Accordion,
-        AccordionSummary,
-        AccordionDetails
       } = MaterialUI;
 
       const theme = createTheme({
@@ -53,106 +50,96 @@
         },
       });
 
-      function ScriptCard({ title, description, images, features, price }) {
-        const [currentImage, setCurrentImage] = React.useState(0);
-
+      function ScriptCard({ title, description, image, features, price }) {
         return (
           <Card sx={{ 
-            background: 'rgba(30, 41, 59, 0.8)',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            background: 'rgba(15, 23, 42, 0.8)',
             backdropFilter: 'blur(10px)',
             border: '1px solid rgba(148, 163, 184, 0.1)',
           }}>
-            <Box sx={{ position: 'relative', paddingTop: '56.25%' }}>
-              {images.map((image, index) => (
-                <CardMedia
-                  key={index}
-                  component="img"
-                  image={image}
-                  alt={title}
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    opacity: currentImage === index ? 1 : 0,
-                    transition: 'opacity 0.5s ease',
-                  }}
-                />
-              ))}
-              <Box sx={{
-                position: 'absolute',
-                bottom: 16,
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                gap: 1
-              }}>
-                {images.map((_, index) => (
-                  <Box
-                    key={index}
-                    onClick={() => setCurrentImage(index)}
-                    sx={{
-                      width: 8,
-                      height: 8,
-                      borderRadius: '50%',
-                      backgroundColor: currentImage === index ? 'primary.main' : 'rgba(255,255,255,0.5)',
-                      cursor: 'pointer'
-                    }}
-                  />
-                ))}
-              </Box>
-            </Box>
-            <CardContent>
+            <CardMedia
+              component="img"
+              height="200"
+              image={image}
+              alt={title}
+              sx={{
+                borderBottom: '1px solid rgba(148, 163, 184, 0.1)',
+              }}
+            />
+            <CardContent sx={{ flexGrow: 1, p: 3 }}>
               <Typography variant="h4" gutterBottom sx={{ 
+                color: '#3AECF8',
                 fontWeight: 'bold',
-                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
+                mb: 2
               }}>
                 {title}
               </Typography>
-              <Typography variant="body1" color="text.secondary" paragraph>
+              <Typography variant="body1" sx={{ color: '#94A3B8', mb: 3 }}>
                 {description}
               </Typography>
               
-              <Typography variant="h6" gutterBottom>
+              <Typography variant="h6" gutterBottom sx={{ color: '#fff', mb: 2 }}>
                 Features:
               </Typography>
-              <Stack spacing={1}>
+              <Stack spacing={1.5}>
                 {features.map((feature, index) => (
                   <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Icon sx={{ color: 'primary.main' }}>check_circle</Icon>
-                    <Typography variant="body2">{feature}</Typography>
+                    <Icon sx={{ color: '#3AECF8', fontSize: '1.2rem' }}>check_circle</Icon>
+                    <Typography variant="body2" sx={{ color: '#94A3B8' }}>
+                      {feature}
+                    </Typography>
                   </Box>
                 ))}
               </Stack>
 
-              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 3 }}>
+              <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
                 <Chip 
-                  size="small" 
                   label="ESX Compatible" 
+                  size="small"
                   sx={{ 
-                    background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                    color: 'white'
+                    background: '#3AECF8',
+                    color: '#0F172A',
+                    fontWeight: 'bold'
                   }}
                 />
-                <Chip size="small" label="Open Source" />
-                <Chip size="small" label="Regular Updates" />
+                <Chip 
+                  label="Open Source" 
+                  size="small"
+                  sx={{ 
+                    background: 'rgba(148, 163, 184, 0.1)',
+                    color: '#94A3B8'
+                  }}
+                />
+                <Chip 
+                  label="Regular Updates" 
+                  size="small"
+                  sx={{ 
+                    background: 'rgba(148, 163, 184, 0.1)',
+                    color: '#94A3B8'
+                  }}
+                />
               </Stack>
             </CardContent>
-            <CardActions sx={{ p: 3 }}>
+            <CardActions sx={{ p: 3, pt: 0 }}>
               <Button
                 variant="contained"
                 fullWidth
                 href="https://ko-fi.com/nfltemp/shop"
                 sx={{ 
-                  fontSize: '1.2rem',
-                  py: 1.5
+                  background: '#3AECF8',
+                  color: '#0F172A',
+                  py: 1.5,
+                  fontSize: '1.1rem',
+                  fontWeight: 'bold',
+                  '&:hover': {
+                    background: '#2DD4E0'
+                  }
                 }}
               >
-                Purchase Now - ${price}
+                PURCHASE NOW - ${price}
               </Button>
             </CardActions>
           </Card>
@@ -164,9 +151,7 @@
           {
             title: "Advanced Drug & Battle Pass System",
             description: "Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration.",
-            images: [
-              "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG",
-            ],
+            image: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG",
             features: [
               "Detailed Drug Farming System",
               "Battle Pass Integration",
@@ -179,9 +164,7 @@
           {
             title: "Advanced Ambulance Job",
             description: "Complete ambulance and medical system with advanced features for your ESX server.",
-            images: [
-              "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg"
-            ],
+            image: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg",
             features: [
               "Advanced Medical System",
               "Interactive Missions",
@@ -196,27 +179,22 @@
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Container maxWidth="lg" sx={{ pt: 12, pb: 8 }}>
-              <Typography variant="h3" gutterBottom sx={{
-                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}>
-                ESX Scripts
-              </Typography>
-              <Typography variant="h5" color="text.secondary" paragraph>
-                Premium ESX framework scripts for your FiveM server
-              </Typography>
-              
-              <Grid container spacing={4}>
-                {scripts.map((script, index) => (
-                  <Grid item xs={12} md={6} key={index}>
-                    <ScriptCard {...script} />
-                  </Grid>
-                ))}
-              </Grid>
-            </Container>
+            <Box sx={{ 
+              minHeight: '100vh',
+              background: '#0F172A',
+              pt: 4,
+              pb: 8
+            }}>
+              <Container maxWidth="lg">
+                <Grid container spacing={4} justifyContent="center">
+                  {scripts.map((script, index) => (
+                    <Grid item xs={12} md={6} key={index}>
+                      <ScriptCard {...script} />
+                    </Grid>
+                  ))}
+                </Grid>
+              </Container>
+            </Box>
           </ThemeProvider>
         );
       }
