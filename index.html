@@ -375,7 +375,7 @@
                     marginRight: '24px'
                   }
                 }}>
-                  <img src="https://via.placeholder.com/120x60" alt="NFL Temp Logo" style={{ height: 40 }} />
+                  <img src="/images/logo.png" alt="NFL Temp Logo" style={{ height: 40 }} />
                   <Button
                     variant="contained"
                     href="https://discord.gg/r8RKJGz4hk"
@@ -441,7 +441,7 @@
               <Container 
                 maxWidth="lg" 
                 sx={{ 
-                  pt: 8, 
+                  pt: 6,
                   pb: 8,
                   pl: '280px',
                   maxWidth: '1100px !important',
@@ -509,7 +509,9 @@
                   </Button>
                 </Paper>
 
-                <Grid container spacing={4} sx={{ mb: 4 }}>
+                <Grid container spacing={4} sx={{ 
+                  mb: 2
+                }}>
                     {features.map((feature) => (
                     <Grid item xs={12} sm={6} md={3} key={feature.title}>
                         <Paper
@@ -578,7 +580,7 @@
                           <CardMedia
                             component="img"
                             height="200"
-                            image="https://via.placeholder.com/300x200"
+                            image="/images/packages/complete-package.jpg"
                             alt="Complete Package"
                           />
                           <Box sx={{
