@@ -106,6 +106,7 @@
         padding-top: 80px;
         border-right: 1px solid rgba(148, 163, 184, 0.1);
         transition: width 0.3s ease;
+        z-index: 1000;
       }
 
       .left-panel.collapsed {
@@ -114,9 +115,10 @@
 
       .panel-content {
         transition: opacity 0.3s ease;
+        overflow: hidden;
       }
 
-      .panel-content.collapsed {
+      .panel-content.hidden {
         opacity: 0;
         pointer-events: none;
       }
@@ -126,6 +128,7 @@
         color: #94A3B8;
         cursor: pointer;
         transition: all 0.3s ease;
+        white-space: nowrap;
       }
 
       .panel-item:hover {
@@ -137,6 +140,12 @@
         margin-top: 24px;
         padding: 12px 24px;
         border-top: 1px solid rgba(148, 163, 184, 0.1);
+        transition: opacity 0.3s ease;
+      }
+
+      .panel-section.hidden {
+        opacity: 0;
+        pointer-events: none;
       }
 
       .panel-section-title {
@@ -162,6 +171,12 @@
         justify-content: center;
         font-weight: 500;
         color: #fff;
+      }
+
+      /* Adjust main content margin when sidebar is collapsed */
+      .MuiContainer-root {
+        transition: margin-left 0.3s ease;
+        margin-left: ${isSidebarCollapsed ? '60px' : '250px'};
       }
     </style>
 
@@ -334,7 +349,7 @@
         const [trailId, setTrailId] = React.useState(0);
         const lastMousePos = React.useRef({ x: 0, y: 0 });
         const frameRef = React.useRef();
-        const [isPanelCollapsed, setIsPanelCollapsed] = React.useState(false);
+        const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
 
         React.useEffect(() => {
           const handleMouseMove = (e) => {
@@ -511,34 +526,32 @@
                 </Toolbar>
               </AppBar>
 
-              <div className="left-panel">
+              <div className={`left-panel ${isSidebarCollapsed ? 'collapsed' : ''}`}>
                 <IconButton 
+                  onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
                   sx={{ 
-                    position: 'absolute', 
-                    top: 20, 
-                    right: 10,
-                    color: 'white'
+                    position: 'absolute',
+                    top: 20,
+                    right: -20,
+                    backgroundColor: 'rgba(30, 41, 59, 0.8)',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                    }
                   }}
-                  onClick={() => setIsPanelCollapsed(!isPanelCollapsed)}
                 >
-                  <Icon>menu</Icon>
+                  <Icon>{isSidebarCollapsed ? 'menu' : 'menu_open'}</Icon>
                 </IconButton>
-                
-                <div className={`panel-content ${isPanelCollapsed ? 'collapsed' : ''}`}>
-                  <div className="panel-item">Home</div>
-                  <div className="panel-item">Packages</div>
-                  <div className="panel-item">ESX Scripts</div>
-                  <div className="panel-item">QB Core Scripts</div>
-                  <div className="panel-item">About</div>
-                  <div 
-                    className="panel-item"
-                    onClick={() => window.location.href = '/image-test.html'}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    Image Tests
-                  </div>
 
-                  <div className="panel-section">
+                <div className={`panel-content ${isSidebarCollapsed ? 'hidden' : ''}`}>
+                  <div className="panel-item" onClick={() => window.location.href = '/'}>Home</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/packages.html'}>Packages</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/esx-scripts.html'}>ESX Scripts</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/qb-scripts.html'}>QB Core Scripts</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/about.html'}>About</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/image-test.html'}>Image Tests</div>
+
+                  <div className={`panel-section ${isSidebarCollapsed ? 'hidden' : ''}`}>
                     <div className="panel-section-title">Top Customer</div>
                     <div className="recent-payment">
                       <div className="avatar">
@@ -560,7 +573,9 @@
                     </div>
                   </div>
 
-                  <RecentPayments />
+                  <div className={`panel-section ${isSidebarCollapsed ? 'hidden' : ''}`}>
+                    <RecentPayments />
+                  </div>
                 </div>
               </div>
 
