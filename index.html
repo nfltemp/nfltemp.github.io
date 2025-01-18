@@ -422,16 +422,35 @@
           }
           
           // Google Analytics tracking
-          if (window.gtag) {
-            gtag('event', 'begin_checkout', {
-              currency: 'USD',
-              value: price,
-              items: [{
-                item_name: productName,
-                price: price
+          if (typeof gtag === 'function') {
+            gtag('event', 'purchase_click', {
+              'event_category': 'ecommerce',
+              'event_label': productName,
+              'value': price,
+              'currency': 'USD',
+              'items': [{
+                'item_id': productName.toLowerCase().replace(/\s+/g, '_'),
+                'item_name': productName,
+                'price': price,
+                'quantity': 1
+              }]
+            });
+
+            // Also track as a conversion
+            gtag('event', 'conversion', {
+              'send_to': 'G-E1VL962LJ3',
+              'value': price,
+              'currency': 'USD',
+              'transaction_id': Date.now().toString(),
+              'items': [{
+                'item_name': productName,
+                'price': price
               }]
             });
           }
+
+          // Log to console for debugging
+          console.log('Purchase click tracked:', productName, price);
         };
 
         const features = [
