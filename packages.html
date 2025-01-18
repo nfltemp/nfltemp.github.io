@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Packages - NFL Temp</title>
+    
+    <!-- React -->
+    <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.22.5/babel.min.js"></script>
+
+    <!-- Material UI -->
+    <script src="https://unpkg.com/@mui/material@5.15.5/umd/material-ui.development.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const {
+        Container,
+        Typography,
+        Grid,
+        Card,
+        CardContent,
+        CardMedia,
+        CardActions,
+        Button,
+        Chip,
+        Stack,
+        Box,
+        Icon,
+        createTheme,
+        ThemeProvider,
+        CssBaseline,
+      } = MaterialUI;
+
+      const theme = createTheme({
+        palette: {
+          mode: 'dark',
+          primary: {
+            main: '#3AECF8',
+          },
+          background: {
+            default: '#0F172A',
+            paper: 'rgba(30, 41, 59, 0.8)',
+          },
+        },
+      });
+
+      function PackageCard({ title, description, image, features, price, compatibility, isBestSeller }) {
+        return (
+          <Card sx={{ 
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            background: 'rgba(15, 23, 42, 0.8)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(148, 163, 184, 0.1)',
+          }}>
+            <Box className="script-card-media" sx={{ position: 'relative' }}>
+              <CardMedia
+                component="img"
+                height="200"
+                image={image}
+                alt={title}
+              />
+              {isBestSeller && (
+                <Box sx={{
+                  position: 'absolute',
+                  top: 16,
+                  right: 16,
+                  zIndex: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 1,
+                }}>
+                  <Chip
+                    label="BEST SELLER"
+                    sx={{
+                      background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                      color: 'white',
+                      fontWeight: 'bold',
+                    }}
+                  />
+                  <Chip
+                    label="25% OFF"
+                    sx={{ 
+                      background: 'linear-gradient(135deg, #F87171 0%, #EF4444 100%)',
+                      color: 'white',
+                      fontWeight: 'bold',
+                    }}
+                  />
+                </Box>
+              )}
+            </Box>
+            <CardContent sx={{ flexGrow: 1, p: 3 }}>
+              <Typography variant="h5" gutterBottom sx={{ 
+                fontWeight: 'bold',
+                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                {title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" paragraph>
+                {description}
+              </Typography>
+              
+              <Typography variant="subtitle2" gutterBottom sx={{ color: '#fff', mb: 2 }}>
+                Key Features:
+              </Typography>
+              <Stack spacing={1}>
+                {features.map((feature, index) => (
+                  <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Icon sx={{ color: '#3AECF8', fontSize: '0.8rem' }}>check_circle</Icon>
+                    <Typography variant="caption" sx={{ color: '#94A3B8' }}>
+                      {feature}
+                    </Typography>
+                  </Box>
+                ))}
+              </Stack>
+
+              <Stack direction="row" spacing={1} sx={{ mt: 3 }} flexWrap="wrap">
+                {compatibility.map((tag, index) => (
+                  <Chip 
+                    key={index}
+                    label={tag} 
+                    size="small"
+                    sx={index === 0 ? { 
+                      background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                      color: 'white'
+                    } : {}}
+                  />
+                ))}
+              </Stack>
+            </CardContent>
+            <CardActions sx={{ p: 2 }}>
+              <Button
+                variant="contained"
+                fullWidth
+                href="https://ko-fi.com/nfltemp/shop"
+                sx={{ 
+                  fontSize: '1.1rem',
+                  py: 1.5
+                }}
+              >
+                Purchase Now - ${price}
+              </Button>
+            </CardActions>
+          </Card>
+        );
+      }
+
+      function Packages() {
+        const packages = [
+          {
+            title: "Advanced Ambulance Job",
+            description: "Complete ambulance and medical system with advanced features for ESX and QB Core servers.",
+            image: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg",
+            features: [
+              "Advanced Medical System",
+              "Interactive Missions",
+              "Vehicle Management",
+              "Equipment System",
+              "Patient Care Features",
+              "Hospital Management"
+            ],
+            price: "20.00",
+            compatibility: ["ESX Compatible", "QB Core Ready", "Regular Updates"],
+            isBestSeller: true
+          },
+          {
+            title: "Advanced Drug & Battle Pass System",
+            description: "Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration.",
+            image: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG",
+            features: [
+              "Detailed Drug Farming System",
+              "Battle Pass Integration",
+              "Tiered Rewards System",
+              "Player Progress Tracking",
+              "Customizable Missions",
+              "Territory Control"
+            ],
+            price: "20.00",
+            compatibility: ["ESX Compatible", "QB Core Ready", "Open Source"],
+            isBestSeller: false
+          },
+          {
+            title: "Advanced Police Job",
+            description: "Transform your server's law enforcement experience with our comprehensive police job script.",
+            image: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/policejob.PNG",
+            features: [
+              "Vehicle Management System",
+              "Advanced Arrest System",
+              "Evidence Handling",
+              "SWAT Mode",
+              "Interactive Police Garage",
+              "Evidence Management"
+            ],
+            price: "20.00",
+            compatibility: ["QB Core Only", "High Performance", "Open Source"],
+            isBestSeller: false
+          },
+          {
+            title: "Advanced Hitman Script",
+            description: "Dive into the thrilling world of FiveM with this professional Hitman Script. Perfect for enhancing your roleplay experience.",
+            image: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/hitman.PNG",
+            features: [
+              "Professional Contract System",
+              "Dynamic Mission Generation",
+              "Advanced Target Tracking",
+              "Stealth Mechanics",
+              "Reputation System",
+              "Custom Weapon Unlocks"
+            ],
+            price: "15.00",
+            compatibility: ["QB Core Only", "High Performance", "Open Source"],
+            isBestSeller: false
+          }
+        ];
+
+        return (
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Container maxWidth="lg" sx={{ pt: 12, pb: 8 }}>
+              <Typography variant="h3" gutterBottom sx={{
+                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                All Packages
+              </Typography>
+              <Typography variant="h5" color="text.secondary" paragraph>
+                Browse our complete collection of premium FiveM scripts
+              </Typography>
+              
+              <Grid container spacing={4}>
+                {packages.map((pkg, index) => (
+                  <Grid item xs={12} md={6} key={index}>
+                    <PackageCard {...pkg} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Container>
+          </ThemeProvider>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <React.StrictMode>
+          <Packages />
+        </React.StrictMode>
+      );
+    </script>
+  </body>
+</html> 
