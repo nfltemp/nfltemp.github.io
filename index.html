@@ -416,6 +416,10 @@
         }, [trailId]);
 
         const handleBuyClick = (productName, price) => {
+          // Prevent default behavior and event bubbling
+          event.preventDefault();
+          event.stopPropagation();
+
           // Facebook Pixel tracking
           if (window.fbq) {
             fbq('track', 'InitiateCheckout', {
@@ -425,6 +429,7 @@
               value: price
             });
             
+            // Also track as AddToCart event
             fbq('track', 'AddToCart', {
               content_name: productName,
               content_type: 'product',
@@ -448,6 +453,17 @@
               }]
             });
           }
+
+          // Log to console for debugging
+          console.log('Purchase click tracked:', {
+            pixel: window.fbq ? 'Meta Pixel loaded' : 'Meta Pixel not loaded',
+            analytics: typeof gtag === 'function' ? 'Google Analytics loaded' : 'Google Analytics not loaded',
+            product: productName,
+            price: price
+          });
+
+          // Navigate to the purchase URL
+          window.location.href = 'https://ko-fi.com/nfltemp/shop';
         };
 
         const features = [
@@ -549,31 +565,16 @@
                 <Toolbar sx={{ 
                   justifyContent: 'space-between',
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                  '& img': {
+                    marginLeft: 'auto',
+                    marginRight: '24px'
+                  }
                 }}>
-                  <Typography 
-                    variant="h6" 
-                    sx={{ 
-                      color: 'text.secondary',
-                      fontWeight: 300 
-                    }}
-                  >
-                    Enhance your server today
-                  </Typography>
-                  
-                  <Box sx={{ 
-                    position: 'absolute',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}>
-                    <img 
-                      src="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/logo.png?raw=true" 
-                      alt="NFL Temp Logo" 
-                      style={{ height: 40 }} 
-                    />
-                  </Box>
-
+                  <img 
+                    src="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/logo.png?raw=true" 
+                    alt="NFL Temp Logo" 
+                    style={{ height: 40 }} 
+                  />
                   <Button
                     variant="contained"
                     href="https://discord.gg/r8RKJGz4hk"
