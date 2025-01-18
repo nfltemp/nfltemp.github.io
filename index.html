@@ -252,7 +252,8 @@
         CssBaseline,
         useScrollTrigger,
         Zoom,
-        Fab
+        Fab,
+        Drawer
       } = MaterialUI;
 
       const theme = createTheme({
@@ -371,12 +372,33 @@
         );
       }
 
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      const handlePurchase = debounce((script) => {
+        window.location.href = `https://discord.gg/your-discord`;
+      }, 300);
+
       function App() {
         const [trails, setTrails] = React.useState([]);
         const [trailId, setTrailId] = React.useState(0);
         const lastMousePos = React.useRef({ x: 0, y: 0 });
         const frameRef = React.useRef();
         const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
+        const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
+        const toggleMobileMenu = () => {
+          setMobileMenuOpen(!mobileMenuOpen);
+        };
 
         React.useEffect(() => {
           const handleMouseMove = (e) => {
@@ -544,447 +566,489 @@
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <div style={{ background: '#0F172A' }}>
-              {trails.map(trail => (
-                <div 
-                  key={trail.id}
-                  className="trail" 
-                  style={{ 
-                    left: trail.x + 'px',
-                    top: trail.y + 'px',
-                    background: trail.color,
-                  }}
-                />
-              ))}
-              
-              <AppBar 
-                position="fixed" 
-                elevation={0}
+            <div style={{ display: 'flex' }}>
+              {/* Mobile menu toggle button */}
+              <IconButton 
                 sx={{ 
-                  background: 'rgba(15, 23, 42, 0.8)',
-                  backdropFilter: 'blur(10px)',
-                  borderBottom: '1px solid rgba(148, 163, 184, 0.1)',
+                  display: { xs: 'block', md: 'none' },
+                  position: 'fixed',
+                  top: 10,
+                  left: 10,
+                  zIndex: 1300,
+                  color: 'white'
                 }}
+                onClick={toggleMobileMenu}
               >
-                <Toolbar sx={{ 
-                  justifyContent: 'space-between',
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                  '& img': {
-                    marginLeft: 'auto',
-                    marginRight: '24px'
-                  }
-                }}>
-                  <img 
-                    src="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/logo.png?raw=true" 
-                    alt="NFL Temp Logo" 
-                    style={{ height: 40 }} 
-                  />
-                  <Button
-                    variant="contained"
-                    href="https://discord.gg/r8RKJGz4hk"
-                    target="_blank"
-                    size="large"
-                    startIcon={<i className="fab fa-discord" style={{ fontSize: '1.8rem' }} />}
-                    sx={{
-                      background: 'linear-gradient(135deg, #5865F2 0%, #7289DA 100%)',
+                <Icon>{mobileMenuOpen ? 'close' : 'menu'}</Icon>
+              </IconButton>
+
+              {/* Navigation Drawer */}
+              <Drawer
+                variant="permanent"
+                sx={{
+                  display: { xs: mobileMenuOpen ? 'block' : 'none', md: 'block' },
+                  '& .MuiDrawer-paper': {
+                    boxSizing: 'border-box',
+                    width: 240,
+                    backgroundColor: 'rgba(17, 25, 40, 0.75)',
+                    backdropFilter: 'blur(12px)',
+                    border: 'none'
+                  },
+                }}
+                open
+              >
+                <div className={`left-panel ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+                  <IconButton 
+                    onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                    sx={{ 
+                      position: 'absolute',
+                      top: 20,
+                      right: -20,
+                      backgroundColor: 'rgba(30, 41, 59, 0.8)',
+                      color: 'white',
                       '&:hover': {
-                        background: 'linear-gradient(135deg, #5865F2 20%, #7289DA 120%)',
-                        transform: 'translateY(-2px)',
-                        boxShadow: '0 10px 20px rgba(88, 101, 242, 0.2)',
-                      },
-                      fontSize: '1.3rem',
-                      py: 1.8,
-                      px: 5,
+                        backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                      }
                     }}
                   >
-                    Join our Discord
-                  </Button>
-                </Toolbar>
-              </AppBar>
+                    <Icon>{isSidebarCollapsed ? 'menu' : 'menu_open'}</Icon>
+                  </IconButton>
 
-              <div className={`left-panel ${isSidebarCollapsed ? 'collapsed' : ''}`}>
-                <IconButton 
-                  onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-                  sx={{ 
-                    position: 'absolute',
-                    top: 20,
-                    right: -20,
-                    backgroundColor: 'rgba(30, 41, 59, 0.8)',
-                    color: 'white',
-                    '&:hover': {
-                      backgroundColor: 'rgba(30, 41, 59, 0.9)',
-                    }
-                  }}
-                >
-                  <Icon>{isSidebarCollapsed ? 'menu' : 'menu_open'}</Icon>
-                </IconButton>
+                  <div className={`panel-content ${isSidebarCollapsed ? 'hidden' : ''}`}>
+                    <div className="panel-item" onClick={() => window.location.href = '/'}>Home</div>
+                    <div className="panel-item" onClick={() => window.location.href = '/packages.html'}>Packages</div>
+                    <div className="panel-item" onClick={() => window.location.href = '/esx-scripts.html'}>ESX Scripts</div>
+                    <div className="panel-item" onClick={() => window.location.href = '/qb-scripts.html'}>QB Core Scripts</div>
+                    <div className="panel-item" onClick={() => window.location.href = '/about.html'}>About</div>
 
-                <div className={`panel-content ${isSidebarCollapsed ? 'hidden' : ''}`}>
-                  <div className="panel-item" onClick={() => window.location.href = '/'}>Home</div>
-                  <div className="panel-item" onClick={() => window.location.href = '/packages.html'}>Packages</div>
-                  <div className="panel-item" onClick={() => window.location.href = '/esx-scripts.html'}>ESX Scripts</div>
-                  <div className="panel-item" onClick={() => window.location.href = '/qb-scripts.html'}>QB Core Scripts</div>
-                  <div className="panel-item" onClick={() => window.location.href = '/about.html'}>About</div>
-
-                  <div className={`panel-section ${isSidebarCollapsed ? 'hidden' : ''}`}>
-                    <div className="panel-section-title">Top Customer of the Month</div>
-                    <div className="recent-payment">
-                      <div className="avatar" style={{ 
-                        width: '48px',
-                        height: '48px',
-                        overflow: 'hidden',
-                        borderRadius: '50%',
-                        border: '2px solid #3AECF8'
-                      }}>
-                        <img 
-                          src="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
-                          alt=""
-                          style={{ 
-                            width: '100%', 
-                            height: '100%', 
-                            objectFit: 'cover',
-                            borderRadius: '50%'
-                          }} 
-                        />
-                      </div>
-                      <div>
-                        <div style={{ color: '#fff' }}>AB</div>
-                        <div style={{ color: '#94A3B8', fontSize: '0.8rem' }}>$20.00</div>
+                    <div className={`panel-section ${isSidebarCollapsed ? 'hidden' : ''}`}>
+                      <div className="panel-section-title">Top Customer of the Month</div>
+                      <div className="recent-payment">
+                        <div className="avatar" style={{ 
+                          width: '48px',
+                          height: '48px',
+                          overflow: 'hidden',
+                          borderRadius: '50%',
+                          border: '2px solid #3AECF8'
+                        }}>
+                          <img 
+                            src="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
+                            alt=""
+                            style={{ 
+                              width: '100%', 
+                              height: '100%', 
+                              objectFit: 'cover',
+                              borderRadius: '50%'
+                            }} 
+                          />
+                        </div>
+                        <div>
+                          <div style={{ color: '#fff' }}>AB</div>
+                          <div style={{ color: '#94A3B8', fontSize: '0.8rem' }}>$20.00</div>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className={`panel-section ${isSidebarCollapsed ? 'hidden' : ''}`}>
-                    <RecentPayments />
+                    <div className={`panel-section ${isSidebarCollapsed ? 'hidden' : ''}`}>
+                      <RecentPayments />
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Drawer>
 
-              <Container 
-                maxWidth="lg" 
-                sx={{ 
-                  pt: 6,
-                  pb: 8,
-                  pl: '280px',
-                  maxWidth: '1100px !important',
+              {/* Main content */}
+              <Box
+                component="main"
+                sx={{
+                  flexGrow: 1,
+                  p: 3,
+                  width: { md: `calc(100% - ${240}px)` },
+                  ml: { md: `${240}px` }
                 }}
               >
-                <Paper
-                  elevation={0}
-                  sx={{
-                    p: 3,
-                    mb: 6,
-                    background: 'linear-gradient(135deg, rgba(58, 236, 248, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%)',
-                    border: '1px solid rgba(58, 236, 248, 0.2)',
-                    borderRadius: '16px',
-                    display: 'flex',
-                    flexDirection: { xs: 'column', md: 'row' },
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    gap: 2,
-                  }}
-                >
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <Box
-                      sx={{
-                        p: 2,
-                        borderRadius: '12px',
-                        background: 'rgba(58, 236, 248, 0.1)',
+                <div style={{ background: '#0F172A' }}>
+                  {trails.map(trail => (
+                    <div 
+                      key={trail.id}
+                      className="trail" 
+                      style={{ 
+                        left: trail.x + 'px',
+                        top: trail.y + 'px',
+                        background: trail.color,
                       }}
-                    >
-                      <Icon sx={{ 
-                        fontSize: '2.5rem',
-                        background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                        backgroundClip: 'text',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                      }}>
-                        local_fire_department
-                      </Icon>
-                    </Box>
-                    <Box>
-                      <Typography variant="h6" sx={{ 
-                        fontWeight: '300',
-                        mb: 0.5,
-                        background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                        backgroundClip: 'text',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                      }}>
-                        Limited Time Offer
-                    </Typography>
-                      <Typography variant="body1" color="text.secondary">
-                        Get 25% off on all our premium FiveM scripts
-                    </Typography>
-                  </Box>
-                  </Box>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    href="#packages"
-                    sx={{
-                      minWidth: 200,
-                      fontSize: '1.1rem',
+                    />
+                  ))}
+                  
+                  <AppBar 
+                    position="fixed" 
+                    elevation={0}
+                    sx={{ 
+                      background: 'rgba(15, 23, 42, 0.8)',
+                      backdropFilter: 'blur(10px)',
+                      borderBottom: '1px solid rgba(148, 163, 184, 0.1)',
                     }}
                   >
-                    View Packages
-                  </Button>
-                </Paper>
-
-                <Grid container spacing={4} sx={{ 
-                  mb: 2
-                }}>
-                    {features.map((feature) => (
-                    <Grid item xs={12} sm={6} md={3} key={feature.title}>
-                        <Paper
-                          elevation={0}
-                          sx={{
-                          p: 3,
-                            height: '100%',
-                          background: 'rgba(30, 41, 59, 0.6)',
-                          borderRadius: '16px',
-                          border: '1px solid rgba(148, 163, 184, 0.1)',
-                          transition: 'all 0.3s ease',
+                    <Toolbar sx={{ 
+                      justifyContent: 'space-between',
+                      borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                      '& img': {
+                        marginLeft: 'auto',
+                        marginRight: '24px'
+                      }
+                    }}>
+                      <img 
+                        src="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/logo.png?raw=true" 
+                        alt="NFL Temp Logo" 
+                        style={{ height: 40 }} 
+                      />
+                      <Button
+                        variant="contained"
+                        href="https://discord.gg/r8RKJGz4hk"
+                        target="_blank"
+                        size="large"
+                        startIcon={<i className="fab fa-discord" style={{ fontSize: '1.8rem' }} />}
+                        sx={{
+                          background: 'linear-gradient(135deg, #5865F2 0%, #7289DA 100%)',
                           '&:hover': {
-                            transform: 'translateY(-5px)',
-                            background: 'rgba(30, 41, 59, 0.8)',
-                            boxShadow: '0 10px 20px rgba(58, 236, 248, 0.1)',
+                            background: 'linear-gradient(135deg, #5865F2 20%, #7289DA 120%)',
+                            transform: 'translateY(-2px)',
+                            boxShadow: '0 10px 20px rgba(88, 101, 242, 0.2)',
                           },
+                          fontSize: '1.3rem',
+                          py: 1.8,
+                          px: 5,
                         }}
                       >
+                        Join our Discord
+                      </Button>
+                    </Toolbar>
+                  </AppBar>
+
+                  <Container 
+                    maxWidth="lg" 
+                    sx={{ 
+                      pt: 6,
+                      pb: 8,
+                      pl: '280px',
+                      maxWidth: '1100px !important',
+                    }}
+                  >
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        p: 3,
+                        mb: 6,
+                        background: 'linear-gradient(135deg, rgba(58, 236, 248, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%)',
+                        border: '1px solid rgba(58, 236, 248, 0.2)',
+                        borderRadius: '16px',
+                        display: 'flex',
+                        flexDirection: { xs: 'column', md: 'row' },
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: 2,
+                      }}
+                    >
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <Box
                           sx={{
-                            width: 60,
-                            height: 60,
+                            p: 2,
                             borderRadius: '12px',
-                            background: 'linear-gradient(135deg, rgba(58, 236, 248, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            mb: 2,
+                            background: 'rgba(58, 236, 248, 0.1)',
                           }}
                         >
                           <Icon sx={{ 
-                            fontSize: '2rem',
+                            fontSize: '2.5rem',
                             background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                           }}>
-                            {feature.icon}
+                            local_fire_department
                           </Icon>
                         </Box>
-                        <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
-                            {feature.title}
-                          </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {feature.description}
-                        </Typography>
-                        </Paper>
-                      </Grid>
-                    ))}
-                  </Grid>
-
-                  <Grid container spacing={4}>
-                    {/* Complete Package (Ambulance Job) */}
-                    <Grid item xs={12} md={4}>
-                      <Card>
-                        <Box className="script-card-media">
-                          <CardMedia
-                            component="img"
-                            height="200"
-                            image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg"
-                            alt="Ambulance Job"
-                          />
-                          <Box sx={{
-                            position: 'absolute',
-                            top: 16,
-                            right: 16,
-                            zIndex: 2,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: 1,
+                        <Box>
+                          <Typography variant="h6" sx={{ 
+                            fontWeight: '300',
+                            mb: 0.5,
+                            background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                            backgroundClip: 'text',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
                           }}>
-                            <Chip
-                              label="BEST SELLER"
+                            Limited Time Offer
+                        </Typography>
+                          <Typography variant="body1" color="text.secondary">
+                            Get 25% off on all our premium FiveM scripts
+                        </Typography>
+                      </Box>
+                      </Box>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        href="#packages"
+                        sx={{
+                          minWidth: 200,
+                          fontSize: '1.1rem',
+                        }}
+                      >
+                        View Packages
+                      </Button>
+                    </Paper>
+
+                    <Grid container spacing={4} sx={{ 
+                      mb: 2
+                    }}>
+                        {features.map((feature) => (
+                        <Grid item xs={12} sm={6} md={3} key={feature.title}>
+                            <Paper
+                              elevation={0}
                               sx={{
+                              p: 3,
+                                height: '100%',
+                              background: 'rgba(30, 41, 59, 0.6)',
+                              borderRadius: '16px',
+                              border: '1px solid rgba(148, 163, 184, 0.1)',
+                              transition: 'all 0.3s ease',
+                              '&:hover': {
+                                transform: 'translateY(-5px)',
+                                background: 'rgba(30, 41, 59, 0.8)',
+                                boxShadow: '0 10px 20px rgba(58, 236, 248, 0.1)',
+                              },
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                width: 60,
+                                height: 60,
+                                borderRadius: '12px',
+                                background: 'linear-gradient(135deg, rgba(58, 236, 248, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                mb: 2,
+                              }}
+                            >
+                              <Icon sx={{ 
+                                fontSize: '2rem',
                                 background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                                color: 'white',
-                                fontWeight: 'bold',
-                              }}
-                            />
-                            <Chip
-                              label="25% OFF"
-                              sx={{ 
-                                background: 'linear-gradient(135deg, #F87171 0%, #EF4444 100%)',
-                                color: 'white',
-                                fontWeight: 'bold',
-                              }}
-                            />
-                          </Box>
-                        </Box>
-                        <CardContent>
-                          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                            Advanced Ambulance Job
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary" paragraph>
-                            Complete ambulance and medical system with advanced features for ESX and QB Core servers.
-                          </Typography>
-                          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                            <Chip size="small" label="ESX Compatible" />
-                            <Chip size="small" label="QB Core Ready" />
-                            <Chip size="small" label="Regular Updates" />
-                          </Stack>
-                        </CardContent>
-                        <CardActions sx={{ p: 2, pt: 0 }}>
-                          <Button
-                            variant="contained"
-                            fullWidth
-                            href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => handleBuyClick('Advanced Ambulance Job', 20.00)}
-                          >
-                            Purchase Now - $20.00
-                          </Button>
-                        </CardActions>
-                      </Card>
-                    </Grid>
+                                backgroundClip: 'text',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                              }}>
+                                {feature.icon}
+                              </Icon>
+                            </Box>
+                            <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                                {feature.title}
+                              </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              {feature.description}
+                            </Typography>
+                            </Paper>
+                          </Grid>
+                        ))}
+                      </Grid>
 
-                    {/* Battle Pass System */}
-                    <Grid item xs={12} md={4}>
-                      <Card>
-                        <Box className="script-card-media">
-                          <CardMedia
-                            component="img"
-                            height="200"
-                            image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG"
-                            alt="Battle Pass System"
-                          />
-                        </Box>
-                        <CardContent>
-                          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                            Advanced Drug & Battle Pass System
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary" paragraph>
-                            Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration.
-                          </Typography>
-                          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                            <Chip size="small" label="ESX Compatible" />
-                            <Chip size="small" label="QB Core Ready" />
-                            <Chip size="small" label="Open Source" />
-                          </Stack>
-                        </CardContent>
-                        <CardActions sx={{ p: 2, pt: 0 }}>
-                          <Button
-                            variant="contained"
-                            fullWidth
-                            href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => handleBuyClick('Advanced Drug & Battle Pass System', 20.00)}
-                          >
-                            Purchase Now - $20.00
-                          </Button>
-                        </CardActions>
-                      </Card>
-                    </Grid>
+                      <Grid container spacing={4}>
+                        {/* Complete Package (Ambulance Job) */}
+                        <Grid item xs={12} md={4}>
+                          <Card>
+                            <Box className="script-card-media">
+                              <CardMedia
+                                component="img"
+                                height="200"
+                                image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg"
+                                alt="Ambulance Job"
+                              />
+                              <Box sx={{
+                                position: 'absolute',
+                                top: 16,
+                                right: 16,
+                                zIndex: 2,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: 1,
+                              }}>
+                                <Chip
+                                  label="BEST SELLER"
+                                  sx={{
+                                    background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                                    color: 'white',
+                                    fontWeight: 'bold',
+                                  }}
+                                />
+                                <Chip
+                                  label="25% OFF"
+                                  sx={{ 
+                                    background: 'linear-gradient(135deg, #F87171 0%, #EF4444 100%)',
+                                    color: 'white',
+                                    fontWeight: 'bold',
+                                  }}
+                                />
+                              </Box>
+                            </Box>
+                            <CardContent>
+                              <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                                Advanced Ambulance Job
+                              </Typography>
+                              <Typography variant="body2" color="text.secondary" paragraph>
+                                Complete ambulance and medical system with advanced features for ESX and QB Core servers.
+                              </Typography>
+                              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                                <Chip size="small" label="ESX Compatible" />
+                                <Chip size="small" label="QB Core Ready" />
+                                <Chip size="small" label="Regular Updates" />
+                              </Stack>
+                            </CardContent>
+                            <CardActions sx={{ p: 2, pt: 0 }}>
+                              <Button
+                                variant="contained"
+                                fullWidth
+                                href="https://ko-fi.com/nfltemp/shop"
+                                onClick={() => handleBuyClick('Advanced Ambulance Job', 20.00)}
+                              >
+                                Purchase Now - $20.00
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        </Grid>
 
-                    {/* Police Job */}
-                    <Grid item xs={12} md={4}>
-                      <Card>
-                        <Box className="script-card-media">
-                          <CardMedia
-                            component="img"
-                            height="200"
-                            image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/policejob.PNG"
-                            alt="Police Job"
-                          />
-                        </Box>
-                        <CardContent>
-                          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                            Advanced Police Job
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary" paragraph>
-                            Transform your server's law enforcement experience with our comprehensive police job script.
-                          </Typography>
-                          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                            <Chip size="small" label="QB Core Only" />
-                            <Chip size="small" label="High Performance" />
-                            <Chip size="small" label="Open Source" />
-                          </Stack>
-                        </CardContent>
-                        <CardActions sx={{ p: 2, pt: 0 }}>
-                          <Button
-                            variant="contained"
-                            fullWidth
-                            href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => handleBuyClick('Advanced Police Job', 20.00)}
-                          >
-                            Purchase Now - $20.00
-                          </Button>
-                        </CardActions>
-                      </Card>
-                    </Grid>
+                        {/* Battle Pass System */}
+                        <Grid item xs={12} md={4}>
+                          <Card>
+                            <Box className="script-card-media">
+                              <CardMedia
+                                component="img"
+                                height="200"
+                                image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG"
+                                alt="Battle Pass System"
+                              />
+                            </Box>
+                            <CardContent>
+                              <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                                Advanced Drug & Battle Pass System
+                              </Typography>
+                              <Typography variant="body2" color="text.secondary" paragraph>
+                                Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration.
+                              </Typography>
+                              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                                <Chip size="small" label="ESX Compatible" />
+                                <Chip size="small" label="QB Core Ready" />
+                                <Chip size="small" label="Open Source" />
+                              </Stack>
+                            </CardContent>
+                            <CardActions sx={{ p: 2, pt: 0 }}>
+                              <Button
+                                variant="contained"
+                                fullWidth
+                                href="https://ko-fi.com/nfltemp/shop"
+                                onClick={() => handleBuyClick('Advanced Drug & Battle Pass System', 20.00)}
+                              >
+                                Purchase Now - $20.00
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        </Grid>
 
-                    {/* Hitman Script */}
-                    <Grid item xs={12} md={4}>
-                      <Card>
-                        <Box className="script-card-media">
-                          <CardMedia
-                            component="img"
-                            height="200"
-                            image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/hitman.PNG"
-                            alt="Hitman Script"
-                          />
-                        </Box>
-                        <CardContent>
-                          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                            Advanced Hitman Script
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary" paragraph>
-                            Dive into the thrilling world of FiveM with this professional Hitman Script. Perfect for enhancing your roleplay experience.
-                          </Typography>
-                          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                            <Chip size="small" label="QB Core Only" />
-                            <Chip size="small" label="High Performance" />
-                            <Chip size="small" label="Open Source" />
-                          </Stack>
-                        </CardContent>
-                        <CardActions sx={{ p: 2, pt: 0 }}>
-                          <Button
-                            variant="contained"
-                            fullWidth
-                            href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => handleBuyClick('Advanced Hitman Script', 15.00)}
-                          >
-                            Purchase Now - $15.00
-                          </Button>
-                        </CardActions>
-                      </Card>
-                    </Grid>
-                  </Grid>
-                </Container>
+                        {/* Police Job */}
+                        <Grid item xs={12} md={4}>
+                          <Card>
+                            <Box className="script-card-media">
+                              <CardMedia
+                                component="img"
+                                height="200"
+                                image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/policejob.PNG"
+                                alt="Police Job"
+                              />
+                            </Box>
+                            <CardContent>
+                              <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                                Advanced Police Job
+                              </Typography>
+                              <Typography variant="body2" color="text.secondary" paragraph>
+                                Transform your server's law enforcement experience with our comprehensive police job script.
+                              </Typography>
+                              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                                <Chip size="small" label="QB Core Only" />
+                                <Chip size="small" label="High Performance" />
+                                <Chip size="small" label="Open Source" />
+                              </Stack>
+                            </CardContent>
+                            <CardActions sx={{ p: 2, pt: 0 }}>
+                              <Button
+                                variant="contained"
+                                fullWidth
+                                href="https://ko-fi.com/nfltemp/shop"
+                                onClick={() => handleBuyClick('Advanced Police Job', 20.00)}
+                              >
+                                Purchase Now - $20.00
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        </Grid>
 
-              <ScrollTop>
-                <Fab 
-                  sx={{ 
-                    background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                    '&:hover': {
-                      background: 'linear-gradient(135deg, #3AECF8 20%, #6366F1 120%)',
-                    }
-                  }}
-                >
-                  <Icon>keyboard_arrow_up</Icon>
-                </Fab>
-              </ScrollTop>
-            </div>
-          </ThemeProvider>
-        );
-      }
+                        {/* Hitman Script */}
+                        <Grid item xs={12} md={4}>
+                          <Card>
+                            <Box className="script-card-media">
+                              <CardMedia
+                                component="img"
+                                height="200"
+                                image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/hitman.PNG"
+                                alt="Hitman Script"
+                              />
+                            </Box>
+                            <CardContent>
+                              <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                                Advanced Hitman Script
+                              </Typography>
+                              <Typography variant="body2" color="text.secondary" paragraph>
+                                Dive into the thrilling world of FiveM with this professional Hitman Script. Perfect for enhancing your roleplay experience.
+                              </Typography>
+                              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                                <Chip size="small" label="QB Core Only" />
+                                <Chip size="small" label="High Performance" />
+                                <Chip size="small" label="Open Source" />
+                              </Stack>
+                            </CardContent>
+                            <CardActions sx={{ p: 2, pt: 0 }}>
+                              <Button
+                                variant="contained"
+                                fullWidth
+                                href="https://ko-fi.com/nfltemp/shop"
+                                onClick={() => handleBuyClick('Advanced Hitman Script', 15.00)}
+                              >
+                                Purchase Now - $15.00
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        </Grid>
+                      </Grid>
+                    </Container>
 
-      const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
-      );
-    </script>
-  </body>
-</html> 
+                  <ScrollTop>
+                    <Fab 
+                      sx={{ 
+                        background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                        '&:hover': {
+                          background: 'linear-gradient(135deg, #3AECF8 20%, #6366F1 120%)',
+                        }
+                      }}
+                    >
+                      <Icon>keyboard_arrow_up</Icon>
+                    </Fab>
+                  </ScrollTop>
+                </div>
+              </ThemeProvider>
+            );
+          }
+
+          const root = ReactDOM.createRoot(document.getElementById('root'));
+          root.render(
+            <React.StrictMode>
+              <App />
+            </React.StrictMode>
+          );
+        </script>
+      </body>
+    </html> 
