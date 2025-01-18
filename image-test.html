@@ -56,23 +56,32 @@
         const API_KEY = 'KF_API_cbe95e81-4ada-4638-9ae1-8356ddfbbd1b';
         const PAGE_ID = 'V7V817I0JD';
 
-        // Function to test Ko-fi API
+        // Function to test Ko-fi API through a proxy or serverless function
         const testKofiAPI = async () => {
           setLoading(true);
           setError(null);
           try {
-            const response = await fetch(`https://api.ko-fi.com/v1/payments`, {
-              method: 'GET',
-              headers: {
-                'Authorization': `Bearer ${API_KEY}`,
-                'Content-Type': 'application/json'
-              }
-            });
+            // Instead of direct API call, we'll simulate what data would look like
+            const mockData = {
+              data: {
+                page_id: PAGE_ID,
+                last_payment: {
+                  from_name: "Test User",
+                  amount: "20.00",
+                  message: "Test purchase",
+                  timestamp: new Date().toISOString()
+                }
+              },
+              message: "This is a simulated response. To get real data, you'll need to:",
+              note: [
+                "1. Set up a webhook in Ko-fi",
+                "2. Create a Zapier action to store the data",
+                "3. Use the stored data endpoint instead of direct API calls"
+              ]
+            };
 
-            if (!response.ok) throw new Error('Failed to fetch Ko-fi data');
-            const data = await response.json();
-            setLastWebhook(data);
-            setSuccess('Successfully fetched Ko-fi data!');
+            setLastWebhook(mockData);
+            setSuccess('Note: This is simulated data. See instructions below.');
           } catch (err) {
             setError(err.message);
           } finally {
@@ -80,37 +89,24 @@
           }
         };
 
-        // Function to simulate a purchase webhook
+        // Function to simulate a new purchase webhook
         const simulatePurchase = async () => {
           setLoading(true);
           setError(null);
           try {
             const testData = {
-              verification_token: API_KEY,
-              message_id: `test-${Date.now()}`,
-              timestamp: new Date().toISOString(),
               type: "Shop Order",
-              is_public: true,
               from_name: "Test User",
-              message: "Test purchase",
               amount: "20.00",
-              url: `https://ko-fi.com/${PAGE_ID}`,
-              email: "test@example.com",
-              currency: "USD",
-              is_subscription_payment: false,
-              is_first_subscription_payment: false,
-              kofi_transaction_id: `test-${Date.now()}`,
               shop_items: [
                 {
                   direct_link_code: "TESTSCRIPT",
                   variation_name: "Standard",
                   quantity: 1
                 }
-              ]
+              ],
+              timestamp: new Date().toISOString()
             };
-
-            setLastWebhook(testData);
-            setSuccess('Simulated purchase webhook data!');
 
             // Update the recent buyers list if the function exists
             if (window.updateRecentBuyers) {
@@ -122,6 +118,9 @@
                 avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
               });
             }
+
+            setLastWebhook(testData);
+            setSuccess('Simulated new purchase!');
           } catch (err) {
             setError(err.message);
           } finally {
@@ -175,6 +174,28 @@
                     Simulate Purchase
                   </Button>
                 </Stack>
+              </Paper>
+
+              <Paper sx={{ p: 3, mt: 4 }}>
+                <Typography variant="h6" gutterBottom>Setup Instructions</Typography>
+                <ol style={{ color: '#94A3B8' }}>
+                  <li>In Ko-fi:
+                    <ul>
+                      <li>Go to your Ko-fi settings</li>
+                      <li>Enable API/Webhooks</li>
+                      <li>Copy your webhook URL from Zapier</li>
+                      <li>Paste it in Ko-fi's webhook settings</li>
+                    </ul>
+                  </li>
+                  <li>In Zapier:
+                    <ul>
+                      <li>Create a new Zap with Ko-fi as trigger</li>
+                      <li>Add a "Store" action (like Storage by Zapier)</li>
+                      <li>Store the purchase data</li>
+                      <li>Use that stored data endpoint in this test page</li>
+                    </ul>
+                  </li>
+                </ol>
               </Paper>
 
               {lastWebhook && (
