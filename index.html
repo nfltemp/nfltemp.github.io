@@ -820,6 +820,65 @@
                   </Grid>
                 </Container>
 
+              <Container maxWidth="lg" sx={{ pt: 4, pb: 8 }}>
+                <Typography variant="h4" gutterBottom>Image Loading Tests</Typography>
+                <Grid container spacing={4}>
+                  {/* Test 1: Absolute path from root */}
+                  <Grid item xs={12} md={4}>
+                    <Paper sx={{ p: 2 }}>
+                      <Typography variant="h6">Test 1: Absolute from root</Typography>
+                      <img src="/images/logo.png" alt="Test 1" style={{ width: '100%' }} />
+                      <Typography variant="caption">src="/images/logo.png"</Typography>
+                    </Paper>
+                  </Grid>
+
+                  {/* Test 2: Relative path */}
+                  <Grid item xs={12} md={4}>
+                    <Paper sx={{ p: 2 }}>
+                      <Typography variant="h6">Test 2: Relative path</Typography>
+                      <img src="./images/logo.png" alt="Test 2" style={{ width: '100%' }} />
+                      <Typography variant="caption">src="./images/logo.png"</Typography>
+                    </Paper>
+                  </Grid>
+
+                  {/* Test 3: Relative from current */}
+                  <Grid item xs={12} md={4}>
+                    <Paper sx={{ p: 2 }}>
+                      <Typography variant="h6">Test 3: Relative from current</Typography>
+                      <img src="../images/logo.png" alt="Test 3" style={{ width: '100%' }} />
+                      <Typography variant="caption">src="../images/logo.png"</Typography>
+                    </Paper>
+                  </Grid>
+
+                  {/* Test 4: Full URL */}
+                  <Grid item xs={12} md={4}>
+                    <Paper sx={{ p: 2 }}>
+                      <Typography variant="h6">Test 4: Full GitHub URL</Typography>
+                      <img src="https://nfltemp.github.io/images/logo.png" alt="Test 4" style={{ width: '100%' }} />
+                      <Typography variant="caption">src="https://nfltemp.github.io/images/logo.png"</Typography>
+                    </Paper>
+                  </Grid>
+
+                  {/* Test 5: Raw GitHub content */}
+                  <Grid item xs={12} md={4}>
+                    <Paper sx={{ p: 2 }}>
+                      <Typography variant="h6">Test 5: Raw GitHub</Typography>
+                      <img src="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/main/images/logo.png" alt="Test 5" style={{ width: '100%' }} />
+                      <Typography variant="caption">Using raw.githubusercontent.com</Typography>
+                    </Paper>
+                  </Grid>
+
+                  {/* Test 6: Complete Package Image */}
+                  <Grid item xs={12} md={4}>
+                    <Paper sx={{ p: 2 }}>
+                      <Typography variant="h6">Test 6: Package Image</Typography>
+                      <img src="./images/packages/complete-package.jpg" alt="Test 6" style={{ width: '100%' }} />
+                      <Typography variant="caption">src="./images/packages/complete-package.jpg"</Typography>
+                    </Paper>
+                  </Grid>
+                </Grid>
+              </Container>
+
               <ScrollTop>
                 <Fab 
                   sx={{ 
