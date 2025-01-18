@@ -145,11 +145,14 @@
             default: '#0a0a0a',
             paper: 'rgba(20, 20, 20, 0.8)',
           },
+          error: {
+            main: '#ff4444',
+          }
         },
         typography: {
           fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
           h1: {
-            fontSize: '3.5rem',
+            fontSize: '4rem',
             fontWeight: 700,
             backgroundImage: 'linear-gradient(45deg, #00ffff, #00cccc)',
             backgroundClip: 'text',
@@ -157,6 +160,15 @@
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
           },
+          h3: {
+            fontSize: '2.5rem',
+            fontWeight: 600,
+            backgroundImage: 'linear-gradient(45deg, #00ffff, #00cccc)',
+            backgroundClip: 'text',
+            textFillColor: 'transparent',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }
         },
         components: {
           MuiButton: {
@@ -164,8 +176,9 @@
               root: {
                 borderRadius: '8px',
                 textTransform: 'none',
-                fontSize: '1rem',
-                padding: '0.5rem 1.5rem',
+                fontSize: '1.1rem',
+                padding: '0.75rem 2rem',
+                fontWeight: 500,
               },
             },
           },
@@ -176,6 +189,16 @@
                 background: 'rgba(30, 30, 30, 0.8)',
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
+                position: 'relative',
+                overflow: 'visible',
+              },
+            },
+          },
+          MuiChip: {
+            styleOverrides: {
+              root: {
+                fontSize: '0.9rem',
+                height: '28px',
               },
             },
           },
@@ -260,24 +283,24 @@
               <AppBar position="fixed" color="transparent" sx={{ backdropFilter: 'blur(10px)' }}>
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
                   <img src="https://via.placeholder.com/120x60" alt="NFL Temp Logo" style={{ height: 40 }} />
-                  <Stack direction="row" spacing={2} alignItems="center">
-                    <Button
-                      variant="outlined"
-                      href="https://discord.gg/r8RKJGz4hk"
-                      target="_blank"
-                      startIcon={<i className="fab fa-discord" />}
-                      sx={{
-                        borderColor: 'primary.main',
-                        color: 'primary.main',
-                        '&:hover': {
-                          backgroundColor: 'primary.main',
-                          color: 'background.default',
-                        },
-                      }}
-                    >
-                      Join Discord
-                    </Button>
-                  </Stack>
+                  <Button
+                    variant="contained"
+                    href="https://discord.gg/r8RKJGz4hk"
+                    target="_blank"
+                    size="large"
+                    startIcon={<i className="fab fa-discord" style={{ fontSize: '1.5rem' }} />}
+                    sx={{
+                      backgroundColor: '#5865F2',
+                      '&:hover': {
+                        backgroundColor: '#4752C4',
+                      },
+                      fontSize: '1.2rem',
+                      py: 1.5,
+                      px: 4,
+                    }}
+                  >
+                    Join our Discord
+                  </Button>
                 </Toolbar>
               </AppBar>
 
@@ -295,10 +318,10 @@
                   <Grid container spacing={4} alignItems="center">
                     <Grid item xs={12} md={6}>
                       <Typography variant="h1" gutterBottom>
-                        Premium FiveM Scripts
+                        NFL Temp Scripts
                       </Typography>
-                      <Typography variant="h5" color="text.secondary" paragraph>
-                        Elevate your server with our high-quality scripts and packages
+                      <Typography variant="h5" color="text.secondary" paragraph sx={{ fontSize: '1.5rem', mb: 4 }}>
+                        Premium FiveM Resources to Enhance Your Server Experience
                       </Typography>
                       <Button
                         variant="contained"
@@ -308,12 +331,13 @@
                           mt: 2,
                           backgroundColor: 'primary.main',
                           color: 'background.default',
+                          fontSize: '1.3rem',
                           '&:hover': {
                             backgroundColor: '#00cccc',
                           },
                         }}
                       >
-                        Explore Packages
+                        View Our Packages
                       </Button>
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -333,43 +357,50 @@
               </Box>
 
               <Container maxWidth="lg" sx={{ py: 8 }}>
-                <Typography variant="h3" align="center" gutterBottom sx={{ mb: 6 }}>
-                  Why Choose Our Scripts?
-                </Typography>
-                <Grid container spacing={4}>
-                  {features.map((feature) => (
-                    <Grid item xs={12} sm={6} md={3} key={feature.title}>
-                      <Paper
-                        elevation={0}
-                        sx={{
-                          p: 3,
-                          textAlign: 'center',
-                          background: 'rgba(30, 30, 30, 0.8)',
-                          backdropFilter: 'blur(10px)',
-                          border: '1px solid rgba(255, 255, 255, 0.1)',
-                          borderRadius: 2,
-                        }}
-                      >
-                        <Icon className="feature-icon">{feature.icon}</Icon>
-                        <Typography variant="h6" gutterBottom>
-                          {feature.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {feature.description}
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Container>
-
-              <Container maxWidth="lg" sx={{ py: 8 }}>
-                <Typography variant="h3" align="center" gutterBottom sx={{ mb: 6 }}>
-                  Our Packages
-                </Typography>
+                <Box sx={{ 
+                  textAlign: 'center', 
+                  mb: 8,
+                  position: 'relative',
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: '-20px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '100px',
+                    height: '4px',
+                    background: 'linear-gradient(45deg, #00ffff, #00cccc)',
+                    borderRadius: '2px',
+                  }
+                }}>
+                  <Typography variant="h3" gutterBottom>
+                    Featured Packages
+                  </Typography>
+                  <Typography variant="h6" color="error.main" sx={{ fontWeight: 'bold' }}>
+                    🔥 FLASH SALE: 25% OFF ALL PACKAGES - LIMITED TIME ONLY! 🔥
+                  </Typography>
+                </Box>
+                
                 <Grid container spacing={4}>
                   <Grid item xs={12} md={4}>
-                    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                    <Card sx={{ 
+                      height: '100%', 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      transform: 'scale(1.02)',
+                      zIndex: 1,
+                      '&::before': {
+                        content: '""',
+                        position: 'absolute',
+                        top: -2,
+                        left: -2,
+                        right: -2,
+                        bottom: -2,
+                        background: 'linear-gradient(45deg, #00ffff, #00cccc)',
+                        borderRadius: '14px',
+                        zIndex: -1,
+                      }
+                    }}>
                       <Box className="script-card-media">
                         <CardMedia
                           component="img"
@@ -377,22 +408,35 @@
                           image="https://via.placeholder.com/300x200"
                           alt="Complete Package"
                         />
-                        <Chip
-                          label="Best Value"
-                          color="primary"
-                          sx={{
-                            position: 'absolute',
-                            top: 16,
-                            right: 16,
-                            zIndex: 2,
-                          }}
-                        />
+                        <Box sx={{
+                          position: 'absolute',
+                          top: 16,
+                          right: 16,
+                          zIndex: 2,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 1,
+                        }}>
+                          <Chip
+                            label="BEST SELLER"
+                            color="primary"
+                            sx={{ fontWeight: 'bold' }}
+                          />
+                          <Chip
+                            label="25% OFF"
+                            sx={{ 
+                              bgcolor: '#ff4444',
+                              color: 'white',
+                              fontWeight: 'bold',
+                            }}
+                          />
+                        </Box>
                       </Box>
                       <CardContent sx={{ flexGrow: 1 }}>
-                        <Typography variant="h5" component="h2" gutterBottom color="primary">
+                        <Typography variant="h5" component="h2" gutterBottom color="primary" sx={{ fontWeight: 'bold' }}>
                           Complete Package
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" paragraph>
+                        <Typography variant="body1" color="text.secondary" paragraph>
                           Get access to all our premium scripts in one comprehensive package. 
                           Perfect for server owners looking for a complete solution.
                         </Typography>
@@ -401,15 +445,24 @@
                           <Chip size="small" label="QB Core Ready" />
                           <Chip size="small" label="Regular Updates" />
                         </Stack>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                          <Typography variant="h6" color="error.main" sx={{ textDecoration: 'line-through' }}>
+                            $99.99
+                          </Typography>
+                          <Typography variant="h5" color="primary.main" sx={{ fontWeight: 'bold' }}>
+                            $74.99
+                          </Typography>
+                        </Box>
                       </CardContent>
                       <CardActions sx={{ p: 2, pt: 0 }}>
                         <Button
-                          variant="outlined"
+                          variant="contained"
                           fullWidth
                           href="https://ko-fi.com/nfltemp/shop"
                           onClick={handleBuyClick}
+                          sx={{ fontSize: '1.1rem' }}
                         >
-                          View Details
+                          Purchase Now
                         </Button>
                       </CardActions>
                     </Card>
