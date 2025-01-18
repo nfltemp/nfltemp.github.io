@@ -35,6 +35,9 @@
         createTheme,
         ThemeProvider,
         CssBaseline,
+        Accordion,
+        AccordionSummary,
+        AccordionDetails
       } = MaterialUI;
 
       const theme = createTheme({
@@ -50,96 +53,120 @@
         },
       });
 
-      function ScriptCard({ title, description, image, features, price }) {
+      function FeatureList({ features }) {
+        return (
+          <Stack spacing={2}>
+            {features.map((category, index) => (
+              <Accordion key={index} sx={{ background: 'rgba(30, 41, 59, 0.6)' }}>
+                <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
+                  <Typography variant="h6">{category.title}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Stack spacing={1}>
+                    {category.items.map((item, idx) => (
+                      <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Icon sx={{ color: 'primary.main', fontSize: '1rem' }}>check_circle</Icon>
+                        <Typography variant="body2">{item}</Typography>
+                      </Box>
+                    ))}
+                  </Stack>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </Stack>
+        );
+      }
+
+      function ScriptCard({ title, description, images, features, price }) {
+        const [currentImage, setCurrentImage] = React.useState(0);
+
         return (
           <Card sx={{ 
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            background: 'rgba(15, 23, 42, 0.8)',
+            background: 'rgba(30, 41, 59, 0.8)',
             backdropFilter: 'blur(10px)',
             border: '1px solid rgba(148, 163, 184, 0.1)',
           }}>
-            <CardMedia
-              component="img"
-              height="200"
-              image={image}
-              alt={title}
-              sx={{
-                borderBottom: '1px solid rgba(148, 163, 184, 0.1)',
-              }}
-            />
-            <CardContent sx={{ flexGrow: 1, p: 3 }}>
+            <Box sx={{ position: 'relative', paddingTop: '56.25%' }}>
+              {images.map((image, index) => (
+                <CardMedia
+                  key={index}
+                  component="img"
+                  image={image}
+                  alt={title}
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    opacity: currentImage === index ? 1 : 0,
+                    transition: 'opacity 0.5s ease',
+                  }}
+                />
+              ))}
+              <Box sx={{
+                position: 'absolute',
+                bottom: 16,
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                gap: 1
+              }}>
+                {images.map((_, index) => (
+                  <Box
+                    key={index}
+                    onClick={() => setCurrentImage(index)}
+                    sx={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: '50%',
+                      backgroundColor: currentImage === index ? 'primary.main' : 'rgba(255,255,255,0.5)',
+                      cursor: 'pointer'
+                    }}
+                  />
+                ))}
+              </Box>
+            </Box>
+            <CardContent>
               <Typography variant="h4" gutterBottom sx={{ 
-                color: '#3AECF8',
                 fontWeight: 'bold',
-                mb: 2
+                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
               }}>
                 {title}
               </Typography>
-              <Typography variant="body1" sx={{ color: '#94A3B8', mb: 3 }}>
+              <Typography variant="body1" color="text.secondary" paragraph>
                 {description}
               </Typography>
               
-              <Typography variant="h6" gutterBottom sx={{ color: '#fff', mb: 2 }}>
-                Features:
-              </Typography>
-              <Stack spacing={1.5}>
-                {features.map((feature, index) => (
-                  <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Icon sx={{ color: '#3AECF8', fontSize: '1.2rem' }}>check_circle</Icon>
-                    <Typography variant="body2" sx={{ color: '#94A3B8' }}>
-                      {feature}
-                    </Typography>
-                  </Box>
-                ))}
-              </Stack>
+              <FeatureList features={features} />
 
-              <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
+              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 3 }}>
                 <Chip 
+                  size="small" 
                   label="ESX Compatible" 
-                  size="small"
                   sx={{ 
-                    background: '#3AECF8',
-                    color: '#0F172A',
-                    fontWeight: 'bold'
+                    background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                    color: 'white'
                   }}
                 />
-                <Chip 
-                  label="Open Source" 
-                  size="small"
-                  sx={{ 
-                    background: 'rgba(148, 163, 184, 0.1)',
-                    color: '#94A3B8'
-                  }}
-                />
-                <Chip 
-                  label="Regular Updates" 
-                  size="small"
-                  sx={{ 
-                    background: 'rgba(148, 163, 184, 0.1)',
-                    color: '#94A3B8'
-                  }}
-                />
+                <Chip size="small" label="Open Source" />
+                <Chip size="small" label="Regular Updates" />
               </Stack>
             </CardContent>
-            <CardActions sx={{ p: 3, pt: 0 }}>
+            <CardActions sx={{ p: 3 }}>
               <Button
                 variant="contained"
                 fullWidth
                 href="https://ko-fi.com/nfltemp/shop"
                 sx={{ 
-                  background: '#3AECF8',
-                  color: '#0F172A',
-                  py: 1.5,
-                  fontSize: '1.1rem',
-                  fontWeight: 'bold',
-                  '&:hover': {
-                    background: '#2DD4E0'
-                  }
+                  fontSize: '1.2rem',
+                  py: 1.5
                 }}
               >
-                PURCHASE NOW - ${price}
+                Purchase Now - ${price}
               </Button>
             </CardActions>
           </Card>
@@ -151,26 +178,59 @@
           {
             title: "Advanced Drug & Battle Pass System",
             description: "Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration.",
-            image: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG",
+            images: [
+              "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG"
+            ],
             features: [
-              "Detailed Drug Farming System",
-              "Battle Pass Integration",
-              "Tiered Rewards System",
-              "Player Progress Tracking",
-              "Customizable Missions"
+              {
+                title: "🌿 Drug System",
+                items: [
+                  "Detailed Drug Farming System",
+                  "Multiple Drug Types",
+                  "Processing Mechanics",
+                  "Drug Effects System",
+                  "Territory Control"
+                ]
+              },
+              {
+                title: "🎮 Battle Pass",
+                items: [
+                  "Tiered Rewards System",
+                  "Player Progress Tracking",
+                  "Customizable Missions",
+                  "Season Management",
+                  "Premium Rewards"
+                ]
+              }
             ],
             price: "20.00"
           },
           {
             title: "Advanced Ambulance Job",
             description: "Complete ambulance and medical system with advanced features for your ESX server.",
-            image: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg",
+            images: [
+              "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg"
+            ],
             features: [
-              "Advanced Medical System",
-              "Interactive Missions",
-              "Vehicle Management",
-              "Equipment System",
-              "Patient Care Features"
+              {
+                title: "🚑 Core Features",
+                items: [
+                  "Advanced Medical System",
+                  "Interactive Missions",
+                  "Vehicle Management",
+                  "Equipment System"
+                ]
+              },
+              {
+                title: "👨‍⚕️ Medical Mechanics",
+                items: [
+                  "Patient Care Features",
+                  "Injury System",
+                  "Medical Reports",
+                  "Hospital Management",
+                  "Emergency Calls"
+                ]
+              }
             ],
             price: "20.00"
           }
@@ -179,22 +239,27 @@
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Box sx={{ 
-              minHeight: '100vh',
-              background: '#0F172A',
-              pt: 4,
-              pb: 8
-            }}>
-              <Container maxWidth="lg">
-                <Grid container spacing={4} justifyContent="center">
-                  {scripts.map((script, index) => (
-                    <Grid item xs={12} md={6} key={index}>
-                      <ScriptCard {...script} />
-                    </Grid>
-                  ))}
-                </Grid>
-              </Container>
-            </Box>
+            <Container maxWidth="lg" sx={{ pt: 12, pb: 8 }}>
+              <Typography variant="h3" gutterBottom sx={{
+                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                ESX Scripts
+              </Typography>
+              <Typography variant="h5" color="text.secondary" paragraph>
+                Premium ESX framework scripts for your FiveM server
+              </Typography>
+              
+              <Grid container spacing={4}>
+                {scripts.map((script, index) => (
+                  <Grid item xs={12} md={6} key={index}>
+                    <ScriptCard {...script} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Container>
           </ThemeProvider>
         );
       }
