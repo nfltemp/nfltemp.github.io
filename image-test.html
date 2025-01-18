@@ -27,7 +27,8 @@
         createTheme,
         ThemeProvider,
         CssBaseline,
-        Button
+        Button,
+        Box
       } = MaterialUI;
 
       const theme = createTheme({
@@ -43,7 +44,92 @@
         },
       });
 
+      function ImageTest({ title, src, description }) {
+        const [error, setError] = React.useState(false);
+        const [loaded, setLoaded] = React.useState(false);
+
+        return (
+          <Grid item xs={12} md={4}>
+            <Paper sx={{ p: 2 }}>
+              <Typography variant="h6" gutterBottom>{title}</Typography>
+              <Box sx={{ 
+                height: 200, 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                border: '1px dashed rgba(255,255,255,0.2)',
+                position: 'relative'
+              }}>
+                <img 
+                  src={src} 
+                  alt={title}
+                  onError={() => setError(true)}
+                  onLoad={() => setLoaded(true)}
+                  style={{ 
+                    maxWidth: '100%', 
+                    maxHeight: '100%',
+                    display: error ? 'none' : 'block'
+                  }} 
+                />
+                {error && (
+                  <Typography color="error">
+                    Failed to load image
+                  </Typography>
+                )}
+                {loaded && (
+                  <Typography 
+                    color="success.main" 
+                    sx={{ position: 'absolute', bottom: 8, right: 8 }}
+                  >
+                    ✓ Loaded
+                  </Typography>
+                )}
+              </Box>
+              <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+                {description}
+              </Typography>
+              <Typography variant="caption" display="block" color={error ? "error" : "success.main"}>
+                Status: {error ? "Failed to load" : loaded ? "Successfully loaded" : "Loading..."}
+              </Typography>
+            </Paper>
+          </Grid>
+        );
+      }
+
       function ImageTests() {
+        const tests = [
+          {
+            title: "Test 1: Direct Path",
+            src: "images/logo.png",
+            description: 'src="images/logo.png"'
+          },
+          {
+            title: "Test 2: Relative Path",
+            src: "./images/logo.png",
+            description: 'src="./images/logo.png"'
+          },
+          {
+            title: "Test 3: Root Path",
+            src: "/images/logo.png",
+            description: 'src="/images/logo.png"'
+          },
+          {
+            title: "Test 4: Full URL",
+            src: "https://nfltemp.github.io/images/logo.png",
+            description: "Using full GitHub Pages URL"
+          },
+          {
+            title: "Test 5: Package Image",
+            src: "images/packages/complete-package.jpg",
+            description: 'src="images/packages/complete-package.jpg"'
+          },
+          {
+            title: "Test 6: Debug Info",
+            src: "images/packages/complete-package.jpg",
+            description: `Current path: ${window.location.pathname}\nBase URL: ${window.location.origin}`
+          }
+        ];
+
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -57,61 +143,14 @@
               </Button>
               
               <Typography variant="h3" gutterBottom>Image Loading Tests</Typography>
+              <Typography variant="body1" paragraph>
+                Current URL: {window.location.href}
+              </Typography>
               
               <Grid container spacing={4}>
-                {/* Test 1: Absolute path from root */}
-                <Grid item xs={12} md={4}>
-                  <Paper sx={{ p: 2 }}>
-                    <Typography variant="h6">Test 1: Absolute from root</Typography>
-                    <img src="/images/logo.png" alt="Test 1" style={{ width: '100%' }} />
-                    <Typography variant="caption">src="/images/logo.png"</Typography>
-                  </Paper>
-                </Grid>
-
-                {/* Test 2: Relative path */}
-                <Grid item xs={12} md={4}>
-                  <Paper sx={{ p: 2 }}>
-                    <Typography variant="h6">Test 2: Relative path</Typography>
-                    <img src="./images/logo.png" alt="Test 2" style={{ width: '100%' }} />
-                    <Typography variant="caption">src="./images/logo.png"</Typography>
-                  </Paper>
-                </Grid>
-
-                {/* Test 3: Relative from current */}
-                <Grid item xs={12} md={4}>
-                  <Paper sx={{ p: 2 }}>
-                    <Typography variant="h6">Test 3: Relative from current</Typography>
-                    <img src="../images/logo.png" alt="Test 3" style={{ width: '100%' }} />
-                    <Typography variant="caption">src="../images/logo.png"</Typography>
-                  </Paper>
-                </Grid>
-
-                {/* Test 4: Full URL */}
-                <Grid item xs={12} md={4}>
-                  <Paper sx={{ p: 2 }}>
-                    <Typography variant="h6">Test 4: Full GitHub URL</Typography>
-                    <img src="https://nfltemp.github.io/images/logo.png" alt="Test 4" style={{ width: '100%' }} />
-                    <Typography variant="caption">src="https://nfltemp.github.io/images/logo.png"</Typography>
-                  </Paper>
-                </Grid>
-
-                {/* Test 5: Raw GitHub content */}
-                <Grid item xs={12} md={4}>
-                  <Paper sx={{ p: 2 }}>
-                    <Typography variant="h6">Test 5: Raw GitHub</Typography>
-                    <img src="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/main/images/logo.png" alt="Test 5" style={{ width: '100%' }} />
-                    <Typography variant="caption">Using raw.githubusercontent.com</Typography>
-                  </Paper>
-                </Grid>
-
-                {/* Test 6: Complete Package Image */}
-                <Grid item xs={12} md={4}>
-                  <Paper sx={{ p: 2 }}>
-                    <Typography variant="h6">Test 6: Package Image</Typography>
-                    <img src="./images/packages/complete-package.jpg" alt="Test 6" style={{ width: '100%' }} />
-                    <Typography variant="caption">src="./images/packages/complete-package.jpg"</Typography>
-                  </Paper>
-                </Grid>
+                {tests.map((test, index) => (
+                  <ImageTest key={index} {...test} />
+                ))}
               </Grid>
             </Container>
           </ThemeProvider>
