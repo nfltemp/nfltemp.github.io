@@ -416,9 +416,22 @@
         }, [trailId]);
 
         const handleBuyClick = (productName, price) => {
-          // Existing Facebook Pixel tracking
+          // Facebook Pixel tracking
           if (window.fbq) {
-            window.fbq('track', 'InitiateCheckout');
+            fbq('track', 'InitiateCheckout', {
+              content_name: productName,
+              content_type: 'product',
+              currency: 'USD',
+              value: price
+            });
+            
+            // Also track as AddToCart event
+            fbq('track', 'AddToCart', {
+              content_name: productName,
+              content_type: 'product',
+              currency: 'USD',
+              value: price
+            });
           }
           
           // Google Analytics tracking
@@ -436,7 +449,6 @@
               }]
             });
 
-            // Also track as a conversion
             gtag('event', 'conversion', {
               'send_to': 'G-E1VL962LJ3',
               'value': price,
@@ -450,7 +462,12 @@
           }
 
           // Log to console for debugging
-          console.log('Purchase click tracked:', productName, price);
+          console.log('Purchase click tracked:', {
+            pixel: window.fbq ? 'Meta Pixel loaded' : 'Meta Pixel not loaded',
+            analytics: typeof gtag === 'function' ? 'Google Analytics loaded' : 'Google Analytics not loaded',
+            product: productName,
+            price: price
+          });
         };
 
         const features = [
