@@ -14,12 +14,6 @@
     <script src="https://unpkg.com/@mui/material@5.15.5/umd/material-ui.development.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Ko-fi Widget -->
-    <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
   </head>
   <body>
     <div id="root"></div>
@@ -28,17 +22,14 @@
       const {
         Container,
         Typography,
-        Grid,
-        Card,
-        CardContent,
-        Button,
-        Stack,
         Box,
+        Paper,
+        Grid,
         Icon,
+        Button,
         createTheme,
         ThemeProvider,
         CssBaseline,
-        Link
       } = MaterialUI;
 
       const theme = createTheme({
@@ -55,98 +46,67 @@
       });
 
       function About() {
-        React.useEffect(() => {
-          if (window.kofiwidget2) {
-            window.kofiwidget2.init('Support me on Ko-fi', '#f5ac73', 'V7V817I0JD');
-            window.kofiwidget2.draw();
-          }
-        }, []);
-
-        const socials = [
-          {
-            name: 'YouTube',
-            icon: 'fab fa-youtube',
-            link: 'https://www.youtube.com/@malcolmhj1a',
-            color: '#FF0000'
-          },
-          {
-            name: 'GitHub',
-            icon: 'fab fa-github',
-            link: 'https://github.com/nfltemp',
-            color: '#ffffff'
-          },
-          {
-            name: 'Shop',
-            icon: 'fas fa-store',
-            link: 'https://ko-fi.com/nfltemp/shop',
-            color: '#f5ac73'
-          }
-        ];
-
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Container maxWidth="md" sx={{ pt: 12, pb: 8 }}>
+            <Container maxWidth="lg" sx={{ pt: 12, pb: 8 }}>
               <Typography variant="h3" gutterBottom sx={{
                 background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                textAlign: 'center',
-                mb: 4
               }}>
                 About NFL Temp
               </Typography>
 
-              <Card sx={{ mb: 4, background: 'rgba(30, 41, 59, 0.8)' }}>
-                <CardContent>
-                  <Typography variant="h5" gutterBottom>
-                    🌐 Connect With Us
-                  </Typography>
-                  <Grid container spacing={3} sx={{ mt: 2 }}>
-                    {socials.map((social) => (
-                      <Grid item xs={12} sm={4} key={social.name}>
-                        <Button
-                          variant="contained"
-                          fullWidth
-                          href={social.link}
-                          target="_blank"
-                          startIcon={<i className={social.icon} />}
-                          sx={{
-                            py: 2,
-                            background: `linear-gradient(135deg, ${social.color}40, ${social.color}20)`,
-                            '&:hover': {
-                              background: `linear-gradient(135deg, ${social.color}60, ${social.color}40)`,
-                            }
-                          }}
-                        >
-                          {social.name}
-                        </Button>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </CardContent>
-              </Card>
-
-              <Card sx={{ mb: 4, background: 'rgba(30, 41, 59, 0.8)' }}>
-                <CardContent>
-                  <Typography variant="h5" gutterBottom>
-                    💝 Support My Work
-                  </Typography>
-                  <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
-                    <div id="kofi-widget"></div>
-                  </Box>
-                </CardContent>
-              </Card>
-
-              <Button 
-                variant="outlined" 
-                onClick={() => window.location.href = '/'} 
-                sx={{ mt: 4 }}
-                startIcon={<Icon>arrow_back</Icon>}
-              >
-                Back to Home
-              </Button>
+              <Grid container spacing={4}>
+                <Grid item xs={12} md={8}>
+                  <Paper sx={{ p: 4, background: 'rgba(30, 41, 59, 0.8)' }}>
+                    <Typography variant="h5" gutterBottom>
+                      Our Mission
+                    </Typography>
+                    <Typography paragraph>
+                      At NFL Temp, we're dedicated to creating high-quality, innovative scripts for FiveM servers. Our focus is on delivering premium solutions that enhance roleplay experiences and server functionality.
+                    </Typography>
+                    <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
+                      What We Offer
+                    </Typography>
+                    <Typography paragraph>
+                      We specialize in developing advanced scripts for both ESX and QB Core frameworks, ensuring compatibility and optimal performance. Our products are regularly updated and come with dedicated support.
+                    </Typography>
+                    <Button 
+                      variant="contained"
+                      href="https://discord.gg/r8RKJGz4hk"
+                      target="_blank"
+                      sx={{ mt: 2 }}
+                    >
+                      Join Our Community
+                    </Button>
+                  </Paper>
+                </Grid>
+                
+                <Grid item xs={12} md={4}>
+                  <Paper sx={{ p: 4, background: 'rgba(30, 41, 59, 0.8)' }}>
+                    <Typography variant="h5" gutterBottom>
+                      Quick Stats
+                    </Typography>
+                    <Box sx={{ mt: 2 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                        <Icon sx={{ mr: 1, color: 'primary.main' }}>code</Icon>
+                        <Typography>10+ Premium Scripts</Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                        <Icon sx={{ mr: 1, color: 'primary.main' }}>people</Icon>
+                        <Typography>500+ Happy Customers</Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Icon sx={{ mr: 1, color: 'primary.main' }}>support_agent</Icon>
+                        <Typography>24/7 Support Available</Typography>
+                      </Box>
+                    </Box>
+                  </Paper>
+                </Grid>
+              </Grid>
             </Container>
           </ThemeProvider>
         );

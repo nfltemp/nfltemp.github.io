@@ -558,9 +558,15 @@
                   <div className={`panel-section ${isSidebarCollapsed ? 'hidden' : ''}`}>
                     <div className="panel-section-title">Top Customer</div>
                     <div className="recent-payment">
-                      <div className="avatar">
+                      <div className="avatar" style={{ 
+                        width: '48px', // Increased size
+                        height: '48px', // Increased size
+                        overflow: 'hidden',
+                        borderRadius: '50%',
+                        border: '2px solid #3AECF8'
+                      }}>
                         <img 
-                          src="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/logo.png?raw=true"
+                          src="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
                           alt=""
                           style={{ 
                             width: '100%', 
