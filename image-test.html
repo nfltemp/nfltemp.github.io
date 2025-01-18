@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ko-fi Webhook Test - NFL Temp</title>
+    <title>Ko-fi API Test - NFL Temp</title>
     
     <!-- React -->
     <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
@@ -28,18 +28,18 @@
         CssBaseline,
         Button,
         Box,
-        TextField,
         Alert,
         Snackbar,
-        CircularProgress
+        CircularProgress,
+        Stack,
+        TextField,
+        Divider
       } = MaterialUI;
 
       const theme = createTheme({
         palette: {
           mode: 'dark',
-          primary: {
-            main: '#3AECF8',
-          },
+          primary: { main: '#3AECF8' },
           background: {
             default: '#0F172A',
             paper: 'rgba(30, 41, 59, 0.8)',
@@ -47,22 +47,81 @@
         },
       });
 
-      function WebhookTest() {
+      function KofiTest() {
         const [lastWebhook, setLastWebhook] = React.useState(null);
         const [loading, setLoading] = React.useState(false);
         const [error, setError] = React.useState(null);
         const [success, setSuccess] = React.useState(null);
-        const [webhookUrl, setWebhookUrl] = React.useState('');
 
-        const checkWebhook = async () => {
+        const API_KEY = 'KF_API_cbe95e81-4ada-4638-9ae1-8356ddfbbd1b';
+        const PAGE_ID = 'V7V817I0JD';
+
+        // Function to test Ko-fi API
+        const testKofiAPI = async () => {
           setLoading(true);
           setError(null);
           try {
-            const response = await fetch(webhookUrl);
-            if (!response.ok) throw new Error('Failed to fetch webhook data');
+            const response = await fetch(`https://api.ko-fi.com/v1/payments`, {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${API_KEY}`,
+                'Content-Type': 'application/json'
+              }
+            });
+
+            if (!response.ok) throw new Error('Failed to fetch Ko-fi data');
             const data = await response.json();
             setLastWebhook(data);
-            setSuccess('Successfully fetched webhook data!');
+            setSuccess('Successfully fetched Ko-fi data!');
+          } catch (err) {
+            setError(err.message);
+          } finally {
+            setLoading(false);
+          }
+        };
+
+        // Function to simulate a purchase webhook
+        const simulatePurchase = async () => {
+          setLoading(true);
+          setError(null);
+          try {
+            const testData = {
+              verification_token: API_KEY,
+              message_id: `test-${Date.now()}`,
+              timestamp: new Date().toISOString(),
+              type: "Shop Order",
+              is_public: true,
+              from_name: "Test User",
+              message: "Test purchase",
+              amount: "20.00",
+              url: `https://ko-fi.com/${PAGE_ID}`,
+              email: "test@example.com",
+              currency: "USD",
+              is_subscription_payment: false,
+              is_first_subscription_payment: false,
+              kofi_transaction_id: `test-${Date.now()}`,
+              shop_items: [
+                {
+                  direct_link_code: "TESTSCRIPT",
+                  variation_name: "Standard",
+                  quantity: 1
+                }
+              ]
+            };
+
+            setLastWebhook(testData);
+            setSuccess('Simulated purchase webhook data!');
+
+            // Update the recent buyers list if the function exists
+            if (window.updateRecentBuyers) {
+              window.updateRecentBuyers({
+                name: testData.from_name,
+                amount: `$${testData.amount}`,
+                purchase: testData.shop_items[0].direct_link_code,
+                timestamp: testData.timestamp,
+                avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
+              });
+            }
           } catch (err) {
             setError(err.message);
           } finally {
@@ -88,31 +147,39 @@
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}>
-                Ko-fi Webhook Test
+                Ko-fi API Test
               </Typography>
 
               <Paper sx={{ p: 3, mb: 4 }}>
-                <Typography variant="h6" gutterBottom>Webhook Configuration</Typography>
-                <TextField
-                  fullWidth
-                  label="Webhook URL"
-                  value={webhookUrl}
-                  onChange={(e) => setWebhookUrl(e.target.value)}
-                  sx={{ mb: 2 }}
-                />
-                <Button
-                  variant="contained"
-                  onClick={checkWebhook}
-                  disabled={loading || !webhookUrl}
-                  startIcon={loading && <CircularProgress size={20} />}
-                >
-                  Check Latest Webhook
-                </Button>
+                <Typography variant="h6" gutterBottom>API Configuration</Typography>
+                <Typography variant="body2" paragraph color="text.secondary">
+                  Using Ko-fi API Key: {API_KEY.slice(0, 10)}...
+                </Typography>
+                <Typography variant="body2" paragraph color="text.secondary">
+                  Page ID: {PAGE_ID}
+                </Typography>
+                <Stack direction="row" spacing={2}>
+                  <Button
+                    variant="contained"
+                    onClick={testKofiAPI}
+                    disabled={loading}
+                    startIcon={loading && <CircularProgress size={20} />}
+                  >
+                    Test Ko-fi API
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={simulatePurchase}
+                    disabled={loading}
+                  >
+                    Simulate Purchase
+                  </Button>
+                </Stack>
               </Paper>
 
               {lastWebhook && (
                 <Paper sx={{ p: 3 }}>
-                  <Typography variant="h6" gutterBottom>Latest Webhook Data</Typography>
+                  <Typography variant="h6" gutterBottom>Latest Data</Typography>
                   <Box 
                     component="pre"
                     sx={{ 
@@ -154,7 +221,7 @@
       const root = ReactDOM.createRoot(document.getElementById('root'));
       root.render(
         <React.StrictMode>
-          <WebhookTest />
+          <KofiTest />
         </React.StrictMode>
       );
     </script>
