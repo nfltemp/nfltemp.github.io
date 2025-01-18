@@ -14,10 +14,6 @@
     <script src="https://unpkg.com/@mui/material@5.15.5/umd/material-ui.development.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    
-    <!-- Swiper for Carousel -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
   </head>
   <body>
     <div id="root"></div>
@@ -39,102 +35,147 @@
         IconButton,
         createTheme,
         ThemeProvider,
-        CssBaseline
+        CssBaseline,
+        AppBar,
+        Toolbar,
+        Avatar
       } = MaterialUI;
 
-      function ScriptCard({ title, description, images, features, price }) {
-        const [currentImage, setCurrentImage] = React.useState(0);
+      const theme = createTheme({
+        palette: {
+          mode: 'dark',
+          primary: {
+            main: '#3AECF8',
+          },
+          background: {
+            default: '#0F172A',
+            paper: 'rgba(30, 41, 59, 0.8)',
+          },
+        },
+      });
 
+      function Sidebar({ isCollapsed, onToggle }) {
         return (
-          <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-            <Box sx={{ position: 'relative', paddingTop: '56.25%' }}>
-              {images.map((image, index) => (
-                <CardMedia
-                  key={index}
-                  component="img"
-                  image={image}
-                  alt={title}
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    opacity: currentImage === index ? 1 : 0,
-                    transition: 'opacity 0.5s ease',
-                  }}
-                />
-              ))}
-              <Box sx={{
+          <Box
+            sx={{
+              position: 'fixed',
+              left: 0,
+              top: 0,
+              width: isCollapsed ? 60 : 250,
+              height: '100vh',
+              background: 'rgba(30, 41, 59, 0.8)',
+              backdropFilter: 'blur(10px)',
+              borderRight: '1px solid rgba(148, 163, 184, 0.1)',
+              transition: 'width 0.3s ease',
+              zIndex: 1200,
+              overflow: 'hidden',
+            }}
+          >
+            <IconButton
+              onClick={onToggle}
+              sx={{
                 position: 'absolute',
-                bottom: 16,
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                gap: 1
-              }}>
-                {images.map((_, index) => (
+                top: 20,
+                right: isCollapsed ? 10 : 20,
+                color: 'white',
+                backgroundColor: 'rgba(58, 236, 248, 0.1)',
+                '&:hover': {
+                  backgroundColor: 'rgba(58, 236, 248, 0.2)',
+                },
+              }}
+            >
+              <Icon>{isCollapsed ? 'menu' : 'menu_open'}</Icon>
+            </IconButton>
+
+            <Box sx={{ 
+              pt: 10,
+              opacity: isCollapsed ? 0 : 1,
+              transition: 'opacity 0.3s ease',
+              visibility: isCollapsed ? 'hidden' : 'visible',
+            }}>
+              <Stack spacing={0.5}>
+                {[
+                  { text: 'Home', href: '/' },
+                  { text: 'Packages', href: '/packages.html' },
+                  { text: 'ESX Scripts', href: '/esx-scripts.html' },
+                  { text: 'QB Core Scripts', href: '/qb-scripts.html' },
+                  { text: 'About', href: '/about.html' },
+                ].map((item) => (
                   <Box
-                    key={index}
-                    onClick={() => setCurrentImage(index)}
+                    key={item.text}
+                    onClick={() => window.location.href = item.href}
                     sx={{
-                      width: 8,
-                      height: 8,
-                      borderRadius: '50%',
-                      backgroundColor: currentImage === index ? 'primary.main' : 'rgba(255,255,255,0.5)',
-                      cursor: 'pointer'
+                      py: 1.5,
+                      px: 3,
+                      color: item.href === '/esx-scripts.html' ? 'white' : 'text.secondary',
+                      cursor: 'pointer',
+                      backgroundColor: item.href === '/esx-scripts.html' ? 'rgba(58, 236, 248, 0.1)' : 'transparent',
+                      '&:hover': {
+                        background: 'rgba(58, 236, 248, 0.1)',
+                        color: 'white',
+                      },
                     }}
-                  />
-                ))}
-              </Box>
-            </Box>
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                {title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" paragraph>
-                {description}
-              </Typography>
-              <Typography variant="h6" gutterBottom>
-                Features:
-              </Typography>
-              <Stack spacing={1}>
-                {features.map((feature, index) => (
-                  <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Icon sx={{ color: 'primary.main' }}>check_circle</Icon>
-                    <Typography variant="body2">{feature}</Typography>
+                  >
+                    {item.text}
                   </Box>
                 ))}
               </Stack>
-              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 2 }}>
-                <Chip size="small" label="ESX Compatible" />
-                <Chip size="small" label="Open Source" />
-                <Chip size="small" label="Regular Updates" />
-              </Stack>
-            </CardContent>
-            <CardActions sx={{ p: 2, pt: 0 }}>
-              <Button
-                variant="contained"
-                fullWidth
-                href="https://ko-fi.com/nfltemp/shop"
-                sx={{ fontSize: '1.1rem' }}
-              >
-                Purchase Now - ${price}
-              </Button>
-            </CardActions>
-          </Card>
+
+              {/* Top Customer Section */}
+              <Box sx={{ mt: 4, px: 3 }}>
+                <Typography variant="subtitle2" color="white" gutterBottom>
+                  Top Customer
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <Avatar>AB</Avatar>
+                  <Box>
+                    <Typography variant="body2" color="white">AB</Typography>
+                    <Typography variant="caption" color="text.secondary">$20.00</Typography>
+                  </Box>
+                </Box>
+              </Box>
+
+              {/* Recent Payments Section */}
+              <Box sx={{ mt: 4, px: 3 }}>
+                <Typography variant="subtitle2" color="white" gutterBottom>
+                  Recent Payments
+                </Typography>
+                <Stack spacing={1}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <Avatar sx={{ width: 32, height: 32 }}>AB</Avatar>
+                    <Typography 
+                      variant="body2" 
+                      color="white"
+                      sx={{ 
+                        cursor: 'help',
+                        '&:hover': { color: 'primary.main' }
+                      }}
+                      title="[QB/ESX]Advanced Drug Farming & Dealing w/Battle Pass System"
+                    >
+                      AB
+                    </Typography>
+                  </Box>
+                  {Array(4).fill(null).map((_, i) => (
+                    <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Avatar sx={{ width: 32, height: 32, opacity: 0.5 }}>--</Avatar>
+                      <Typography variant="body2" color="text.secondary">---</Typography>
+                    </Box>
+                  ))}
+                </Stack>
+              </Box>
+            </Box>
+          </Box>
         );
       }
 
       function ESXScripts() {
+        const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
+
         const scripts = [
           {
             title: "Advanced Drug & Battle Pass System",
             description: "Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration. The Drug System includes detailed mechanics for harvesting, crafting, and distributing various substances, adding depth to criminal roleplay.",
-            images: [
-              "https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/battlepass.PNG?raw=true",
-              // Add more image URLs for carousel
-            ],
+            image: "https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/battlepass.PNG?raw=true",
             features: [
               "Detailed Drug Farming System",
               "Battle Pass Integration",
@@ -143,29 +184,119 @@
               "Customizable Missions"
             ],
             price: "20.00"
-          },
-          // Add more ESX scripts here
+          }
         ];
 
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Container maxWidth="lg" sx={{ pt: 12, pb: 8 }}>
-              <Typography variant="h3" gutterBottom>
-                ESX Scripts
-              </Typography>
-              <Typography variant="h5" color="text.secondary" paragraph>
-                Premium ESX framework scripts for your FiveM server
-              </Typography>
+            <Box sx={{ background: '#0F172A', minHeight: '100vh' }}>
+              <Sidebar 
+                isCollapsed={isSidebarCollapsed} 
+                onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)} 
+              />
               
-              <Grid container spacing={4}>
-                {scripts.map((script, index) => (
-                  <Grid item xs={12} key={index}>
-                    <ScriptCard {...script} />
-                  </Grid>
-                ))}
-              </Grid>
-            </Container>
+              <AppBar 
+                position="fixed" 
+                elevation={0}
+                sx={{ 
+                  background: 'rgba(15, 23, 42, 0.8)',
+                  backdropFilter: 'blur(10px)',
+                  borderBottom: '1px solid rgba(148, 163, 184, 0.1)',
+                  ml: isSidebarCollapsed ? '60px' : '250px',
+                  width: `calc(100% - ${isSidebarCollapsed ? '60px' : '250px'})`,
+                  transition: 'margin-left 0.3s ease, width 0.3s ease',
+                }}
+              >
+                <Toolbar>
+                  <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    ESX Scripts
+                  </Typography>
+                </Toolbar>
+              </AppBar>
+
+              <Container 
+                maxWidth="lg" 
+                sx={{ 
+                  pt: 10, 
+                  pb: 8,
+                  ml: isSidebarCollapsed ? '60px' : '250px',
+                  transition: 'margin-left 0.3s ease',
+                  width: `calc(100% - ${isSidebarCollapsed ? '60px' : '250px'})`,
+                }}
+              >
+                <Typography variant="h3" gutterBottom sx={{
+                  background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
+                  ESX Scripts
+                </Typography>
+
+                <Grid container spacing={4}>
+                  {scripts.map((script, index) => (
+                    <Grid item xs={12} key={index}>
+                      <Card sx={{ 
+                        background: 'rgba(30, 41, 59, 0.8)',
+                        backdropFilter: 'blur(10px)',
+                        border: '1px solid rgba(148, 163, 184, 0.1)',
+                      }}>
+                        <CardMedia
+                          component="img"
+                          height="400"
+                          image={script.image}
+                          alt={script.title}
+                        />
+                        <CardContent>
+                          <Typography variant="h4" gutterBottom sx={{ 
+                            fontWeight: 'bold',
+                            background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                            backgroundClip: 'text',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                          }}>
+                            {script.title}
+                          </Typography>
+                          <Typography variant="body1" color="text.secondary" paragraph>
+                            {script.description}
+                          </Typography>
+                          
+                          <Typography variant="h6" gutterBottom>Features:</Typography>
+                          <Stack spacing={1} sx={{ mb: 3 }}>
+                            {script.features.map((feature, idx) => (
+                              <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <Icon sx={{ color: 'primary.main' }}>check_circle</Icon>
+                                <Typography>{feature}</Typography>
+                              </Box>
+                            ))}
+                          </Stack>
+
+                          <Stack direction="row" spacing={1} flexWrap="wrap">
+                            <Chip size="small" label="ESX Compatible" />
+                            <Chip size="small" label="QB Core Ready" />
+                            <Chip size="small" label="Open Source" />
+                          </Stack>
+                        </CardContent>
+                        <CardActions sx={{ p: 3 }}>
+                          <Button
+                            variant="contained"
+                            fullWidth
+                            href="https://ko-fi.com/nfltemp/shop"
+                            sx={{ 
+                              fontSize: '1.2rem',
+                              py: 1.5
+                            }}
+                          >
+                            Purchase Now - ${script.price}
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Container>
+            </Box>
           </ThemeProvider>
         );
       }
