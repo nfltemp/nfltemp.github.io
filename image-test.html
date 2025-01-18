@@ -67,17 +67,16 @@
             const issueData = await response.json();
             console.log('Raw issue body:', issueData.body); // Debug log
             
-            // More robust JSON extraction
-            const bodyText = issueData.body;
-            const jsonMatch = bodyText.match(/```json\n([\s\S]*?)\n```/) || 
-                            bodyText.match(/```([\s\S]*?)```/) ||
-                            [null, bodyText];
-            
-            const cleanJson = jsonMatch[1]
-              .replace(/^\s+|\s+$/g, '')  // Remove leading/trailing whitespace
-              .replace(/\\n/g, '')        // Remove escaped newlines
-              .replace(/\\/g, '')         // Remove extra backslashes
-              .replace(/\r/g, '');        // Remove carriage returns
+            // Clean up the JSON string - remove comments and fix formatting
+            let cleanJson = issueData.body
+              .replace(/\/\/.+/g, '')         // Remove single line comments
+              .replace(/\/\*[\s\S]*?\*\//g, '') // Remove multi-line comments
+              .replace(/```json\n?/g, '')     // Remove ```json
+              .replace(/```/g, '')            // Remove closing ```
+              .replace(/^\s+|\s+$/g, '')      // Remove leading/trailing whitespace
+              .replace(/\n/g, '')             // Remove newlines
+              .replace(/,\s*}/g, '}')         // Remove trailing commas
+              .replace(/,\s*]/g, ']');        // Remove trailing commas in arrays
 
             console.log('Cleaned JSON:', cleanJson); // Debug log
             
