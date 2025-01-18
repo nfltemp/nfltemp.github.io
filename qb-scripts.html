@@ -14,6 +14,10 @@
     <script src="https://unpkg.com/@mui/material@5.15.5/umd/material-ui.development.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    
+    <!-- Swiper for Carousel -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
   </head>
   <body>
     <div id="root"></div>
@@ -36,9 +40,6 @@
         createTheme,
         ThemeProvider,
         CssBaseline,
-        AppBar,
-        Toolbar,
-        Avatar,
         Accordion,
         AccordionSummary,
         AccordionDetails
@@ -57,39 +58,134 @@
         },
       });
 
-      // Reuse the same Sidebar component from ESX scripts
-      function Sidebar({ isCollapsed, onToggle }) {
-        // ... Same Sidebar component as in esx-scripts.html ...
+      function FeatureList({ features }) {
+        return (
+          <Stack spacing={2}>
+            {features.map((category, index) => (
+              <Accordion key={index} sx={{ background: 'rgba(30, 41, 59, 0.6)' }}>
+                <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
+                  <Typography variant="h6">{category.title}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Stack spacing={1}>
+                    {category.items.map((item, idx) => (
+                      <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Icon sx={{ color: 'primary.main', fontSize: '1rem' }}>check_circle</Icon>
+                        <Typography variant="body2">{item}</Typography>
+                      </Box>
+                    ))}
+                  </Stack>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </Stack>
+        );
       }
 
-      function FeatureAccordion({ title, items }) {
+      function ScriptCard({ title, description, images, features, price }) {
+        const [currentImage, setCurrentImage] = React.useState(0);
+
         return (
-          <Accordion sx={{ background: 'rgba(30, 41, 59, 0.6)' }}>
-            <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
-              <Typography variant="h6">{title}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Stack spacing={1}>
-                {items.map((item, idx) => (
-                  <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Icon sx={{ color: 'primary.main', fontSize: '1rem' }}>check_circle</Icon>
-                    <Typography variant="body2">{item}</Typography>
-                  </Box>
+          <Card sx={{ 
+            background: 'rgba(30, 41, 59, 0.8)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(148, 163, 184, 0.1)',
+          }}>
+            <Box sx={{ position: 'relative', paddingTop: '56.25%' }}>
+              {images.map((image, index) => (
+                <CardMedia
+                  key={index}
+                  component="img"
+                  image={image}
+                  alt={title}
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    opacity: currentImage === index ? 1 : 0,
+                    transition: 'opacity 0.5s ease',
+                  }}
+                />
+              ))}
+              <Box sx={{
+                position: 'absolute',
+                bottom: 16,
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                gap: 1
+              }}>
+                {images.map((_, index) => (
+                  <Box
+                    key={index}
+                    onClick={() => setCurrentImage(index)}
+                    sx={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: '50%',
+                      backgroundColor: currentImage === index ? 'primary.main' : 'rgba(255,255,255,0.5)',
+                      cursor: 'pointer'
+                    }}
+                  />
                 ))}
+              </Box>
+            </Box>
+            <CardContent>
+              <Typography variant="h4" gutterBottom sx={{ 
+                fontWeight: 'bold',
+                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                {title}
+              </Typography>
+              <Typography variant="body1" color="text.secondary" paragraph>
+                {description}
+              </Typography>
+              
+              <FeatureList features={features} />
+
+              <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 3 }}>
+                <Chip 
+                  size="small" 
+                  label="QB Core Only" 
+                  sx={{ 
+                    background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                    color: 'white'
+                  }}
+                />
+                <Chip size="small" label="Open Source" />
+                <Chip size="small" label="Regular Updates" />
               </Stack>
-            </AccordionDetails>
-          </Accordion>
+            </CardContent>
+            <CardActions sx={{ p: 3 }}>
+              <Button
+                variant="contained"
+                fullWidth
+                href="https://ko-fi.com/nfltemp/shop"
+                sx={{ 
+                  fontSize: '1.2rem',
+                  py: 1.5
+                }}
+              >
+                Purchase Now - ${price}
+              </Button>
+            </CardActions>
+          </Card>
         );
       }
 
       function QBScripts() {
-        const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
-
         const scripts = [
           {
             title: "Advanced Police Job",
             description: "Transform your server's law enforcement experience with our comprehensive police job script, featuring advanced mechanics and immersive features.",
-            image: "https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/policejob.PNG?raw=true",
+            images: [
+              "https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/policejob.png?raw=true"
+            ],
             features: [
               {
                 title: "🚔 Core Features",
@@ -126,7 +222,9 @@
           {
             title: "Advanced Hitman Script",
             description: "Dive into the thrilling world of FiveM with this professional Hitman Script. Perfect for enhancing your roleplay experience with unique missions and challenges.",
-            image: "https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/hitman.PNG?raw=true",
+            images: [
+              "https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/packages/hitman.png?raw=true"
+            ],
             features: [
               {
                 title: "🎯 Core Features",
@@ -154,113 +252,27 @@
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Box sx={{ background: '#0F172A', minHeight: '100vh' }}>
-              <Sidebar 
-                isCollapsed={isSidebarCollapsed} 
-                onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)} 
-              />
+            <Container maxWidth="lg" sx={{ pt: 12, pb: 8 }}>
+              <Typography variant="h3" gutterBottom sx={{
+                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                QB Core Scripts
+              </Typography>
+              <Typography variant="h5" color="text.secondary" paragraph>
+                Premium QB Core framework scripts for your FiveM server
+              </Typography>
               
-              <AppBar 
-                position="fixed" 
-                elevation={0}
-                sx={{ 
-                  background: 'rgba(15, 23, 42, 0.8)',
-                  backdropFilter: 'blur(10px)',
-                  borderBottom: '1px solid rgba(148, 163, 184, 0.1)',
-                  ml: isSidebarCollapsed ? '60px' : '250px',
-                  width: `calc(100% - ${isSidebarCollapsed ? '60px' : '250px'})`,
-                  transition: 'margin-left 0.3s ease, width 0.3s ease',
-                }}
-              >
-                <Toolbar>
-                  <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    QB Core Scripts
-                  </Typography>
-                </Toolbar>
-              </AppBar>
-
-              <Container 
-                maxWidth="lg" 
-                sx={{ 
-                  pt: 10, 
-                  pb: 8,
-                  ml: isSidebarCollapsed ? '60px' : '250px',
-                  transition: 'margin-left 0.3s ease',
-                  width: `calc(100% - ${isSidebarCollapsed ? '60px' : '250px'})`,
-                }}
-              >
-                <Typography variant="h3" gutterBottom sx={{
-                  background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}>
-                  QB Core Scripts
-                </Typography>
-
-                <Grid container spacing={4}>
-                  {scripts.map((script, index) => (
-                    <Grid item xs={12} key={index}>
-                      <Card sx={{ 
-                        background: 'rgba(30, 41, 59, 0.8)',
-                        backdropFilter: 'blur(10px)',
-                        border: '1px solid rgba(148, 163, 184, 0.1)',
-                      }}>
-                        <CardMedia
-                          component="img"
-                          height="400"
-                          image={script.image}
-                          alt={script.title}
-                        />
-                        <CardContent>
-                          <Typography variant="h4" gutterBottom sx={{ 
-                            fontWeight: 'bold',
-                            background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                            backgroundClip: 'text',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                          }}>
-                            {script.title}
-                          </Typography>
-                          <Typography variant="body1" color="text.secondary" paragraph>
-                            {script.description}
-                          </Typography>
-                          
-                          <Stack spacing={2} sx={{ mb: 3 }}>
-                            {script.features.map((category, idx) => (
-                              <FeatureAccordion 
-                                key={idx}
-                                title={category.title}
-                                items={category.items}
-                              />
-                            ))}
-                          </Stack>
-
-                          <Stack direction="row" spacing={1} flexWrap="wrap">
-                            <Chip size="small" label="QB Core Only" />
-                            <Chip size="small" label="High Performance" />
-                            <Chip size="small" label="Open Source" />
-                          </Stack>
-                        </CardContent>
-                        <CardActions sx={{ p: 3 }}>
-                          <Button
-                            variant="contained"
-                            fullWidth
-                            href="https://ko-fi.com/nfltemp/shop"
-                            sx={{ 
-                              fontSize: '1.2rem',
-                              py: 1.5
-                            }}
-                          >
-                            Purchase Now - ${script.price}
-                          </Button>
-                        </CardActions>
-                      </Card>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Container>
-            </Box>
+              <Grid container spacing={4}>
+                {scripts.map((script, index) => (
+                  <Grid item xs={12} key={index}>
+                    <ScriptCard {...script} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Container>
           </ThemeProvider>
         );
       }

@@ -173,13 +173,10 @@
         color: #fff;
       }
 
+      /* Adjust main content margin when sidebar is collapsed */
       .MuiContainer-root {
         transition: margin-left 0.3s ease;
-        margin-left: 250px;
-      }
-
-      .MuiContainer-root.sidebar-collapsed {
-        margin-left: 60px;
+        margin-left: ${isSidebarCollapsed ? '60px' : '250px'};
       }
     </style>
 
@@ -348,11 +345,11 @@
       }
 
       function App() {
-        const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
         const [trails, setTrails] = React.useState([]);
         const [trailId, setTrailId] = React.useState(0);
         const lastMousePos = React.useRef({ x: 0, y: 0 });
         const frameRef = React.useRef();
+        const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
 
         React.useEffect(() => {
           const handleMouseMove = (e) => {
@@ -479,7 +476,7 @@
                   style={{ 
                     left: trail.x + 'px',
                     top: trail.y + 'px',
-                    background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                    background: trail.color,
                   }}
                 />
               ))}
@@ -491,9 +488,6 @@
                   background: 'rgba(15, 23, 42, 0.8)',
                   backdropFilter: 'blur(10px)',
                   borderBottom: '1px solid rgba(148, 163, 184, 0.1)',
-                  ml: isSidebarCollapsed ? '60px' : '250px',
-                  width: `calc(100% - ${isSidebarCollapsed ? '60px' : '250px'})`,
-                  transition: 'margin-left 0.3s ease, width 0.3s ease',
                 }}
               >
                 <Toolbar sx={{ 
@@ -532,124 +526,65 @@
                 </Toolbar>
               </AppBar>
 
-              <Box
-                sx={{
-                  position: 'fixed',
-                  left: 0,
-                  top: 0,
-                  width: isSidebarCollapsed ? 60 : 250,
-                  height: '100vh',
-                  background: 'rgba(30, 41, 59, 0.8)',
-                  backdropFilter: 'blur(10px)',
-                  borderRight: '1px solid rgba(148, 163, 184, 0.1)',
-                  transition: 'width 0.3s ease',
-                  zIndex: 1200,
-                  overflow: 'hidden',
-                }}
-              >
-                <IconButton
+              <div className={`left-panel ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+                <IconButton 
                   onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-                  sx={{
+                  sx={{ 
                     position: 'absolute',
                     top: 20,
-                    right: isSidebarCollapsed ? 10 : 20,
+                    right: -20,
+                    backgroundColor: 'rgba(30, 41, 59, 0.8)',
                     color: 'white',
-                    backgroundColor: 'rgba(58, 236, 248, 0.1)',
                     '&:hover': {
-                      backgroundColor: 'rgba(58, 236, 248, 0.2)',
-                    },
+                      backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                    }
                   }}
                 >
                   <Icon>{isSidebarCollapsed ? 'menu' : 'menu_open'}</Icon>
                 </IconButton>
 
-                <Box sx={{ 
-                  pt: 10,
-                  opacity: isSidebarCollapsed ? 0 : 1,
-                  transition: 'opacity 0.3s ease',
-                  visibility: isSidebarCollapsed ? 'hidden' : 'visible',
-                }}>
-                  <Stack spacing={0.5}>
-                    {[
-                      { text: 'Home', href: '/' },
-                      { text: 'Packages', href: '/packages.html' },
-                      { text: 'ESX Scripts', href: '/esx-scripts.html' },
-                      { text: 'QB Core Scripts', href: '/qb-scripts.html' },
-                      { text: 'About', href: '/about.html' },
-                    ].map((item) => (
-                      <Box
-                        key={item.text}
-                        onClick={() => window.location.href = item.href}
-                        sx={{
-                          py: 1.5,
-                          px: 3,
-                          color: 'text.secondary',
-                          cursor: 'pointer',
-                          '&:hover': {
-                            background: 'rgba(58, 236, 248, 0.1)',
-                            color: 'white',
-                          },
-                        }}
-                      >
-                        {item.text}
-                      </Box>
-                    ))}
-                  </Stack>
+                <div className={`panel-content ${isSidebarCollapsed ? 'hidden' : ''}`}>
+                  <div className="panel-item" onClick={() => window.location.href = '/'}>Home</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/packages.html'}>Packages</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/esx-scripts.html'}>ESX Scripts</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/qb-scripts.html'}>QB Core Scripts</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/about.html'}>About</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/image-test.html'}>Image Tests</div>
 
-                  {/* Top Customer Section */}
-                  <Box sx={{ mt: 4, px: 3 }}>
-                    <Typography variant="subtitle2" color="white" gutterBottom>
-                      Top Customer
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                      <Avatar src="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/logo.PNG?raw=true" />
-                      <Box>
-                        <Typography variant="body2" color="white">AB</Typography>
-                        <Typography variant="caption" color="text.secondary">$20.00</Typography>
-                      </Box>
-                    </Box>
-                  </Box>
+                  <div className={`panel-section ${isSidebarCollapsed ? 'hidden' : ''}`}>
+                    <div className="panel-section-title">Top Customer</div>
+                    <div className="recent-payment">
+                      <div className="avatar">
+                        <img 
+                          src="https://github.com/nfltemp/nfltemp.github.io/blob/main/public/images/logo.png?raw=true"
+                          alt=""
+                          style={{ 
+                            width: '100%', 
+                            height: '100%', 
+                            objectFit: 'cover',
+                            borderRadius: '50%'
+                          }} 
+                        />
+                      </div>
+                      <div>
+                        <div style={{ color: '#fff' }}>AB</div>
+                        <div style={{ color: '#94A3B8', fontSize: '0.8rem' }}>$20.00</div>
+                      </div>
+                    </div>
+                  </div>
 
-                  {/* Recent Payments Section */}
-                  <Box sx={{ mt: 4, px: 3 }}>
-                    <Typography variant="subtitle2" color="white" gutterBottom>
-                      Recent Payments
-                    </Typography>
-                    <Stack spacing={1}>
-                      {/* AB's payment */}
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <Avatar sx={{ width: 32, height: 32 }}>AB</Avatar>
-                        <Typography 
-                          variant="body2" 
-                          color="white"
-                          sx={{ 
-                            cursor: 'help',
-                            '&:hover': { color: 'primary.main' }
-                          }}
-                          title="[QB/ESX]Advanced Drug Farming & Dealing w/Battle Pass System"
-                        >
-                          AB
-                        </Typography>
-                      </Box>
-                      {/* Placeholder payments */}
-                      {Array(4).fill(null).map((_, i) => (
-                        <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                          <Avatar sx={{ width: 32, height: 32, opacity: 0.5 }}>--</Avatar>
-                          <Typography variant="body2" color="text.secondary">---</Typography>
-                        </Box>
-                      ))}
-                    </Stack>
-                  </Box>
-                </Box>
-              </Box>
+                  <div className={`panel-section ${isSidebarCollapsed ? 'hidden' : ''}`}>
+                    <RecentPayments />
+                  </div>
+                </div>
+              </div>
 
               <Container 
                 maxWidth="lg" 
-                className={isSidebarCollapsed ? 'sidebar-collapsed' : ''}
                 sx={{ 
-                  pt: 6, 
+                  pt: 6,
                   pb: 8,
-                  width: `calc(100% - ${isSidebarCollapsed ? '60px' : '250px'})`,
+                  pl: '280px',
                   maxWidth: '1100px !important',
                 }}
               >
