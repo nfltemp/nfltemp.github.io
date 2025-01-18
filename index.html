@@ -105,37 +105,12 @@
         background: rgba(30, 41, 59, 0.8);
         padding-top: 80px;
         border-right: 1px solid rgba(148, 163, 184, 0.1);
-        transition: all 0.3s ease;
+        transition: width 0.3s ease;
         z-index: 1000;
       }
 
-      /* Add mobile styles */
-      @media (max-width: 768px) {
-        .left-panel {
-          transform: translateX(-100%);
-          width: 100%;
-        }
-
-        .left-panel.mobile-open {
-          transform: translateX(0);
-        }
-
-        .mobile-menu-button {
-          display: block !important;
-        }
-
-        .MuiContainer-root {
-          padding-left: 16px !important;
-          margin-left: 0 !important;
-        }
-      }
-
-      .mobile-menu-button {
-        display: none;
-        position: fixed;
-        bottom: 16px;
-        left: 16px;
-        z-index: 1001;
+      .left-panel.collapsed {
+        width: 60px;
       }
 
       .panel-content {
@@ -378,7 +353,7 @@
         const [trailId, setTrailId] = React.useState(0);
         const lastMousePos = React.useRef({ x: 0, y: 0 });
         const frameRef = React.useRef();
-        const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+        const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
 
         React.useEffect(() => {
           const handleMouseMove = (e) => {
@@ -494,10 +469,6 @@
           );
         }
 
-        const toggleMobileMenu = () => {
-          setIsMobileMenuOpen(!isMobileMenuOpen);
-        };
-
         return (
           <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -559,43 +530,31 @@
                 </Toolbar>
               </AppBar>
 
-              <div className={`left-panel ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+              <div className={`left-panel ${isSidebarCollapsed ? 'collapsed' : ''}`}>
                 <IconButton 
-                  onClick={toggleMobileMenu}
+                  onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
                   sx={{ 
                     position: 'absolute',
                     top: 20,
-                    right: 20,
-                    display: { xs: 'block', md: 'none' },
-                    color: 'white'
+                    right: -20,
+                    backgroundColor: 'rgba(30, 41, 59, 0.8)',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                    }
                   }}
                 >
-                  <Icon>close</Icon>
+                  <Icon>{isSidebarCollapsed ? 'menu' : 'menu_open'}</Icon>
                 </IconButton>
 
-                <div className="panel-content">
-                  <div className="panel-item" onClick={() => {
-                    window.location.href = '/';
-                    setIsMobileMenuOpen(false);
-                  }}>Home</div>
-                  <div className="panel-item" onClick={() => {
-                    window.location.href = '/packages.html';
-                    setIsMobileMenuOpen(false);
-                  }}>Packages</div>
-                  <div className="panel-item" onClick={() => {
-                    window.location.href = '/esx-scripts.html';
-                    setIsMobileMenuOpen(false);
-                  }}>ESX Scripts</div>
-                  <div className="panel-item" onClick={() => {
-                    window.location.href = '/qb-scripts.html';
-                    setIsMobileMenuOpen(false);
-                  }}>QB Core Scripts</div>
-                  <div className="panel-item" onClick={() => {
-                    window.location.href = '/about.html';
-                    setIsMobileMenuOpen(false);
-                  }}>About</div>
+                <div className={`panel-content ${isSidebarCollapsed ? 'hidden' : ''}`}>
+                  <div className="panel-item" onClick={() => window.location.href = '/'}>Home</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/packages.html'}>Packages</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/esx-scripts.html'}>ESX Scripts</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/qb-scripts.html'}>QB Core Scripts</div>
+                  <div className="panel-item" onClick={() => window.location.href = '/about.html'}>About</div>
 
-                  <div className={`panel-section ${isMobileMenuOpen ? 'hidden' : ''}`}>
+                  <div className={`panel-section ${isSidebarCollapsed ? 'hidden' : ''}`}>
                     <div className="panel-section-title">Top Customer of the Month</div>
                     <div className="recent-payment">
                       <div className="avatar" style={{ 
@@ -623,7 +582,7 @@
                     </div>
                   </div>
 
-                  <div className={`panel-section ${isMobileMenuOpen ? 'hidden' : ''}`}>
+                  <div className={`panel-section ${isSidebarCollapsed ? 'hidden' : ''}`}>
                     <RecentPayments />
                   </div>
                 </div>
@@ -634,7 +593,7 @@
                 sx={{ 
                   pt: 6,
                   pb: 8,
-                  pl: { xs: '16px', md: '280px' },
+                  pl: '280px',
                   maxWidth: '1100px !important',
                 }}
               >
