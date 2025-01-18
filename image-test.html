@@ -65,15 +65,25 @@
             if (!response.ok) throw new Error('Failed to fetch issue data');
             
             const issueData = await response.json();
+            console.log('Raw issue body:', issueData.body); // Debug log
             
-            // Clean up the issue body to get valid JSON
-            const bodyText = issueData.body
-              .replace(/```json\n/g, '') // Remove ```json
-              .replace(/```/g, '')       // Remove closing ```
-              .trim();                   // Remove extra whitespace
+            // More robust JSON extraction
+            const bodyText = issueData.body;
+            const jsonMatch = bodyText.match(/```json\n([\s\S]*?)\n```/) || 
+                            bodyText.match(/```([\s\S]*?)```/) ||
+                            [null, bodyText];
+            
+            const cleanJson = jsonMatch[1]
+              .replace(/^\s+|\s+$/g, '')  // Remove leading/trailing whitespace
+              .replace(/\\n/g, '')        // Remove escaped newlines
+              .replace(/\\/g, '')         // Remove extra backslashes
+              .replace(/\r/g, '');        // Remove carriage returns
+
+            console.log('Cleaned JSON:', cleanJson); // Debug log
             
             try {
-              const purchaseData = JSON.parse(bodyText);
+              const purchaseData = JSON.parse(cleanJson);
+              console.log('Parsed data:', purchaseData); // Debug log
               setLastWebhook(purchaseData);
               setSuccess('Successfully fetched latest purchase data!');
 
@@ -82,8 +92,9 @@
                 window.updateRecentBuyers(purchaseData.recentBuyers[0]);
               }
             } catch (jsonError) {
-              console.error('JSON Parse Error:', bodyText);
-              setError('Failed to parse purchase data. Check console for details.');
+              console.error('JSON Parse Error:', jsonError);
+              console.error('Failed to parse:', cleanJson);
+              setError(`Failed to parse purchase data: ${jsonError.message}`);
             }
           } catch (err) {
             setError(err.message);
