@@ -5,51 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NFL Temp - FiveM Scripts</title>
     
-    <!-- React and ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
+    <!-- React and Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
     <!-- Material UI -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <script src="https://unpkg.com/@mui/material@latest/umd/material-ui.production.min.js"></script>
+    
+    <!-- Discord Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <!-- Your CSS -->
     <style>
-      body {
-        margin: 0;
-        font-family: 'Roboto', sans-serif;
-        background-color: #121212;
-        color: white;
+      :root {
+        --primary-color: #1976d2;
+        --background-dark: #121212;
+        --card-bg: #1e1e1e;
+        --text-primary: #ffffff;
+        --text-secondary: #888888;
       }
 
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Roboto', sans-serif;
+        background-color: var(--background-dark);
+        color: var(--text-primary);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Mouse trail effect */
+      .trail {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        pointer-events: none;
+        opacity: 0.5;
+        z-index: 9999;
+        transition: transform 0.1s ease;
       }
 
       .header {
-        background-color: #1976d2;
+        background-color: var(--primary-color);
         padding: 1rem;
-        margin-bottom: 2rem;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
       }
 
       .nav {
+        max-width: 1200px;
+        margin: 0 auto;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 0 20px;
       }
 
       .nav-brand {
         color: white;
         font-size: 1.5rem;
         text-decoration: none;
+        font-weight: bold;
       }
 
       .nav-links {
         display: flex;
-        gap: 1rem;
+        gap: 2rem;
       }
 
       .nav-link {
@@ -57,39 +89,118 @@
         text-decoration: none;
         padding: 0.5rem 1rem;
         border-radius: 4px;
+        transition: background-color 0.3s;
       }
 
       .nav-link:hover {
         background-color: rgba(255, 255, 255, 0.1);
       }
 
+      .main-content {
+        margin-top: 80px;
+        padding: 2rem;
+      }
+
       .hero {
         text-align: center;
-        padding: 4rem 0;
+        padding: 6rem 0;
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://via.placeholder.com/1920x1080') center/cover;
+        margin: -2rem -2rem 2rem -2rem;
       }
 
       .hero h1 {
-        font-size: 3rem;
+        font-size: 3.5rem;
         margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
       }
 
       .hero p {
         font-size: 1.25rem;
-        color: #888;
+        color: var(--text-secondary);
         margin-bottom: 2rem;
       }
 
       .button {
-        background-color: #1976d2;
+        background-color: var(--primary-color);
         color: white;
         padding: 0.75rem 1.5rem;
         border-radius: 4px;
         text-decoration: none;
         display: inline-block;
+        transition: transform 0.3s, background-color 0.3s;
       }
 
       .button:hover {
         background-color: #1565c0;
+        transform: translateY(-2px);
+      }
+
+      .categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .category-card {
+        background: var(--card-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s;
+        position: relative;
+      }
+
+      .category-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .category-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .category-content {
+        padding: 1.5rem;
+      }
+
+      .category-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .category-description {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+      }
+
+      .discord-section {
+        text-align: center;
+        padding: 2rem;
+        background: var(--card-bg);
+        margin-top: 4rem;
+      }
+
+      .discord-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: #7289da;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+      }
+
+      .discord-button:hover {
+        background-color: #5b73c7;
+      }
+
+      .discord-icon {
+        font-size: 1.5rem;
       }
     </style>
 
@@ -110,80 +221,202 @@
       <img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=1054321653378177&ev=PageView&noscript=1"/>
     </noscript>
-    <!-- End Meta Pixel Code -->
   </head>
   <body>
-    <header class="header">
-      <nav class="nav container">
-        <a href="/" class="nav-brand">NFL Temp</a>
-        <div class="nav-links">
-          <a href="/" class="nav-link">Home</a>
-          <a href="https://ko-fi.com/nfltemp/shop" class="nav-link">Shop</a>
-          <a href="https://ko-fi.com/nfltemp/shop" class="nav-link">Cart</a>
-        </div>
-      </nav>
-    </header>
+    <div id="root"></div>
 
-    <main class="container">
-      <section class="hero">
-        <h1>Welcome to NFL Temp</h1>
-        <p>Your One-Stop Shop for Premium FiveM Scripts</p>
-        <a href="https://ko-fi.com/nfltemp/shop" class="button">Browse Scripts</a>
-      </section>
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+      const { 
+        AppBar, Toolbar, Typography, Button, Box, Container,
+        Card, CardContent, CardMedia
+      } = MaterialUI;
 
-      <section class="products">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-          <!-- Product Card 1 -->
-          <div style="background: #1e1e1e; border-radius: 8px; overflow: hidden;">
-            <img src="https://via.placeholder.com/300x200" alt="Advanced FiveM Script Bundle" style="width: 100%; height: 200px; object-fit: cover;">
-            <div style="padding: 1rem;">
-              <h3>Advanced FiveM Script Bundle</h3>
-              <p style="color: #888;">A comprehensive collection of essential FiveM scripts for your server.</p>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                <span style="color: #1976d2; font-size: 1.25rem;">$49.99</span>
-                <a href="https://ko-fi.com/nfltemp/shop" class="button">Buy Now</a>
-              </div>
-            </div>
-          </div>
+      function MouseTrail({ x, y }) {
+        return (
+          <div 
+            className="trail" 
+            style={{ 
+              left: x + 'px',
+              top: y + 'px'
+            }}
+          />
+        );
+      }
 
-          <!-- Product Card 2 -->
-          <div style="background: #1e1e1e; border-radius: 8px; overflow: hidden;">
-            <img src="https://via.placeholder.com/300x200" alt="Premium Server Tools" style="width: 100%; height: 200px; object-fit: cover;">
-            <div style="padding: 1rem;">
-              <h3>Premium Server Tools</h3>
-              <p style="color: #888;">Professional-grade tools to enhance your server management capabilities.</p>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                <span style="color: #1976d2; font-size: 1.25rem;">$39.99</span>
-                <a href="https://ko-fi.com/nfltemp/shop" class="button">Buy Now</a>
-              </div>
-            </div>
-          </div>
+      function App() {
+        const [trails, setTrails] = useState([]);
+        const [trailId, setTrailId] = useState(0);
 
-          <!-- Product Card 3 -->
-          <div style="background: #1e1e1e; border-radius: 8px; overflow: hidden;">
-            <img src="https://via.placeholder.com/300x200" alt="Custom UI Package" style="width: 100%; height: 200px; object-fit: cover;">
-            <div style="padding: 1rem;">
-              <h3>Custom UI Package</h3>
-              <p style="color: #888;">Beautiful and responsive UI elements for your FiveM server.</p>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                <span style="color: #1976d2; font-size: 1.25rem;">$29.99</span>
-                <a href="https://ko-fi.com/nfltemp/shop" class="button">Buy Now</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+        useEffect(() => {
+          const handleMouseMove = (e) => {
+            const newTrail = {
+              id: trailId,
+              x: e.clientX,
+              y: e.clientY
+            };
 
-    <script>
-      // Track purchase events
-      document.querySelectorAll('.button').forEach(button => {
-        button.addEventListener('click', () => {
+            setTrails(prev => [...prev, newTrail]);
+            setTrailId(prev => prev + 1);
+
+            setTimeout(() => {
+              setTrails(prev => prev.filter(trail => trail.id !== newTrail.id));
+            }, 500);
+          };
+
+          document.addEventListener('mousemove', handleMouseMove);
+          return () => document.removeEventListener('mousemove', handleMouseMove);
+        }, [trailId]);
+
+        const handleBuyClick = () => {
           if (window.fbq) {
-            fbq('track', 'InitiateCheckout');
+            window.fbq('track', 'InitiateCheckout');
           }
-        });
-      });
+        };
+
+        const categories = [
+          {
+            id: 1,
+            title: 'Packages',
+            description: 'Complete script bundles for your server.',
+            image: 'https://via.placeholder.com/300x200'
+          },
+          {
+            id: 2,
+            title: 'ESX Scripts',
+            description: 'Premium ESX framework scripts.',
+            image: 'https://via.placeholder.com/300x200'
+          },
+          {
+            id: 3,
+            title: 'QB Core Scripts',
+            description: 'High-quality QB Core framework scripts.',
+            image: 'https://via.placeholder.com/300x200'
+          }
+        ];
+
+        return (
+          <>
+            {trails.map(trail => (
+              <MouseTrail key={trail.id} x={trail.x} y={trail.y} />
+            ))}
+
+            <AppBar position="fixed">
+              <Toolbar>
+                <Typography variant="h6" component="a" href="/" sx={{ 
+                  flexGrow: 1, 
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  fontWeight: 'bold'
+                }}>
+                  NFL Temp
+                </Typography>
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                  <Button color="inherit" href="/">Home</Button>
+                  <Button color="inherit" href="https://ko-fi.com/nfltemp/shop">Shop</Button>
+                  <Button color="inherit" href="https://ko-fi.com/nfltemp/shop">Cart</Button>
+                </Box>
+              </Toolbar>
+            </AppBar>
+
+            <Box sx={{ mt: '64px' }}>
+              <Box className="hero">
+                <Typography variant="h1" gutterBottom>
+                  Welcome to NFL Temp
+                </Typography>
+                <Typography variant="h5" color="text.secondary" paragraph>
+                  Your One-Stop Shop for Premium FiveM Scripts
+                </Typography>
+                <Button 
+                  variant="contained" 
+                  size="large"
+                  href="https://ko-fi.com/nfltemp/shop"
+                  onClick={handleBuyClick}
+                >
+                  Browse Scripts
+                </Button>
+              </Box>
+
+              <Container maxWidth="lg">
+                <Box sx={{ 
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                  gap: 4,
+                  py: 4
+                }}>
+                  {categories.map(category => (
+                    <Card 
+                      key={category.id}
+                      sx={{ 
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        transition: 'transform 0.3s',
+                        '&:hover': {
+                          transform: 'translateY(-5px)'
+                        }
+                      }}
+                    >
+                      <CardMedia
+                        component="img"
+                        height="200"
+                        image={category.image}
+                        alt={category.title}
+                      />
+                      <CardContent sx={{ flexGrow: 1 }}>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          {category.title}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" paragraph>
+                          {category.description}
+                        </Typography>
+                        <Button 
+                          variant="contained"
+                          href="https://ko-fi.com/nfltemp/shop"
+                          onClick={handleBuyClick}
+                          fullWidth
+                        >
+                          View Scripts
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </Box>
+
+                <Box sx={{ 
+                  textAlign: 'center',
+                  py: 4,
+                  mt: 4,
+                  bgcolor: 'background.paper',
+                  borderRadius: 1
+                }}>
+                  <Typography variant="h4" gutterBottom>
+                    Join our Discord Community
+                  </Typography>
+                  <Typography variant="body1" paragraph>
+                    Get support, updates, and connect with other users
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    href="#"
+                    startIcon={<i className="fab fa-discord" />}
+                    sx={{ bgcolor: '#7289da', '&:hover': { bgcolor: '#5b73c7' } }}
+                  >
+                    Join Discord
+                  </Button>
+                </Box>
+              </Container>
+            </Box>
+          </>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      );
     </script>
   </body>
 </html> 
