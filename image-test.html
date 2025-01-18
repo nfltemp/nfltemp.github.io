@@ -3,150 +3,165 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ko-fi Purchase Monitor - NFL Temp</title>
+    <title>Image Tests - NFL Temp</title>
     
     <!-- React -->
     <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone@7.22.5/babel.min.js"></script>
+
+    <!-- Material UI -->
     <script src="https://unpkg.com/@mui/material@5.15.5/umd/material-ui.development.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   </head>
   <body>
     <div id="root"></div>
 
     <script type="text/babel">
-      // Obfuscated configuration
-      const _0x5f2a=['Z2l0aHViX3BhdF8xMUFPRVlHV1kwUVA3b2RrREVVaEdBX1d6c0NveWZEUVcwOWlXTmhvT3QzRDZ0T3d2aXZzb1R4MkRPTnNleWhic0lOWEZHNVFWT3BKd2FmYXFW'];(function(_0x2838ef,_0x5f2a89){const _0x42b2cb=function(_0x35f4a1){while(--_0x35f4a1){_0x2838ef['push'](_0x2838ef['shift']());}};_0x42b2cb(++_0x5f2a89);}(_0x5f2a,0x1d3));const _0x42b2=function(_0x2838ef,_0x5f2a89){_0x2838ef=_0x2838ef-0x0;let _0x42b2cb=_0x5f2a[_0x2838ef];if(_0x42b2['initialized']===undefined){(function(){const _0x35f4a1=function(){let _0x2f9c7e;try{_0x2f9c7e=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');')();}catch(_0x4db674){_0x2f9c7e=window;}return _0x2f9c7e;};const _0x2f9c7e=_0x35f4a1();const _0x4db674='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x2f9c7e['atob']||(_0x2f9c7e['atob']=function(_0x2838ef){const _0x5f2a89=String(_0x2838ef)['replace'](/=+$/,'');let _0x42b2cb='';for(let _0x35f4a1=0x0,_0x2f9c7e,_0x4db674,_0x3d7b02=0x0;_0x4db674=_0x5f2a89['charAt'](_0x3d7b02++);~_0x4db674&&(_0x2f9c7e=_0x35f4a1%0x4?_0x2f9c7e*0x40+_0x4db674:_0x4db674,_0x35f4a1++%0x4)?_0x42b2cb+=String['fromCharCode'](0xff&_0x2f9c7e>>(-0x2*_0x35f4a1&0x6)):0x0){_0x4db674=_0x4db674['indexOf'](_0x4db674);}return _0x42b2cb;});}());_0x42b2['base64DecodeUnicode']=function(_0x2838ef){const _0x5f2a89=atob(_0x2838ef);const _0x42b2cb=[];for(let _0x35f4a1=0x0,_0x2f9c7e=_0x5f2a89['length'];_0x35f4a1<_0x2f9c7e;_0x35f4a1++){_0x42b2cb[_0x35f4a1]=_0x5f2a89['charCodeAt'](_0x35f4a1);}return String['fromCharCode']['apply'](null,_0x42b2cb);};_0x42b2['data']={};_0x42b2['initialized']=!![];}const _0x35f4a1=_0x42b2['data'][_0x2838ef];if(_0x35f4a1===undefined){_0x42b2cb=_0x42b2['base64DecodeUnicode'](_0x42b2cb);_0x42b2['data'][_0x2838ef]=_0x42b2cb;}else{_0x42b2cb=_0x35f4a1;}return _0x42b2cb;};
-
       const {
         Container,
         Typography,
+        Grid,
         Paper,
         createTheme,
         ThemeProvider,
         CssBaseline,
         Button,
-        Box,
-        Alert,
-        Snackbar,
-        CircularProgress,
-        Stack
+        Box
       } = MaterialUI;
 
-      function KofiTest() {
-        const [lastWebhook, setLastWebhook] = React.useState(null);
-        const [loading, setLoading] = React.useState(false);
-        const [error, setError] = React.useState(null);
-        const [success, setSuccess] = React.useState(null);
-        const [autoRefresh, setAutoRefresh] = React.useState(false);
+      const theme = createTheme({
+        palette: {
+          mode: 'dark',
+          primary: {
+            main: '#3AECF8',
+          },
+          background: {
+            default: '#0F172A',
+            paper: 'rgba(30, 41, 59, 0.8)',
+          },
+        },
+      });
 
-        // Fetch data from GitHub
-        const fetchData = async () => {
-          setLoading(true);
-          try {
-            const token = atob(_0x5f2a[0]);
-            
-            const response = await fetch(
-              'https://api.github.com/repos/nfltemp/nfltemp.github.io/issues/1',
-              {
-                headers: {
-                  'Authorization': `token ${token}`,
-                  'Accept': 'application/vnd.github.v3+json',
-                  'X-GitHub-Api-Version': '2022-11-28',
-                  'User-Agent': 'nfltemp-app'
-                }
-              }
-            );
-            
-            if (!response.ok) {
-              const errorData = await response.json();
-              console.error('GitHub API Error:', errorData);
-              throw new Error(`GitHub API Error: ${errorData.message}`);
-            }
-
-            const data = await response.json();
-            const cleanBody = data.body.replace(/```json\n?|```/g, '').trim();
-            const purchaseData = JSON.parse(cleanBody);
-            
-            setLastWebhook(purchaseData);
-            setSuccess('Successfully fetched latest data!');
-
-            if (window.updateRecentBuyers && purchaseData.recentBuyers?.[0]) {
-              window.updateRecentBuyers(purchaseData.recentBuyers[0]);
-            }
-          } catch (err) {
-            console.error('Fetch error:', err);
-            setError(err.message);
-          } finally {
-            setLoading(false);
-          }
-        };
-
-        // Auto-refresh setup
-        React.useEffect(() => {
-          let interval;
-          if (autoRefresh) {
-            interval = setInterval(fetchData, 30000);
-          }
-          return () => clearInterval(interval);
-        }, [autoRefresh]);
+      function ImageTest({ title, src, description }) {
+        const [error, setError] = React.useState(false);
+        const [loaded, setLoaded] = React.useState(false);
 
         return (
-          <ThemeProvider theme={createTheme({
-            palette: {
-              mode: 'dark',
-              primary: { main: '#3AECF8' },
-              background: { default: '#0F172A', paper: 'rgba(30, 41, 59, 0.8)' },
-            },
-          })}>
+          <Grid item xs={12} md={4}>
+            <Paper sx={{ p: 2 }}>
+              <Typography variant="h6" gutterBottom>{title}</Typography>
+              <Box sx={{ 
+                height: 200, 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                border: '1px dashed rgba(255,255,255,0.2)',
+                position: 'relative'
+              }}>
+                <img 
+                  src={src} 
+                  alt={title}
+                  onError={() => setError(true)}
+                  onLoad={() => setLoaded(true)}
+                  style={{ 
+                    maxWidth: '100%', 
+                    maxHeight: '100%',
+                    display: error ? 'none' : 'block'
+                  }} 
+                />
+                {error && (
+                  <Typography color="error">
+                    Failed to load image
+                  </Typography>
+                )}
+                {loaded && (
+                  <Typography 
+                    color="success.main" 
+                    sx={{ position: 'absolute', bottom: 8, right: 8 }}
+                  >
+                    ✓ Loaded
+                  </Typography>
+                )}
+              </Box>
+              <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+                {description}
+              </Typography>
+              <Typography variant="caption" display="block" color={error ? "error" : "success.main"}>
+                Status: {error ? "Failed to load" : loaded ? "Successfully loaded" : "Loading..."}
+              </Typography>
+            </Paper>
+          </Grid>
+        );
+      }
+
+      function ImageTests() {
+        const tests = [
+          {
+            title: "Test 1: Direct Path",
+            src: "images/logo.png",
+            description: 'src="images/logo.png"'
+          },
+          {
+            title: "Test 2: Relative Path",
+            src: "./images/logo.png",
+            description: 'src="./images/logo.png"'
+          },
+          {
+            title: "Test 3: Root Path",
+            src: "/images/logo.png",
+            description: 'src="/images/logo.png"'
+          },
+          {
+            title: "Test 4: Full URL",
+            src: "https://nfltemp.github.io/images/logo.png",
+            description: "Using full GitHub Pages URL"
+          },
+          {
+            title: "Test 5: Package Image",
+            src: "images/packages/complete-package.jpg",
+            description: 'src="images/packages/complete-package.jpg"'
+          },
+          {
+            title: "Test 6: Debug Info",
+            src: "images/packages/complete-package.jpg",
+            description: `Current path: ${window.location.pathname}\nBase URL: ${window.location.origin}`
+          }
+        ];
+
+        return (
+          <ThemeProvider theme={theme}>
             <CssBaseline />
             <Container maxWidth="lg" sx={{ pt: 4, pb: 8 }}>
-              <Button variant="outlined" onClick={() => window.location.href = '/'} sx={{ mb: 4 }}>
+              <Button 
+                variant="outlined" 
+                onClick={() => window.location.href = '/'} 
+                sx={{ mb: 4 }}
+              >
                 Back to Home
               </Button>
               
-              <Stack direction="row" spacing={2} sx={{ mb: 4 }}>
-                <Button
-                  variant="contained"
-                  onClick={fetchData}
-                  disabled={loading}
-                  startIcon={loading && <CircularProgress size={20} />}
-                >
-                  Check Latest Purchases
-                </Button>
-                <Button
-                  variant={autoRefresh ? "contained" : "outlined"}
-                  color={autoRefresh ? "success" : "primary"}
-                  onClick={() => setAutoRefresh(!autoRefresh)}
-                >
-                  {autoRefresh ? "Auto-Refresh ON" : "Auto-Refresh OFF"}
-                </Button>
-              </Stack>
-
-              {lastWebhook && (
-                <Paper sx={{ p: 3 }}>
-                  <Typography variant="h6" gutterBottom>Latest Purchase Data</Typography>
-                  <Box component="pre" sx={{ p: 2, background: 'rgba(0,0,0,0.2)', borderRadius: 1, overflow: 'auto' }}>
-                    {JSON.stringify(lastWebhook, null, 2)}
-                  </Box>
-                </Paper>
-              )}
-
-              <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError(null)}>
-                <Alert severity="error" onClose={() => setError(null)}>{error}</Alert>
-              </Snackbar>
-
-              <Snackbar open={!!success} autoHideDuration={6000} onClose={() => setSuccess(null)}>
-                <Alert severity="success" onClose={() => setSuccess(null)}>{success}</Alert>
-              </Snackbar>
+              <Typography variant="h3" gutterBottom>Image Loading Tests</Typography>
+              <Typography variant="body1" paragraph>
+                Current URL: {window.location.href}
+              </Typography>
+              
+              <Grid container spacing={4}>
+                {tests.map((test, index) => (
+                  <ImageTest key={index} {...test} />
+                ))}
+              </Grid>
             </Container>
           </ThemeProvider>
         );
       }
 
-      ReactDOM.createRoot(document.getElementById('root')).render(
-        <React.StrictMode><KofiTest /></React.StrictMode>
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <React.StrictMode>
+          <ImageTests />
+        </React.StrictMode>
       );
     </script>
   </body>
