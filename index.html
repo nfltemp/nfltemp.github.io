@@ -477,9 +477,6 @@
         }, [trailId]);
 
         const handleBuyClick = (productName, price) => {
-          // Prevent the default href navigation
-          event.preventDefault();
-          
           // Facebook Pixel tracking
           if (window.fbq) {
             fbq('track', 'InitiateCheckout', {
@@ -513,7 +510,7 @@
             });
           }
 
-          // Navigate after tracking is complete
+          // Navigate after tracking
           window.location.href = "https://ko-fi.com/nfltemp/shop";
         };
 
