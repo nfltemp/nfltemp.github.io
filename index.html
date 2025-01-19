@@ -1038,6 +1038,31 @@
 
                   {/* Police Job */}
                   <Grid item xs={12} md={4}>
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        p: 3,
+                        mb: 2,
+                        background: 'linear-gradient(135deg, #F87171 0%, #EF4444 100%)',
+                        border: '1px solid rgba(255, 0, 0, 0.2)',
+                        borderRadius: '16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
+                        Limited Time Offer: Advanced Police Job - Now Only $15!
+                      </Typography>
+                      <Chip
+                        label="SALE"
+                        sx={{
+                          background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                          color: 'white',
+                          fontWeight: 'bold',
+                        }}
+                      />
+                    </Paper>
                     <Card>
                       <Box className="script-card-media">
                         <CardMedia
