@@ -423,6 +423,14 @@
             lastMousePos.current = { x: e.clientX, y: e.clientY };
           };
 
+          const handleMouseLeave = () => {
+            // Clear all trails when mouse leaves window
+            setTrails([]);
+            if (frameRef.current) {
+              cancelAnimationFrame(frameRef.current);
+            }
+          };
+
           const createTrail = () => {
             const { x, y } = lastMousePos.current;
             
@@ -446,12 +454,24 @@
             frameRef.current = requestAnimationFrame(createTrail);
           };
 
+          // Add mouse leave listener
+          document.addEventListener('mouseleave', handleMouseLeave);
           document.addEventListener('mousemove', handleMouseMove);
-          frameRef.current = requestAnimationFrame(createTrail);
+          
+          // Only start animation after first mouse move
+          const initialMove = (e) => {
+            lastMousePos.current = { x: e.clientX, y: e.clientY };
+            frameRef.current = requestAnimationFrame(createTrail);
+            document.removeEventListener('mousemove', initialMove);
+          };
+          document.addEventListener('mousemove', initialMove);
 
           return () => {
             document.removeEventListener('mousemove', handleMouseMove);
-            cancelAnimationFrame(frameRef.current);
+            document.removeEventListener('mouseleave', handleMouseLeave);
+            if (frameRef.current) {
+              cancelAnimationFrame(frameRef.current);
+            }
           };
         }, [trailId]);
 
