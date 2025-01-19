@@ -483,11 +483,19 @@
           
           // Create a promise for tracking completion
           const trackingPromise = new Promise((resolve) => {
-            // Facebook Pixel tracking
+            // Facebook Pixel tracking with content_id and contents
             if (window.fbq) {
+              const content_id = productName.toLowerCase().replace(/\s+/g, '_');
+              
               fbq('track', 'InitiateCheckout', {
                 content_name: productName,
                 content_type: 'product',
+                content_id: content_id,
+                contents: [{
+                  id: content_id,
+                  quantity: 1,
+                  price: price
+                }],
                 currency: 'USD',
                 value: price
               });
@@ -495,6 +503,12 @@
               fbq('track', 'AddToCart', {
                 content_name: productName,
                 content_type: 'product',
+                content_id: content_id,
+                contents: [{
+                  id: content_id,
+                  quantity: 1,
+                  price: price
+                }],
                 currency: 'USD',
                 value: price
               });
@@ -505,6 +519,7 @@
               gtag('event', 'purchase_click', {
                 'event_category': 'ecommerce',
                 'event_label': productName,
+                'content_id': productName.toLowerCase().replace(/\s+/g, '_'),
                 'value': price,
                 'currency': 'USD',
                 'items': [{
