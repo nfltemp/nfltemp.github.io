@@ -455,60 +455,40 @@
           };
         }, [trailId]);
 
-        const handleBuyClick = (() => {
-          let isProcessing = false;
+        const handleBuyClick = (productName, price) => {
+          // Facebook Pixel tracking
+          if (window.fbq) {
+            fbq('track', 'InitiateCheckout', {
+              content_name: productName,
+              content_type: 'product',
+              currency: 'USD',
+              value: price
+            });
+            
+            fbq('track', 'AddToCart', {
+              content_name: productName,
+              content_type: 'product',
+              currency: 'USD',
+              value: price
+            });
+          }
           
-          return (productName, price, event) => {
-            // Prevent multiple clicks
-            if (isProcessing) return;
-            isProcessing = true;
-            
-            // Prevent default behavior
-            if (event) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-
-            // Facebook Pixel tracking
-            if (window.fbq) {
-              fbq('track', 'InitiateCheckout', {
-                content_name: productName,
-                content_type: 'product',
-                currency: 'USD',
-                value: price
-              });
-              
-              fbq('track', 'AddToCart', {
-                content_name: productName,
-                content_type: 'product',
-                currency: 'USD',
-                value: price
-              });
-            }
-            
-            // Google Analytics tracking
-            if (typeof gtag === 'function') {
-              gtag('event', 'purchase_click', {
-                'event_category': 'ecommerce',
-                'event_label': productName,
-                'value': price,
-                'currency': 'USD',
-                'items': [{
-                  'item_id': productName.toLowerCase().replace(/\s+/g, '_'),
-                  'item_name': productName,
-                  'price': price,
-                  'quantity': 1
-                }]
-              });
-            }
-
-            // Reset after a short delay and navigate
-            setTimeout(() => {
-              isProcessing = false;
-              window.location.href = 'https://ko-fi.com/nfltemp/shop';
-            }, 100);
-          };
-        })();
+          // Google Analytics tracking
+          if (typeof gtag === 'function') {
+            gtag('event', 'purchase_click', {
+              'event_category': 'ecommerce',
+              'event_label': productName,
+              'value': price,
+              'currency': 'USD',
+              'items': [{
+                'item_id': productName.toLowerCase().replace(/\s+/g, '_'),
+                'item_name': productName,
+                'price': price,
+                'quantity': 1
+              }]
+            });
+          }
+        };
 
         const features = [
           { icon: 'speed', title: 'High Performance', description: 'Optimized scripts that won\'t impact your server\'s performance' },
@@ -921,7 +901,8 @@
                           <Button
                             variant="contained"
                             fullWidth
-                            onClick={(e) => handleBuyClick('Advanced Ambulance Job', 20.00, e)}
+                            href="https://ko-fi.com/nfltemp/shop"
+                            onClick={() => handleBuyClick('Advanced Ambulance Job', 20.00)}
                             sx={{ 
                               fontSize: '1.2rem',
                               py: 1.5
@@ -961,7 +942,8 @@
                           <Button
                             variant="contained"
                             fullWidth
-                            onClick={(e) => handleBuyClick('Advanced Drug & Battle Pass System', 20.00, e)}
+                            href="https://ko-fi.com/nfltemp/shop"
+                            onClick={() => handleBuyClick('Advanced Drug & Battle Pass System', 20.00)}
                             sx={{ 
                               fontSize: '1.2rem',
                               py: 1.5
@@ -1001,7 +983,8 @@
                           <Button
                             variant="contained"
                             fullWidth
-                            onClick={(e) => handleBuyClick('Advanced Police Job', 20.00, e)}
+                            href="https://ko-fi.com/nfltemp/shop"
+                            onClick={() => handleBuyClick('Advanced Police Job', 20.00)}
                             sx={{ 
                               fontSize: '1.2rem',
                               py: 1.5
@@ -1041,7 +1024,8 @@
                           <Button
                             variant="contained"
                             fullWidth
-                            onClick={(e) => handleBuyClick('Advanced Hitman Script', 15.00, e)}
+                            href="https://ko-fi.com/nfltemp/shop"
+                            onClick={() => handleBuyClick('Advanced Hitman Script', 15.00)}
                             sx={{ 
                               fontSize: '1.2rem',
                               py: 1.5
