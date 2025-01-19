@@ -560,99 +560,54 @@
         }, []);
 
         function RecentPayments() {
-          const [recentBuyers, setRecentBuyers] = React.useState([]);
-          const [isLoading, setIsLoading] = React.useState(true);
-
-          React.useEffect(() => {
-            const fetchRecentBuyers = async () => {
-              try {
-                // Fetch without authentication - the issue should be public
-                const response = await fetch('https://api.github.com/repos/nfltemp/nfltemp.github.io/issues/1', {
-                  headers: {
-                    'Accept': 'application/vnd.github.v3+json'
-                  }
-                });
-                
-                if (!response.ok) {
-                  throw new Error('Failed to fetch recent buyers');
-                }
-
-                const data = await response.json();
-                const buyersData = JSON.parse(data.body || '[]');
-                
-                // Ensure we always have 5 entries, fill with placeholder data if needed
-                const filledBuyers = [
-                  ...buyersData,
-                  ...Array(5 - buyersData.length).fill({
-                    name: "---",
-                    amount: "$--.--",
-                    purchase: "No recent purchase",
-                    timestamp: null,
-                    avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
-                  })
-                ].slice(0, 5);
-
-                setRecentBuyers(filledBuyers);
-              } catch (error) {
-                console.error('Error fetching recent buyers:', error);
-                // Fallback to placeholder data on error
-                setRecentBuyers(Array(5).fill({
-                  name: "---",
-                  amount: "$--.--",
-                  purchase: "No recent purchase",
-                  timestamp: null,
-                  avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
-                }));
-              } finally {
-                setIsLoading(false);
-              }
-            };
-
-            fetchRecentBuyers();
-            
-            // Set up polling every 5 minutes
-            const pollInterval = setInterval(fetchRecentBuyers, 5 * 60 * 1000);
-            
-            return () => clearInterval(pollInterval);
-          }, []);
+          const recentBuyers = React.useMemo(() => [
+            {
+              name: "AB",
+              amount: "$20.00",
+              purchase: "[QB/ESX]Advanced Drug Farming & Dealing w/Battle Pass System",
+              timestamp: new Date().toISOString(),
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
+            },
+            ...Array(4).fill({
+              name: "---",
+              amount: "$--.--",
+              purchase: "No recent purchase",
+              timestamp: null,
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
+            })
+          ], []);
 
           return (
             <div className="panel-section">
               <div className="panel-section-title">Recent Payments</div>
-              {isLoading ? (
-                <div style={{ color: 'rgba(148, 163, 184, 0.5)', textAlign: 'center', padding: '10px' }}>
-                  Loading...
-                </div>
-              ) : (
-                recentBuyers.map((buyer, index) => (
-                  <div 
-                    key={index} 
-                    className="recent-payment"
-                    title={buyer.name !== "---" ? `Recently purchased: ${buyer.purchase}` : ""}
-                    style={{ cursor: buyer.name !== "---" ? 'help' : 'default' }}
-                  >
-                    <div className="avatar" style={{ overflow: 'hidden' }}>
-                      <img 
-                        src={buyer.avatar}
-                        alt=""
-                        style={{ 
-                          width: '100%', 
-                          height: '100%', 
-                          objectFit: 'cover',
-                          opacity: buyer.name !== "---" ? 1 : 0.15,
-                          transform: 'scale(1)',
-                          willChange: 'transform'
-                        }} 
-                      />
-                    </div>
-                    <div style={{ 
-                      color: buyer.name !== "---" ? '#fff' : 'rgba(148, 163, 184, 0.3)'
-                    }}>
-                      {buyer.name}
-                    </div>
+              {recentBuyers.map((buyer, index) => (
+                <div 
+                  key={index} 
+                  className="recent-payment"
+                  title={buyer.name !== "---" ? `Recently purchased: ${buyer.purchase}` : ""}
+                  style={{ cursor: buyer.name !== "---" ? 'help' : 'default' }}
+                >
+                  <div className="avatar" style={{ overflow: 'hidden' }}>
+                    <img 
+                      src={buyer.avatar}
+                      alt=""
+                      style={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        objectFit: 'cover',
+                        opacity: buyer.name !== "---" ? 1 : 0.15,
+                        transform: 'scale(1)',
+                        willChange: 'transform'
+                      }} 
+                    />
                   </div>
-                ))
-              )}
+                  <div style={{ 
+                    color: buyer.name !== "---" ? '#fff' : 'rgba(148, 163, 184, 0.3)'
+                  }}>
+                    {buyer.name}
+                  </div>
+                </div>
+              ))}
             </div>
           );
         }
