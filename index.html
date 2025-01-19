@@ -476,6 +476,9 @@
         }, [trailId]);
 
         const handleBuyClick = (productName, price) => {
+          // Prevent the default href navigation
+          event.preventDefault();
+          
           // Facebook Pixel tracking
           if (window.fbq) {
             fbq('track', 'InitiateCheckout', {
@@ -485,7 +488,6 @@
               value: price
             });
             
-            // Also track as AddToCart event
             fbq('track', 'AddToCart', {
               content_name: productName,
               content_type: 'product',
@@ -509,6 +511,9 @@
               }]
             });
           }
+
+          // Navigate after tracking is complete
+          window.location.href = "https://ko-fi.com/nfltemp/shop";
         };
 
         const features = [
@@ -928,8 +933,7 @@
                           <Button
                             variant="contained"
                             fullWidth
-                            href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => handleBuyClick('Advanced Ambulance Job', 20.00)}
+                            onClick={(event) => handleBuyClick('Advanced Ambulance Job', 20.00)}
                             sx={{ 
                               fontSize: '1.2rem',
                               py: 1.5
@@ -969,8 +973,7 @@
                           <Button
                             variant="contained"
                             fullWidth
-                            href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => handleBuyClick('Advanced Drug & Battle Pass System', 20.00)}
+                            onClick={(event) => handleBuyClick('Advanced Drug & Battle Pass System', 20.00)}
                             sx={{ 
                               fontSize: '1.2rem',
                               py: 1.5
@@ -1010,8 +1013,7 @@
                           <Button
                             variant="contained"
                             fullWidth
-                            href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => handleBuyClick('Advanced Police Job', 20.00)}
+                            onClick={(event) => handleBuyClick('Advanced Police Job', 20.00)}
                             sx={{ 
                               fontSize: '1.2rem',
                               py: 1.5
@@ -1051,8 +1053,7 @@
                           <Button
                             variant="contained"
                             fullWidth
-                            href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => handleBuyClick('Advanced Hitman Script', 15.00)}
+                            onClick={(event) => handleBuyClick('Advanced Hitman Script', 15.00)}
                             sx={{ 
                               fontSize: '1.2rem',
                               py: 1.5
