@@ -598,10 +598,16 @@
                     <IconButton
                       onClick={() => setIsSidebarCollapsed(false)}
                       sx={{
-                        color: 'white',
-                        display: { xs: 'flex', md: 'none' },
-                        position: 'absolute',
+                        position: 'fixed',
                         left: 16,
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        zIndex: 1000,
+                        backgroundColor: 'rgba(30, 41, 59, 0.8)',
+                        color: 'white',
+                        '&:hover': {
+                          backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                        }
                       }}
                     >
                       <Icon>menu</Icon>
