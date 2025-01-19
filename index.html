@@ -893,8 +893,9 @@
                             variant="contained"
                             fullWidth
                             href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => {
-                              // Facebook Pixel tracking
+                            onClick={(e) => {
+                              e.preventDefault();
+                              
                               if (window.fbq) {
                                 fbq('track', 'InitiateCheckout', {
                                   content_name: 'Advanced Ambulance Job',
@@ -911,7 +912,6 @@
                                 });
                               }
                               
-                              // Google Analytics tracking
                               if (typeof gtag === 'function') {
                                 gtag('event', 'purchase_click', {
                                   'event_category': 'ecommerce',
@@ -926,6 +926,8 @@
                                   }]
                                 });
                               }
+
+                              window.location.href = 'https://ko-fi.com/nfltemp/shop';
                             }}
                             sx={{ 
                               fontSize: '1.2rem',
@@ -967,8 +969,9 @@
                             variant="contained"
                             fullWidth
                             href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => {
-                              // Facebook Pixel tracking
+                            onClick={(e) => {
+                              e.preventDefault();
+                              
                               if (window.fbq) {
                                 fbq('track', 'InitiateCheckout', {
                                   content_name: 'Advanced Drug & Battle Pass System',
@@ -985,7 +988,6 @@
                                 });
                               }
                               
-                              // Google Analytics tracking
                               if (typeof gtag === 'function') {
                                 gtag('event', 'purchase_click', {
                                   'event_category': 'ecommerce',
@@ -1000,6 +1002,8 @@
                                   }]
                                 });
                               }
+
+                              window.location.href = 'https://ko-fi.com/nfltemp/shop';
                             }}
                             sx={{ 
                               fontSize: '1.2rem',
@@ -1041,8 +1045,9 @@
                             variant="contained"
                             fullWidth
                             href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => {
-                              // Facebook Pixel tracking
+                            onClick={(e) => {
+                              e.preventDefault();
+                              
                               if (window.fbq) {
                                 fbq('track', 'InitiateCheckout', {
                                   content_name: 'Advanced Police Job',
@@ -1059,7 +1064,6 @@
                                 });
                               }
                               
-                              // Google Analytics tracking
                               if (typeof gtag === 'function') {
                                 gtag('event', 'purchase_click', {
                                   'event_category': 'ecommerce',
@@ -1074,6 +1078,8 @@
                                   }]
                                 });
                               }
+
+                              window.location.href = 'https://ko-fi.com/nfltemp/shop';
                             }}
                             sx={{ 
                               fontSize: '1.2rem',
@@ -1115,8 +1121,9 @@
                             variant="contained"
                             fullWidth
                             href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => {
-                              // Facebook Pixel tracking
+                            onClick={(e) => {
+                              e.preventDefault();
+                              
                               if (window.fbq) {
                                 fbq('track', 'InitiateCheckout', {
                                   content_name: 'Advanced Hitman Script',
@@ -1133,7 +1140,6 @@
                                 });
                               }
                               
-                              // Google Analytics tracking
                               if (typeof gtag === 'function') {
                                 gtag('event', 'purchase_click', {
                                   'event_category': 'ecommerce',
@@ -1148,6 +1154,8 @@
                                   }]
                                 });
                               }
+
+                              window.location.href = 'https://ko-fi.com/nfltemp/shop';
                             }}
                             sx={{ 
                               fontSize: '1.2rem',
