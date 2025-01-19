@@ -903,194 +903,220 @@
                     ))}
                   </Grid>
 
-                  <Grid container spacing={4}>
-                    {/* Complete Package (Ambulance Job) */}
-                    <Grid item xs={12} md={4}>
-                      <Card>
-                        <Box className="script-card-media">
-                          <CardMedia
-                            component="img"
-                            height="200"
-                            image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg"
-                            alt="Ambulance Job"
-                          />
-                          <Box sx={{
-                            position: 'absolute',
-                            top: 16,
-                            right: 16,
-                            zIndex: 2,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: 1,
-                          }}>
-                            <Chip
-                              label="BEST SELLER"
-                              sx={{
-                                background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                                color: 'white',
-                                fontWeight: 'bold',
-                              }}
-                            />
-                            <Chip
-                              label="25% OFF"
-                              sx={{ 
-                                background: 'linear-gradient(135deg, #F87171 0%, #EF4444 100%)',
-                                color: 'white',
-                                fontWeight: 'bold',
-                              }}
-                            />
-                          </Box>
-                        </Box>
-                        <CardContent>
-                          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                            Advanced Ambulance Job
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary" paragraph>
-                            Complete ambulance and medical system with advanced features for ESX and QB Core servers.
-                          </Typography>
-                          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                            <Chip size="small" label="ESX Compatible" />
-                            <Chip size="small" label="QB Core Ready" />
-                            <Chip size="small" label="Regular Updates" />
-                          </Stack>
-                        </CardContent>
-                        <CardActions sx={{ p: 2, pt: 0 }}>
-                          <Button
-                            variant="contained"
-                            fullWidth
-                            onClick={handleBuyClick('Advanced Ambulance Job', 20.00)}
-                            sx={{ 
-                              fontSize: '1.2rem',
-                              py: 1.5
-                            }}
-                          >
-                            Purchase Now - $20.00
-                          </Button>
-                        </CardActions>
-                      </Card>
-                    </Grid>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 3,
+                    mb: 6,
+                    background: 'linear-gradient(135deg, #F87171 0%, #EF4444 100%)',
+                    border: '1px solid rgba(255, 0, 0, 0.2)',
+                    borderRadius: '16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
+                    Limited Time Offer: Advanced Police Job - Now Only $15!
+                  </Typography>
+                  <Chip
+                    label="SALE"
+                    sx={{
+                      background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                      color: 'white',
+                      fontWeight: 'bold',
+                    }}
+                  />
+                </Paper>
 
-                    {/* Battle Pass System */}
-                    <Grid item xs={12} md={4}>
-                      <Card>
-                        <Box className="script-card-media">
-                          <CardMedia
-                            component="img"
-                            height="200"
-                            image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG"
-                            alt="Battle Pass System"
+                <Grid container spacing={4}>
+                  {/* Complete Package (Ambulance Job) */}
+                  <Grid item xs={12} md={4}>
+                    <Card>
+                      <Box className="script-card-media">
+                        <CardMedia
+                          component="img"
+                          height="200"
+                          image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg"
+                          alt="Ambulance Job"
+                        />
+                        <Box sx={{
+                          position: 'absolute',
+                          top: 16,
+                          right: 16,
+                          zIndex: 2,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 1,
+                        }}>
+                          <Chip
+                            label="BEST SELLER"
+                            sx={{
+                              background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
+                              color: 'white',
+                              fontWeight: 'bold',
+                            }}
+                          />
+                          <Chip
+                            label="25% OFF"
+                            sx={{ 
+                              background: 'linear-gradient(135deg, #F87171 0%, #EF4444 100%)',
+                              color: 'white',
+                              fontWeight: 'bold',
+                            }}
                           />
                         </Box>
-                        <CardContent>
-                          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                            Advanced Drug & Battle Pass System
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary" paragraph>
-                            Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration.
-                          </Typography>
-                          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                            <Chip size="small" label="ESX Compatible" />
-                            <Chip size="small" label="QB Core Ready" />
-                            <Chip size="small" label="Open Source" />
-                          </Stack>
-                        </CardContent>
-                        <CardActions sx={{ p: 2, pt: 0 }}>
-                          <Button
-                            variant="contained"
-                            fullWidth
-                            onClick={handleBuyClick('Advanced Drug & Battle Pass System', 20.00)}
-                            sx={{ 
-                              fontSize: '1.2rem',
-                              py: 1.5
-                            }}
-                          >
-                            Purchase Now - $20.00
-                          </Button>
-                        </CardActions>
-                      </Card>
-                    </Grid>
-
-                    {/* Police Job */}
-                    <Grid item xs={12} md={4}>
-                      <Card>
-                        <Box className="script-card-media">
-                          <CardMedia
-                            component="img"
-                            height="200"
-                            image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/policejob.PNG"
-                            alt="Police Job"
-                          />
-                        </Box>
-                        <CardContent>
-                          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                            Advanced Police Job
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary" paragraph>
-                            Transform your server's law enforcement experience with our comprehensive police job script.
-                          </Typography>
-                          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                            <Chip size="small" label="QB Core Only" />
-                            <Chip size="small" label="High Performance" />
-                            <Chip size="small" label="Open Source" />
-                          </Stack>
-                        </CardContent>
-                        <CardActions sx={{ p: 2, pt: 0 }}>
-                          <Button
-                            variant="contained"
-                            fullWidth
-                            onClick={handleBuyClick('Advanced Police Job', 15.00)}
-                            sx={{ 
-                              fontSize: '1.2rem',
-                              py: 1.5
-                            }}
-                          >
-                            Purchase Now - $15.00
-                          </Button>
-                        </CardActions>
-                      </Card>
-                    </Grid>
-
-                    {/* Hitman Script */}
-                    <Grid item xs={12} md={4}>
-                      <Card>
-                        <Box className="script-card-media">
-                          <CardMedia
-                            component="img"
-                            height="200"
-                            image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/hitman.PNG"
-                            alt="Hitman Script"
-                          />
-                        </Box>
-                        <CardContent>
-                          <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                            Advanced Hitman Script
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary" paragraph>
-                            Dive into the thrilling world of FiveM with this professional Hitman Script. Perfect for enhancing your roleplay experience.
-                          </Typography>
-                          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                            <Chip size="small" label="QB Core Only" />
-                            <Chip size="small" label="High Performance" />
-                            <Chip size="small" label="Open Source" />
-                          </Stack>
-                        </CardContent>
-                        <CardActions sx={{ p: 2, pt: 0 }}>
-                          <Button
-                            variant="contained"
-                            fullWidth
-                            onClick={handleBuyClick('Advanced Hitman Script', 15.00)}
-                            sx={{ 
-                              fontSize: '1.2rem',
-                              py: 1.5
-                            }}
-                          >
-                            Purchase Now - $15.00
-                          </Button>
-                        </CardActions>
-                      </Card>
-                    </Grid>
+                      </Box>
+                      <CardContent>
+                        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                          Advanced Ambulance Job
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" paragraph>
+                          Complete ambulance and medical system with advanced features for ESX and QB Core servers.
+                        </Typography>
+                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                          <Chip size="small" label="ESX Compatible" />
+                          <Chip size="small" label="QB Core Ready" />
+                          <Chip size="small" label="Regular Updates" />
+                        </Stack>
+                      </CardContent>
+                      <CardActions sx={{ p: 2, pt: 0 }}>
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          onClick={handleBuyClick('Advanced Ambulance Job', 20.00)}
+                          sx={{ 
+                            fontSize: '1.2rem',
+                            py: 1.5
+                          }}
+                        >
+                          Purchase Now - $20.00
+                        </Button>
+                      </CardActions>
+                    </Card>
                   </Grid>
-                </Container>
+
+                  {/* Battle Pass System */}
+                  <Grid item xs={12} md={4}>
+                    <Card>
+                      <Box className="script-card-media">
+                        <CardMedia
+                          component="img"
+                          height="200"
+                          image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG"
+                          alt="Battle Pass System"
+                        />
+                      </Box>
+                      <CardContent>
+                        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                          Advanced Drug & Battle Pass System
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" paragraph>
+                          Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration.
+                        </Typography>
+                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                          <Chip size="small" label="ESX Compatible" />
+                          <Chip size="small" label="QB Core Ready" />
+                          <Chip size="small" label="Open Source" />
+                        </Stack>
+                      </CardContent>
+                      <CardActions sx={{ p: 2, pt: 0 }}>
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          onClick={handleBuyClick('Advanced Drug & Battle Pass System', 20.00)}
+                          sx={{ 
+                            fontSize: '1.2rem',
+                            py: 1.5
+                          }}
+                        >
+                          Purchase Now - $20.00
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+
+                  {/* Police Job */}
+                  <Grid item xs={12} md={4}>
+                    <Card>
+                      <Box className="script-card-media">
+                        <CardMedia
+                          component="img"
+                          height="200"
+                          image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/policejob.PNG"
+                          alt="Police Job"
+                        />
+                      </Box>
+                      <CardContent>
+                        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                          Advanced Police Job
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" paragraph>
+                          Transform your server's law enforcement experience with our comprehensive police job script.
+                        </Typography>
+                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                          <Chip size="small" label="QB Core Only" />
+                          <Chip size="small" label="High Performance" />
+                          <Chip size="small" label="Open Source" />
+                        </Stack>
+                      </CardContent>
+                      <CardActions sx={{ p: 2, pt: 0 }}>
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          onClick={handleBuyClick('Advanced Police Job', 15.00)}
+                          sx={{ 
+                            fontSize: '1.2rem',
+                            py: 1.5
+                          }}
+                        >
+                          Purchase Now - $15.00
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+
+                  {/* Hitman Script */}
+                  <Grid item xs={12} md={4}>
+                    <Card>
+                      <Box className="script-card-media">
+                        <CardMedia
+                          component="img"
+                          height="200"
+                          image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/hitman.PNG"
+                          alt="Hitman Script"
+                        />
+                      </Box>
+                      <CardContent>
+                        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                          Advanced Hitman Script
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" paragraph>
+                          Dive into the thrilling world of FiveM with this professional Hitman Script. Perfect for enhancing your roleplay experience.
+                        </Typography>
+                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                          <Chip size="small" label="QB Core Only" />
+                          <Chip size="small" label="High Performance" />
+                          <Chip size="small" label="Open Source" />
+                        </Stack>
+                      </CardContent>
+                      <CardActions sx={{ p: 2, pt: 0 }}>
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          onClick={handleBuyClick('Advanced Hitman Script', 15.00)}
+                          sx={{ 
+                            fontSize: '1.2rem',
+                            py: 1.5
+                          }}
+                        >
+                          Purchase Now - $15.00
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                </Grid>
+              </Container>
 
               <ScrollTop>
                 <Fab 
