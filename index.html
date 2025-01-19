@@ -475,42 +475,6 @@
           };
         }, [trailId]);
 
-        const handleBuyClick = (productName, price) => {
-          // Facebook Pixel tracking
-          if (window.fbq) {
-            fbq('track', 'InitiateCheckout', {
-              content_name: productName,
-              content_type: 'product',
-              currency: 'USD',
-              value: price
-            });
-            
-            // Also track as AddToCart event
-            fbq('track', 'AddToCart', {
-              content_name: productName,
-              content_type: 'product',
-              currency: 'USD',
-              value: price
-            });
-          }
-          
-          // Google Analytics tracking
-          if (typeof gtag === 'function') {
-            gtag('event', 'purchase_click', {
-              'event_category': 'ecommerce',
-              'event_label': productName,
-              'value': price,
-              'currency': 'USD',
-              'items': [{
-                'item_id': productName.toLowerCase().replace(/\s+/g, '_'),
-                'item_name': productName,
-                'price': price,
-                'quantity': 1
-              }]
-            });
-          }
-        };
-
         const features = [
           { icon: 'speed', title: 'High Performance', description: 'Optimized scripts that won\'t impact your server\'s performance' },
           { icon: 'security', title: 'Secure', description: 'Built with security in mind to protect your server and players' },
@@ -929,7 +893,40 @@
                             variant="contained"
                             fullWidth
                             href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => handleBuyClick('Advanced Ambulance Job', 20.00)}
+                            onClick={() => {
+                              // Facebook Pixel tracking
+                              if (window.fbq) {
+                                fbq('track', 'InitiateCheckout', {
+                                  content_name: 'Advanced Ambulance Job',
+                                  content_type: 'product',
+                                  currency: 'USD',
+                                  value: 20.00
+                                });
+                                
+                                fbq('track', 'AddToCart', {
+                                  content_name: 'Advanced Ambulance Job',
+                                  content_type: 'product',
+                                  currency: 'USD',
+                                  value: 20.00
+                                });
+                              }
+                              
+                              // Google Analytics tracking
+                              if (typeof gtag === 'function') {
+                                gtag('event', 'purchase_click', {
+                                  'event_category': 'ecommerce',
+                                  'event_label': 'Advanced Ambulance Job',
+                                  'value': 20.00,
+                                  'currency': 'USD',
+                                  'items': [{
+                                    'item_id': 'advanced_ambulance_job',
+                                    'item_name': 'Advanced Ambulance Job',
+                                    'price': 20.00,
+                                    'quantity': 1
+                                  }]
+                                });
+                              }
+                            }}
                             sx={{ 
                               fontSize: '1.2rem',
                               py: 1.5
@@ -970,7 +967,40 @@
                             variant="contained"
                             fullWidth
                             href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => handleBuyClick('Advanced Drug & Battle Pass System', 20.00)}
+                            onClick={() => {
+                              // Facebook Pixel tracking
+                              if (window.fbq) {
+                                fbq('track', 'InitiateCheckout', {
+                                  content_name: 'Advanced Drug & Battle Pass System',
+                                  content_type: 'product',
+                                  currency: 'USD',
+                                  value: 20.00
+                                });
+                                
+                                fbq('track', 'AddToCart', {
+                                  content_name: 'Advanced Drug & Battle Pass System',
+                                  content_type: 'product',
+                                  currency: 'USD',
+                                  value: 20.00
+                                });
+                              }
+                              
+                              // Google Analytics tracking
+                              if (typeof gtag === 'function') {
+                                gtag('event', 'purchase_click', {
+                                  'event_category': 'ecommerce',
+                                  'event_label': 'Advanced Drug & Battle Pass System',
+                                  'value': 20.00,
+                                  'currency': 'USD',
+                                  'items': [{
+                                    'item_id': 'advanced_drug_battle_pass_system',
+                                    'item_name': 'Advanced Drug & Battle Pass System',
+                                    'price': 20.00,
+                                    'quantity': 1
+                                  }]
+                                });
+                              }
+                            }}
                             sx={{ 
                               fontSize: '1.2rem',
                               py: 1.5
@@ -1011,7 +1041,40 @@
                             variant="contained"
                             fullWidth
                             href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => handleBuyClick('Advanced Police Job', 20.00)}
+                            onClick={() => {
+                              // Facebook Pixel tracking
+                              if (window.fbq) {
+                                fbq('track', 'InitiateCheckout', {
+                                  content_name: 'Advanced Police Job',
+                                  content_type: 'product',
+                                  currency: 'USD',
+                                  value: 20.00
+                                });
+                                
+                                fbq('track', 'AddToCart', {
+                                  content_name: 'Advanced Police Job',
+                                  content_type: 'product',
+                                  currency: 'USD',
+                                  value: 20.00
+                                });
+                              }
+                              
+                              // Google Analytics tracking
+                              if (typeof gtag === 'function') {
+                                gtag('event', 'purchase_click', {
+                                  'event_category': 'ecommerce',
+                                  'event_label': 'Advanced Police Job',
+                                  'value': 20.00,
+                                  'currency': 'USD',
+                                  'items': [{
+                                    'item_id': 'advanced_police_job',
+                                    'item_name': 'Advanced Police Job',
+                                    'price': 20.00,
+                                    'quantity': 1
+                                  }]
+                                });
+                              }
+                            }}
                             sx={{ 
                               fontSize: '1.2rem',
                               py: 1.5
@@ -1052,7 +1115,40 @@
                             variant="contained"
                             fullWidth
                             href="https://ko-fi.com/nfltemp/shop"
-                            onClick={() => handleBuyClick('Advanced Hitman Script', 15.00)}
+                            onClick={() => {
+                              // Facebook Pixel tracking
+                              if (window.fbq) {
+                                fbq('track', 'InitiateCheckout', {
+                                  content_name: 'Advanced Hitman Script',
+                                  content_type: 'product',
+                                  currency: 'USD',
+                                  value: 15.00
+                                });
+                                
+                                fbq('track', 'AddToCart', {
+                                  content_name: 'Advanced Hitman Script',
+                                  content_type: 'product',
+                                  currency: 'USD',
+                                  value: 15.00
+                                });
+                              }
+                              
+                              // Google Analytics tracking
+                              if (typeof gtag === 'function') {
+                                gtag('event', 'purchase_click', {
+                                  'event_category': 'ecommerce',
+                                  'event_label': 'Advanced Hitman Script',
+                                  'value': 15.00,
+                                  'currency': 'USD',
+                                  'items': [{
+                                    'item_id': 'advanced_hitman_script',
+                                    'item_name': 'Advanced Hitman Script',
+                                    'price': 15.00,
+                                    'quantity': 1
+                                  }]
+                                });
+                              }
+                            }}
                             sx={{ 
                               fontSize: '1.2rem',
                               py: 1.5
