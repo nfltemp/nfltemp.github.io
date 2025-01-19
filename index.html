@@ -455,50 +455,60 @@
           };
         }, [trailId]);
 
-        const handleBuyClick = (productName, price, event) => {
-          // Prevent event from firing twice
-          if (event) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
-          // Facebook Pixel tracking
-          if (window.fbq) {
-            fbq('track', 'InitiateCheckout', {
-              content_name: productName,
-              content_type: 'product',
-              currency: 'USD',
-              value: price
-            });
-            
-            // Also track as AddToCart event
-            fbq('track', 'AddToCart', {
-              content_name: productName,
-              content_type: 'product',
-              currency: 'USD',
-              value: price
-            });
-          }
+        const handleBuyClick = (() => {
+          let isProcessing = false;
           
-          // Google Analytics tracking
-          if (typeof gtag === 'function') {
-            gtag('event', 'purchase_click', {
-              'event_category': 'ecommerce',
-              'event_label': productName,
-              'value': price,
-              'currency': 'USD',
-              'items': [{
-                'item_id': productName.toLowerCase().replace(/\s+/g, '_'),
-                'item_name': productName,
-                'price': price,
-                'quantity': 1
-              }]
-            });
-          }
+          return (productName, price, event) => {
+            // Prevent multiple clicks
+            if (isProcessing) return;
+            isProcessing = true;
+            
+            // Prevent default behavior
+            if (event) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
 
-          // Navigate programmatically
-          window.location.href = 'https://ko-fi.com/nfltemp/shop';
-        };
+            // Facebook Pixel tracking
+            if (window.fbq) {
+              fbq('track', 'InitiateCheckout', {
+                content_name: productName,
+                content_type: 'product',
+                currency: 'USD',
+                value: price
+              });
+              
+              fbq('track', 'AddToCart', {
+                content_name: productName,
+                content_type: 'product',
+                currency: 'USD',
+                value: price
+              });
+            }
+            
+            // Google Analytics tracking
+            if (typeof gtag === 'function') {
+              gtag('event', 'purchase_click', {
+                'event_category': 'ecommerce',
+                'event_label': productName,
+                'value': price,
+                'currency': 'USD',
+                'items': [{
+                  'item_id': productName.toLowerCase().replace(/\s+/g, '_'),
+                  'item_name': productName,
+                  'price': price,
+                  'quantity': 1
+                }]
+              });
+            }
+
+            // Reset after a short delay and navigate
+            setTimeout(() => {
+              isProcessing = false;
+              window.location.href = 'https://ko-fi.com/nfltemp/shop';
+            }, 100);
+          };
+        })();
 
         const features = [
           { icon: 'speed', title: 'High Performance', description: 'Optimized scripts that won\'t impact your server\'s performance' },
