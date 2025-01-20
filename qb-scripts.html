@@ -244,25 +244,27 @@
               </Stack>
             </CardContent>
             <CardActions sx={{ p: 2 }}>
-              <Button
-                variant="contained"
-                size="small"
-                href="https://www.youtube.com/watch?v=2KTnJ93G2Ho"
-                target="_blank"
-                sx={{ 
-                  fontSize: '0.8rem',
-                  mr: 1
-                }}
-              >
-                Preview Video
-              </Button>
+              {title === "Advanced Drug & Battle Pass System" && (
+                <Button
+                  variant="contained"
+                  size="small"
+                  href="https://www.youtube.com/watch?v=5nobwu_1"
+                  target="_blank"
+                  sx={{ 
+                    fontSize: '0.8rem',
+                    mr: 1
+                  }}
+                >
+                  Preview Video
+                </Button>
+              )}
               <Button
                 variant="contained"
                 fullWidth
                 href="https://ko-fi.com/nfltemp/shop"
                 onClick={() => handleBuyClick(title, price)}
                 sx={{ 
-                  fontSize: '1.2rem',
+                  fontSize: '1.1rem',
                   py: 1.5
                 }}
               >
