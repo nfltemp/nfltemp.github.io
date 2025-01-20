@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -258,31 +259,6 @@
       .show-menu-button:hover {
         background-color: rgba(30, 41, 59, 0.9);
         transform: translateY(-50%) scale(1.1);
-      }
-
-      .carousel-container {
-        width: 100%;
-        overflow: hidden;
-        padding: 20px 0;
-      }
-
-      .carousel {
-        display: flex;
-        gap: 20px;
-        padding: 0 20px;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-      }
-
-      .carousel::-webkit-scrollbar {
-        display: none;
-      }
-
-      .carousel > * {
-        scroll-snap-align: start;
-        flex-shrink: 0;
       }
     </style>
   </head>
@@ -1214,97 +1190,6 @@
                     </Grid>
                   </Grid>
                 </Container>
-
-                <div class="carousel-container">
-                  <div class="carousel">
-                    <!-- Script Preview Card -->
-                    <Card sx={{ 
-                      maxWidth: 345,
-                      background: 'rgba(0,0,0,0.8)',
-                      backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      borderRadius: '15px',
-                      mb: 4
-                    }}>
-                      <CardMedia
-                        component="img"
-                        height="200"
-                        image="https://i.imgur.com/ccARUaT.gif"
-                        alt="Script Preview"
-                        sx={{
-                          objectFit: 'cover',
-                          borderRadius: '15px 15px 0 0'
-                        }}
-                      />
-                      <CardContent sx={{ p: 3 }}>
-                        <Typography variant="h5" component="div" sx={{ 
-                          color: '#fff',
-                          fontWeight: 600,
-                          mb: 2,
-                          textShadow: '0 2px 4px rgba(0,0,0,0.3)'
-                        }}>
-                          Gang Actions System
-                        </Typography>
-                        <Typography variant="body2" sx={{ color: '#ccc' }}>
-                          Advanced gang interaction system with radial menu interface. Includes territory control, gang missions, and member management.
-                        </Typography>
-                        
-                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mt: 3 }}>
-                          <Chip 
-                            size="small" 
-                            label="QB Core" 
-                            sx={{ 
-                              background: 'linear-gradient(135deg, #9333EA 0%, #4F46E5 100%)',
-                              color: 'white'
-                            }}
-                          />
-                          <Chip 
-                            size="small" 
-                            label="ESX Compatible" 
-                            sx={{
-                              background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                              color: 'white'  
-                            }}
-                          />
-                          <Chip size="small" label="Regular Updates" />
-                        </Stack>
-                      </CardContent>
-                      <CardActions sx={{ p: 2, pt: 0 }}>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          href="https://www.youtube.com/watch?v=preview"
-                          target="_blank"
-                          sx={{ 
-                            fontSize: '0.8rem',
-                            mr: 1,
-                            background: 'rgba(255,255,255,0.1)',
-                            '&:hover': {
-                              background: 'rgba(255,255,255,0.2)'
-                            }
-                          }}
-                        >
-                          Preview
-                        </Button>
-                        <Button
-                          variant="contained"
-                          fullWidth
-                          onClick={handleBuyClick('Gang Actions System', 25.00)}
-                          sx={{ 
-                            fontSize: '1.2rem',
-                            py: 1.5,
-                            background: 'linear-gradient(135deg, #9333EA 0%, #4F46E5 100%)',
-                            '&:hover': {
-                              background: 'linear-gradient(135deg, #8B31E0 0%, #4B42DB 100%)'
-                            }
-                          }}
-                        >
-                          Buy Now - $25.00
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </div>
-                </div>
               </Container>
 
               <ScrollTop>
