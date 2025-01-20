@@ -563,13 +563,20 @@
         function RecentPayments() {
           const recentBuyers = React.useMemo(() => [
             {
+              name: "OfficerMeekz",
+              amount: "$13.00",
+              purchase: "Advanced Police Job",
+              timestamp: new Date().toISOString(),
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
+            },
+            {
               name: "AB",
               amount: "$20.00",
               purchase: "[QB/ESX]Advanced Drug Farming & Dealing w/Battle Pass System",
               timestamp: new Date().toISOString(),
               avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
             },
-            ...Array(4).fill({
+            ...Array(3).fill({
               name: "---",
               amount: "$--.--",
               purchase: "No recent purchase",
@@ -918,7 +925,7 @@
                   }}
                 >
                   <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
-                    Limited Time Offer: Advanced Police Job - Now Only $15!
+                    Limited Time Offer: Advanced Police Job - Now Only $13!
                   </Typography>
                   <Chip
                     label="SALE"
@@ -1089,13 +1096,13 @@
                         <Button
                           variant="contained"
                           fullWidth
-                          onClick={handleBuyClick('Advanced Police Job', 15.00)}
+                          onClick={handleBuyClick('Advanced Police Job', 13.00)}
                           sx={{ 
                             fontSize: '1.2rem',
                             py: 1.5
                           }}
                         >
-                          Purchase Now - $15.00
+                          Purchase Now - $13.00
                         </Button>
                       </CardActions>
                     </Card>
