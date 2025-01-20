@@ -113,6 +113,7 @@
 
       function ScriptCard({ title, description, images, features, price }) {
         const [currentImage, setCurrentImage] = React.useState(0);
+        const hasMultipleImages = images && images.length > 1;
 
         const handleBuyClick = (productName, price) => {
           // Facebook Pixel tracking
@@ -157,7 +158,7 @@
             maxWidth: '500px',
             mx: 'auto',
           }}>
-            <Box sx={{ position: 'relative', paddingTop: '40%' }}>
+            <Box sx={{ position: 'relative' }}>
               {images.map((image, index) => (
                 <CardMedia
                   key={index}
@@ -165,19 +166,18 @@
                   image={image}
                   alt={title}
                   sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
+                    display: currentImage === index ? 'block' : 'none',
                     width: '100%',
-                    height: '100%',
-                    opacity: currentImage === index ? 1 : 0,
-                    transition: 'opacity 0.5s ease',
+                    height: 'auto',
+                    maxHeight: '400px',
+                    objectFit: 'contain',
+                    backgroundColor: 'rgba(0,0,0,0.8)',
                   }}
                 />
               ))}
             </Box>
 
-            {images.length > 1 && (
+            {hasMultipleImages && (
               <Box sx={{
                 display: 'flex',
                 gap: 1,
@@ -374,7 +374,10 @@
             images: [
               "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg",
               "https://i.imgur.com/1Co6LCI.png",
-              "https://i.imgur.com/3JG0xDC.png"
+              "https://i.imgur.com/O0tsneo.png",
+              "https://i.imgur.com/RV2O6AK.png",
+              "https://i.imgur.com/LBbT0ct.png",
+              "https://i.imgur.com/jGUB8eW.png"
             ],
             features: [
               {
