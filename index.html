@@ -1063,6 +1063,18 @@
                       <CardActions sx={{ p: 2, pt: 0 }}>
                         <Button
                           variant="contained"
+                          size="small"
+                          href="https://www.youtube.com/watch?v=2KTnJ93G2Ho"
+                          target="_blank"
+                          sx={{ 
+                            fontSize: '0.8rem',
+                            mr: 1
+                          }}
+                        >
+                          Preview Video
+                        </Button>
+                        <Button
+                          variant="contained"
                           fullWidth
                           onClick={handleBuyClick('Advanced Police Job', 15.00)}
                           sx={{ 
@@ -1103,6 +1115,18 @@
                       <CardActions sx={{ p: 2, pt: 0 }}>
                         <Button
                           variant="contained"
+                          size="small"
+                          href="https://www.youtube.com/watch?v=wKVY4gY2XN4"
+                          target="_blank"
+                          sx={{ 
+                            fontSize: '0.8rem',
+                            mr: 1
+                          }}
+                        >
+                          Preview Video
+                        </Button>
+                        <Button
+                          variant="contained"
                           fullWidth
                           onClick={handleBuyClick('Advanced Hitman Script', 15.00)}
                           sx={{ 
@@ -1116,6 +1140,36 @@
                     </Card>
                   </Grid>
                 </Grid>
+
+                <Container maxWidth="lg" sx={{ pt: 6, pb: 8 }}>
+                  <Typography variant="h4" gutterBottom sx={{ color: 'white', textAlign: 'center' }}>
+                    Sneak Peek Videos
+                  </Typography>
+                  <Grid container spacing={4} justifyContent="center">
+                    <Grid item xs={12} md={6}>
+                      <iframe
+                        width="100%"
+                        height="315"
+                        src="https://www.youtube.com/embed/jcpgRtvnkzY"
+                        title="Sneak Peek Backdoor Script"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <iframe
+                        width="100%"
+                        height="315"
+                        src="https://www.youtube.com/embed/sh-6Gp53_d0"
+                        title="Sneak Peek Paintball Script"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </Grid>
+                  </Grid>
+                </Container>
               </Container>
 
               <ScrollTop>
