@@ -204,6 +204,19 @@
               </Stack>
             </CardContent>
             <CardActions sx={{ p: 2 }}>
+              {title === "Drug Battle Pass" && (
+                <Button
+                  variant="contained"
+                  size="small"
+                  onClick={() => window.open("https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/5nobwu_1.mp4", "_blank")}
+                  sx={{ 
+                    fontSize: '0.8rem',
+                    mr: 1
+                  }}
+                >
+                  Preview Video
+                </Button>
+              )}
               {title === "Advanced Police Job" && (
                 <Button
                   variant="contained"
