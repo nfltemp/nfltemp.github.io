@@ -204,18 +204,34 @@
               </Stack>
             </CardContent>
             <CardActions sx={{ p: 2 }}>
-              <Button
-                variant="contained"
-                size="small"
-                href="https://www.youtube.com/watch?v=2KTnJ93G2Ho"
-                target="_blank"
-                sx={{ 
-                  fontSize: '0.8rem',
-                  mr: 1
-                }}
-              >
-                Preview Video
-              </Button>
+              {title === "Advanced Police Job" && (
+                <Button
+                  variant="contained"
+                  size="small"
+                  href="https://www.youtube.com/watch?v=2KTnJ93G2Ho"
+                  target="_blank"
+                  sx={{ 
+                    fontSize: '0.8rem',
+                    mr: 1
+                  }}
+                >
+                  Preview Video
+                </Button>
+              )}
+              {title === "Advanced Hitman Script" && (
+                <Button
+                  variant="contained"
+                  size="small"
+                  href="https://www.youtube.com/watch?v=wKVY4gY2XN4"
+                  target="_blank"
+                  sx={{ 
+                    fontSize: '0.8rem',
+                    mr: 1
+                  }}
+                >
+                  Preview Video
+                </Button>
+              )}
               <Button
                 variant="contained"
                 fullWidth
