@@ -289,6 +289,10 @@
     <!-- React Root -->
     <div id="root"></div>
 
+    <!-- Ko-fi shop embed -->
+    <div id="kofi-shop-embed" data-shop-id="V7V817I0JD" data-shop-theme="default" data-shop-currency="$"></div>
+    <script src="https://embed.ko-fi.tools/shop.js"></script>
+
     <ScrollTop>
       <Fab 
         sx={{ 
@@ -1222,16 +1226,6 @@
                   </Grid>
                 </Container>
               </Container>
-
-              {/* Ko-fi shop embed div */}
-              <Box sx={{ mt: 4, pb: 4 }}>
-                <div 
-                  id="kofi-shop-embed" 
-                  data-shop-id="V7V817I0JD" 
-                  data-shop-theme="default" 
-                  data-shop-currency="$"
-                />
-              </Box>
             </div>
           </ThemeProvider>
         );
@@ -1242,8 +1236,5 @@
         <App />
       );
     </script>
-
-    {/* Ko-fi script */}
-    <script src="https://embed.ko-fi.tools/shop.js"></script>
   </body>
 </html> 
