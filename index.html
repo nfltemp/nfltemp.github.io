@@ -591,19 +591,6 @@
           }
         }, []);
 
-        React.useEffect(() => {
-          // Create and append the Ko-fi script dynamically
-          const script = document.createElement('script');
-          script.src = 'https://embed.ko-fi.tools/shop.js';
-          script.async = true;
-          document.body.appendChild(script);
-
-          return () => {
-            // Cleanup on unmount
-            document.body.removeChild(script);
-          };
-        }, []);
-
         function RecentPayments() {
           const recentBuyers = React.useMemo(() => [
             {
@@ -1236,20 +1223,18 @@
                 </Container>
               </Container>
 
-              {/* Ko-fi shop embed div */}
-              <div 
-                id="kofi-shop-embed" 
-                data-shop-id="V7V817I0JD" 
-                data-shop-theme="default" 
-                data-shop-currency="$"
-              />
+              {/* Add Ko-fi shop embed at the bottom */}
+              <div id="kofi-shop-embed" data-shop-id="V7V817I0JD" data-shop-theme="default" data-shop-currency="$"></div>
+              <script src="https://embed.ko-fi.tools/shop.js"></script>
             </div>
           </ThemeProvider>
         );
       }
 
       const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(<App />);
+      root.render(
+        <App />
+      );
     </script>
   </body>
 </html> 
