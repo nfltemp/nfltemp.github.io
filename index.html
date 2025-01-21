@@ -1223,19 +1223,15 @@
                 </Container>
               </Container>
 
-<<<<<<< HEAD
-              {/* Add Ko-fi shop embed at the bottom */}
-              <div id="kofi-shop-embed" data-shop-id="V7V817I0JD" data-shop-theme="default" data-shop-currency="$"></div>
-              <script src="https://embed.ko-fi.tools/shop.js"></script>
-=======
               {/* Ko-fi shop embed div */}
-              <div 
-                id="kofi-shop-embed" 
-                data-shop-id="V7V817I0JD" 
-                data-shop-theme="default" 
-                data-shop-currency="$"
-              />
->>>>>>> parent of 91d7cc0 (Update index.html)
+              <Box sx={{ mt: 4, pb: 4 }}>
+                <div 
+                  id="kofi-shop-embed" 
+                  data-shop-id="V7V817I0JD" 
+                  data-shop-theme="default" 
+                  data-shop-currency="$"
+                />
+              </Box>
             </div>
           </ThemeProvider>
         );
@@ -1246,5 +1242,8 @@
         <App />
       );
     </script>
+
+    {/* Ko-fi script */}
+    <script src="https://embed.ko-fi.tools/shop.js"></script>
   </body>
 </html> 
