@@ -1020,8 +1020,18 @@
                           weapon retrieval, NPC buyer system, and full ESX/QB compatibility.
                         </Typography>
                       </CardContent>
-                      <CardActions>
+                      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Button size="small" onClick={() => handleOpen('backdoorModal')}>Learn More</Button>
+                        <Button 
+                          variant="contained"
+                          onClick={handleBuyClick('Backdoor/Pistol Snatching Script', 10.00)}
+                          sx={{ 
+                            fontSize: '1rem',
+                            py: 1
+                          }}
+                        >
+                          Purchase Now - $10.00
+                        </Button>
                       </CardActions>
                     </Card>
                   </Grid>
@@ -1297,7 +1307,7 @@
                     <img src="https://i.imgur.com/lCaIfq4.png" alt="Backdoor Script Preview 1" />
                   </ImageListItem>
                   <ImageListItem>
-                    <img src="https://i.imgur.com/V19JzV7.png" alt="Backdoor Script Preview 2" />
+                    <img src="https://i.imgur.com/ykpeH0p.png" alt="Backdoor Script Preview 2" />
                   </ImageListItem>
                 </ImageList>
 
