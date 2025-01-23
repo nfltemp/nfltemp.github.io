@@ -285,14 +285,16 @@
               <Button
                 variant="contained"
                 fullWidth
-                href="https://ko-fi.com/s/447ce10c2d"
-                onClick={() => handleBuyClick('Backdoor/Pistol Snatching Script', 10.00)}
+                href={title === "Backdoor/Pistol Snatching Script" 
+                  ? "https://ko-fi.com/s/447ce10c2d" 
+                  : "https://ko-fi.com/nfltemp/shop"}
+                onClick={() => handleBuyClick(title, price)}
                 sx={{ 
                   fontSize: '1.1rem',
                   py: 1.5
                 }}
               >
-                Purchase Now - $10.00
+                Purchase Now - ${price}
               </Button>
             </CardActions>
           </Card>
