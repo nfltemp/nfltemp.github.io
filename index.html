@@ -1024,8 +1024,10 @@
                         <Button size="small" onClick={() => handleOpen('backdoorModal')}>Learn More</Button>
                         <Button 
                           variant="contained"
+                          component="a"
                           href="https://ko-fi.com/s/447ce10c2d"
-                          onClick={handleBuyClick('Backdoor/Pistol Snatching Script', 10.00)}
+                          target="_blank"
+                          onClick={() => handleBuyClick('Backdoor/Pistol Snatching Script', 10.00)}
                           sx={{ 
                             fontSize: '1rem',
                             py: 1
