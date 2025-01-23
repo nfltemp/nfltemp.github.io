@@ -329,7 +329,10 @@
         CssBaseline,
         useScrollTrigger,
         Zoom,
-        Fab
+        Fab,
+        Modal,
+        ImageList,
+        ImageListItem
       } = MaterialUI;
 
       const theme = createTheme({
@@ -454,6 +457,7 @@
         const lastMousePos = React.useRef({ x: 0, y: 0 });
         const frameRef = React.useRef();
         const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
+        const [open, setOpen] = React.useState(null);
 
         React.useEffect(() => {
           const handleMouseMove = (e) => {
@@ -656,6 +660,27 @@
         }
 
         const isMobile = () => window.innerWidth <= 768;
+
+        const handleOpen = (modal) => {
+          setOpen(modal);
+        };
+
+        const handleClose = () => {
+          setOpen(null);
+        };
+
+        const modalStyle = {
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '80%',
+          maxWidth: '600px',
+          bgcolor: 'background.paper',
+          border: '2px solid #000',
+          boxShadow: 24,
+          p: 4,
+        };
 
         return (
           <ThemeProvider theme={theme}>
@@ -973,6 +998,34 @@
                 </Paper>
 
                 <Grid container spacing={4}>
+                  {/* New Backdoor/Pistol Snatching Script Listing */}
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Card>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image="https://i.imgur.com/lCaIfq4.png"
+                        alt="Backdoor/Pistol Snatching Script"
+                      />
+                      <CardContent>
+                        <Box display="flex" alignItems="center" mb={1}>
+                          <Typography variant="h6" component="div" style={{marginRight: '8px'}}>
+                            Backdoor/Pistol Snatching Script
+                          </Typography>
+                          <Chip label="New" color="secondary" size="small" />
+                        </Box>
+                        <Typography variant="body2" color="text.secondary">
+                          A unique original script with custom animations for weapon robbery roleplay. Features include:
+                          core robbery system with skillchecks, configurable weapon restrictions, cooldown system,
+                          weapon retrieval, NPC buyer system, and full ESX/QB compatibility.
+                        </Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Button size="small" onClick={() => handleOpen('backdoorModal')}>Learn More</Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+
                   {/* Complete Package (Ambulance Job) */}
                   <Grid item xs={12} md={4}>
                     <Card>
@@ -1227,6 +1280,54 @@
                 </Container>
               </Container>
             </div>
+
+            {/* Add new modal */}
+            <Modal
+              open={open === 'backdoorModal'}
+              onClose={handleClose}
+              aria-labelledby="backdoor-modal-title"
+            >
+              <Box sx={modalStyle}>
+                <Typography id="backdoor-modal-title" variant="h6" component="h2" mb={2}>
+                  Backdoor/Pistol Snatching Script ESX/QB Open Source
+                </Typography>
+                
+                <ImageList cols={2} gap={8}>
+                  <ImageListItem>
+                    <img src="https://i.imgur.com/lCaIfq4.png" alt="Backdoor Script Preview 1" />
+                  </ImageListItem>
+                  <ImageListItem>
+                    <img src="https://i.imgur.com/V19JzV7.png" alt="Backdoor Script Preview 2" />
+                  </ImageListItem>
+                </ImageList>
+
+                <Box my={2}>
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="https://i.imgur.com/J11IoKg.mp4"
+                    title="Backdoor Script Preview"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </Box>
+
+                <Typography variant="h6" gutterBottom>Main Features:</Typography>
+                <Typography variant="body2" component="div">
+                  <ul>
+                    <li><strong>Core Robbery System:</strong> Players can steal weapons using /backdoor command with skillchecks and animated sequences</li>
+                    <li><strong>Weapon Restrictions:</strong> Configurable weapon class and specific weapon restrictions</li>
+                    <li><strong>Cooldown System:</strong> 2-hour configurable cooldown with persistence</li>
+                    <li><strong>Weapon Retrieval:</strong> Victims can retrieve weapons by killing the robber</li>
+                    <li><strong>Weapon Buyer System:</strong> NPC that buys stolen weapons with custom pricing</li>
+                    <li><strong>Framework Compatibility:</strong> Works with both ESX and QB-Core</li>
+                    <li><strong>Anti-Abuse Features:</strong> Various protections and restrictions</li>
+                    <li><strong>Highly Configurable:</strong> Extensive options for customization</li>
+                  </ul>
+                </Typography>
+              </Box>
+            </Modal>
           </ThemeProvider>
         );
       }
