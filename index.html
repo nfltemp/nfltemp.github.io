@@ -602,8 +602,15 @@
         function RecentPayments() {
           const recentBuyers = React.useMemo(() => [
             {
+              name: "Zopher",
+              amount: "$10.00",
+              purchase: "Backdoor/Pistol Snatching Script",
+              timestamp: new Date().toISOString(),
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
+            },
+            {
               name: "OfficerMeekz",
-              amount: "$13.00",
+              amount: "$13.00", 
               purchase: "Advanced Police Job",
               timestamp: new Date().toISOString(),
               avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
@@ -615,7 +622,7 @@
               timestamp: new Date().toISOString(),
               avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
             },
-            ...Array(3).fill({
+            ...Array(2).fill({
               name: "---",
               amount: "$--.--",
               purchase: "No recent purchase",
