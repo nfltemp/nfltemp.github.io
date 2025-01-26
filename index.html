@@ -604,21 +604,21 @@
             {
               name: "Zofer",
               amount: "$10.00",
-              purchase: "Backdoor/Pistol Snatching Script",
+              purchase: "FiveM Backdoor Script",
               timestamp: new Date().toISOString(),
               avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB2.png"
             },
             {
               name: "OfficerMeekz",
               amount: "$13.00", 
-              purchase: "Advanced Police Job",
+              purchase: "QB Police Job",
               timestamp: new Date().toISOString(),
               avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
             },
             {
               name: "AB",
               amount: "$20.00",
-              purchase: "[QB/ESX]Advanced Drug Farming & Dealing w/Battle Pass System",
+              purchase: "Drug System + Battle Pass",
               timestamp: new Date().toISOString(),
               avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
             },
@@ -655,10 +655,19 @@
                       }} 
                     />
                   </div>
-                  <div style={{ 
-                    color: buyer.name !== "---" ? '#fff' : 'rgba(148, 163, 184, 0.3)'
-                  }}>
-                    {buyer.name}
+                  <div style={{ flex: 1 }}>
+                    <div style={{ 
+                      color: buyer.name !== "---" ? '#fff' : 'rgba(148, 163, 184, 0.3)'
+                    }}>
+                      {buyer.name}
+                    </div>
+                    <div style={{ 
+                      color: '#94A3B8', 
+                      fontSize: '0.75rem',
+                      marginTop: '2px'
+                    }}>
+                      {buyer.purchase}
+                    </div>
                   </div>
                 </div>
               ))}
