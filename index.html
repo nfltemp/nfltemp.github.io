@@ -609,16 +609,18 @@
               avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/17c766c26b851a64f02b079084234c61.jpg"
             },
             {
-              name: "polomaps/ajlizzy",
+              name: "Polo/Ajlizzy",
               amount: "$10.00",
               purchase: "Backdoor/Pistol Snatching Script", 
               timestamp: new Date().toISOString(),
               avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/polo.jpg",
               nameStyle: {
-                background: 'linear-gradient(45deg, #8b5cf6, #6366f1)',
+                background: 'linear-gradient(45deg, #a855f7, #6366f1, #8b5cf6)',
+                backgroundSize: '200% 200%',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 animation: 'gradient 3s ease infinite',
+                fontWeight: 'bold'
               }
             },
             {
@@ -677,7 +679,8 @@
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ 
-                      color: buyer.name !== "---" ? '#fff' : 'rgba(148, 163, 184, 0.3)'
+                      ...(buyer.nameStyle || {}),
+                      color: buyer.nameStyle ? undefined : (buyer.name !== "---" ? '#fff' : 'rgba(148, 163, 184, 0.3)')
                     }}>
                       {buyer.name}
                     </div>
