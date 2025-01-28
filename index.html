@@ -278,6 +278,40 @@
           margin-left: 70px;
         }
       }
+
+      /* New keyframes for Polo/Ajlizzy's name */
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes glow {
+        0% {
+          text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+        100% {
+          text-shadow: 0 0 20px rgba(168, 85, 247, 1);
+        }
+      }
+
+      @keyframes dance {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
     </style>
   </head>
   <body>
@@ -615,12 +649,15 @@
               timestamp: new Date().toISOString(),
               avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/polo.jpg",
               nameStyle: {
-                background: 'linear-gradient(45deg, #a855f7, #6366f1, #8b5cf6)',
-                backgroundSize: '200% 200%',
+                background: 'linear-gradient(45deg, #a855f7, #6366f1, #8b5cf6, #d946ef, #8b5cf6)',
+                backgroundSize: '300% 300%',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                animation: 'gradient 3s ease infinite',
-                fontWeight: 'bold'
+                animation: 'gradient 2s ease infinite, glow 2s ease-in-out infinite alternate, dance 1.5s ease-in-out infinite',
+                fontWeight: 'bold',
+                textShadow: '0 0 10px rgba(168, 85, 247, 0.5)',
+                display: 'inline-block',
+                cursor: 'pointer',
               }
             },
             {
