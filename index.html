@@ -636,6 +636,17 @@
         function RecentPayments() {
           const recentBuyers = React.useMemo(() => [
             {
+              name: "REEM RUMBLE",
+              amount: "$10.00",
+              purchase: "Backdoor/Pistol Snatching Script",
+              timestamp: new Date().toISOString(),
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/ca4.png",
+              nameStyle: {
+                color: '#32CD32', // Lime green
+                fontWeight: 'bold'
+              }
+            },
+            {
               name: "PREME",
               amount: "$10.00",
               purchase: "Backdoor/Pistol Snatching Script",
@@ -716,10 +727,25 @@
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ 
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
                       ...(buyer.nameStyle || {}),
                       color: buyer.nameStyle ? undefined : (buyer.name !== "---" ? '#fff' : 'rgba(148, 163, 184, 0.3)')
                     }}>
                       {buyer.name}
+                      {buyer.name === "AB" && (
+                        <Chip 
+                          label="First Supporter" 
+                          size="small"
+                          sx={{
+                            background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+                            color: '#000',
+                            fontSize: '0.6rem',
+                            height: '20px'
+                          }}
+                        />
+                      )}
                     </div>
                     <div style={{ 
                       color: '#94A3B8', 
@@ -907,9 +933,29 @@
                           }} 
                         />
                       </div>
-                      <div>
-                        <div style={{ color: '#fff' }}>AB</div>
-                        <div style={{ color: '#94A3B8', fontSize: '0.8rem' }}>$20.00</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <div>
+                          <div style={{ 
+                            color: '#FFD700',
+                            fontWeight: 'bold',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px'
+                          }}>
+                            AB
+                            <Chip 
+                              label="First Supporter" 
+                              size="small"
+                              sx={{
+                                background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+                                color: '#000',
+                                fontSize: '0.6rem',
+                                height: '20px'
+                              }}
+                            />
+                          </div>
+                          <div style={{ color: '#94A3B8', fontSize: '0.8rem' }}>$20.00</div>
+                        </div>
                       </div>
                     </div>
                   </div>
