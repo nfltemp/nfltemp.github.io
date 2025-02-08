@@ -312,6 +312,28 @@
           transform: translateY(0);
         }
       }
+
+      .hot-banner {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: linear-gradient(45deg, #ff4e50, #f9d423);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        animation: pulse 1.5s infinite;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        z-index: 1;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
     </style>
   </head>
   <body>
@@ -811,6 +833,121 @@
           boxShadow: 24,
           p: 4,
         };
+
+        function PackageCard({ title, description, image, images, features, price, compatibility, isBestSeller, isNew, isHot }) {
+          const [currentImage, setCurrentImage] = React.useState(0);
+          const hasMultipleImages = images && images.length > 1;
+          const [open, setOpen] = React.useState(false);
+
+          return (
+            <Card sx={{ 
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              position: 'relative',
+              background: 'rgba(15, 23, 42, 0.8)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(148, 163, 184, 0.1)',
+            }}>
+              {isHot && <div className="hot-banner">HOT</div>}
+              <Box sx={{ position: 'relative' }}>
+                {hasMultipleImages ? (
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={images[currentImage]}
+                    alt={title}
+                  />
+                ) : (
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={image}
+                    alt={title}
+                  />
+                )}
+              </Box>
+              <CardContent>
+                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  {title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" paragraph>
+                  {description}
+                </Typography>
+                <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
+                  {features.map((feature) => (
+                    <Chip size="small" label={feature} />
+                  ))}
+                </Stack>
+              </CardContent>
+              <CardActions sx={{ p: 2, pt: 0 }}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  href="https://ko-fi.com/nfltemp/shop"
+                  onClick={() => handleBuyClick(title, price)}
+                  sx={{ 
+                    fontSize: '1.2rem',
+                    py: 1.5
+                  }}
+                >
+                  Purchase Now - ${price}
+                </Button>
+              </CardActions>
+            </Card>
+          );
+        }
+
+        const packages = [
+          {
+            title: "Backdoor/Pistol Snatching Script",
+            description: "A unique original script with custom animations for weapon robbery roleplay. Features include core robbery system with skillchecks, configurable weapon restrictions, cooldown system, weapon retrieval, NPC buyer system, and full ESX/QB compatibility.",
+            images: [
+              "https://i.imgur.com/lCaIfq4.png",
+              "https://i.imgur.com/ykpeH0p.png"
+            ],
+            features: [
+              "Core Robbery System with Skillchecks",
+              "Configurable Weapon Restrictions",
+              "2-hour Cooldown System",
+              "Weapon Retrieval System",
+              "NPC Weapon Buyer System",
+              "Framework Bridge System",
+              "Anti-Abuse Features",
+              "Extensive Configuration Options"
+            ],
+            price: "10.00",
+            compatibility: ["ESX Compatible", "QB Core Ready", "Open Source"],
+            isBestSeller: false,
+            isNew: true,
+            isHot: true
+          },
+          {
+            title: "Gunplug Script",
+            description: "Advanced weapon crafting system with XP progression, job/gang integration, and dynamic crafting queues. Features include proximity-based crafting, success rates, material requirements, and comprehensive admin controls.",
+            images: [
+              "https://i.imgur.com/oUIcbk7.png",
+              "https://i.imgur.com/43DwMiX.png",
+              "https://i.imgur.com/n0MlWYV.png"
+            ],
+            features: [
+              "Advanced XP & Leveling System",
+              "Job/Gang (QBCore) Integration",
+              "Dynamic Crafting Queue System",
+              "Proximity-based Crafting Tables",
+              "Success Rate Mechanics",
+              "Material Requirements",
+              "Admin Control Panel",
+              "Gang-specific Tables & Recipes"
+            ],
+            price: "20.00",
+            compatibility: ["QB Core Ready", "Gang Integration", "Open Source"],
+            isBestSeller: false,
+            isNew: true,
+            isHot: true
+          },
+          // ... rest of the packages ...
+        ];
 
         return (
           <ThemeProvider theme={theme}>
