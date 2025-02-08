@@ -834,6 +834,93 @@
           p: 4,
         };
 
+        const packages = [
+          {
+            title: "Backdoor/Pistol Snatching Script",
+            description: "A unique original script with custom animations for weapon robbery roleplay. Features include core robbery system with skillchecks, configurable weapon restrictions, cooldown system, weapon retrieval, NPC buyer system, and full ESX/QB compatibility.",
+            images: [
+              "https://i.imgur.com/lCaIfq4.png",
+              "https://i.imgur.com/ykpeH0p.png"
+            ],
+            features: [
+              "Core Robbery System with Skillchecks",
+              "Configurable Weapon Restrictions",
+              "2-hour Cooldown System",
+              "Weapon Retrieval System",
+              "NPC Weapon Buyer System",
+              "Framework Bridge System",
+              "Anti-Abuse Features",
+              "Extensive Configuration Options"
+            ],
+            price: "10.00",
+            compatibility: ["ESX Compatible", "QB Core Ready", "Open Source"],
+            isBestSeller: false,
+            isNew: true,
+            isHot: true
+          },
+          {
+            title: "Gunplug Script",
+            description: "Advanced weapon crafting system with XP progression, job/gang integration, and dynamic crafting queues. Features include proximity-based crafting, success rates, material requirements, and comprehensive admin controls.",
+            images: [
+              "https://i.imgur.com/oUIcbk7.png",
+              "https://i.imgur.com/n0MlWYV.png",
+              "https://i.imgur.com/43DwMiX.png"
+            ],
+            features: [
+              "Advanced XP & Leveling System",
+              "Job/Gang (QBCore) Integration",
+              "Dynamic Crafting Queue System",
+              "Proximity-based Crafting Tables",
+              "Success Rate Mechanics",
+              "Material Requirements",
+              "Admin Control Panel",
+              "Gang-specific Tables & Recipes"
+            ],
+            price: "20.00",
+            compatibility: ["QB Core Ready", "Gang Integration", "Open Source"],
+            isBestSeller: false,
+            isNew: true,
+            isHot: true
+          },
+          {
+            title: "Advanced Drug & Battle Pass System",
+            description: "Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration.",
+            images: [
+              "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG",
+              "https://i.imgur.com/8kMr9VP.png",
+              "https://i.imgur.com/3JG0xDC.png",
+              "https://i.imgur.com/IaHxWGT.png"
+            ],
+            features: [
+              "Detailed Drug Farming System",
+              "Battle Pass Integration",
+              "Tiered Rewards System",
+              "Player Progress Tracking",
+              "Customizable Missions",
+              "Territory Control"
+            ],
+            price: "20.00",
+            compatibility: ["ESX Compatible", "QB Core Ready", "Open Source"],
+            isBestSeller: false
+          },
+          {
+            title: "Advanced Police Job",
+            description: "Transform your server's law enforcement experience with our comprehensive police job script.",
+            image: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/policejob.PNG",
+            features: [
+              "Vehicle Management System",
+              "Advanced Arrest System",
+              "Evidence Handling",
+              "SWAT Mode",
+              "Interactive Police Garage",
+              "Evidence Management"
+            ],
+            price: "13.00",
+            compatibility: ["QB Core Only", "High Performance", "Open Source"],
+            isBestSeller: false
+          }
+        ];
+
         function PackageCard({ title, description, image, images, features, price, compatibility, isBestSeller, isNew, isHot }) {
           const [currentImage, setCurrentImage] = React.useState(0);
           const hasMultipleImages = images && images.length > 1;
@@ -849,21 +936,81 @@
               backdropFilter: 'blur(10px)',
               border: '1px solid rgba(148, 163, 184, 0.1)',
             }}>
-              {isHot && <div className="hot-banner">HOT</div>}
+              {isHot && (
+                <div className="hot-banner">
+                  HOT
+                </div>
+              )}
               <Box sx={{ position: 'relative' }}>
                 {hasMultipleImages ? (
-                  <CardMedia
-                    component="img"
-                    height="200"
-                    image={images[currentImage]}
-                    alt={title}
-                  />
+                  <>
+                    <CardMedia
+                      component="img"
+                      image={images[currentImage]}
+                      alt={title}
+                      sx={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: '400px',
+                        objectFit: 'contain',
+                        backgroundColor: 'rgba(0,0,0,0.8)',
+                      }}
+                    />
+                    <Box sx={{
+                      display: 'flex',
+                      gap: 1,
+                      p: 1,
+                      overflowX: 'auto',
+                      '&::-webkit-scrollbar': { display: 'none' },
+                      msOverflowStyle: 'none',
+                      scrollbarWidth: 'none',
+                    }}>
+                      {images.map((img, index) => (
+                        <Box
+                          key={index}
+                          onClick={() => setCurrentImage(index)}
+                          sx={{
+                            width: 60,
+                            height: 40,
+                            flexShrink: 0,
+                            position: 'relative',
+                            cursor: 'pointer',
+                            borderRadius: 1,
+                            overflow: 'hidden',
+                            border: currentImage === index ? '2px solid #3AECF8' : 'none',
+                          }}
+                        >
+                          <Box
+                            component="img"
+                            src={img}
+                            alt={`Preview ${index + 1}`}
+                            sx={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              filter: currentImage === index ? 'none' : 'blur(2px)',
+                              transition: 'filter 0.3s ease',
+                              '&:hover': {
+                                filter: 'none',
+                              },
+                            }}
+                          />
+                        </Box>
+                      ))}
+                    </Box>
+                  </>
                 ) : (
                   <CardMedia
                     component="img"
-                    height="200"
                     image={image}
                     alt={title}
+                    sx={{
+                      width: '100%',
+                      height: 'auto',
+                      maxHeight: '400px',
+                      objectFit: 'contain',
+                      backgroundColor: 'rgba(0,0,0,0.8)',
+                    }}
                   />
                 )}
               </Box>
@@ -897,57 +1044,6 @@
             </Card>
           );
         }
-
-        const packages = [
-          {
-            title: "Backdoor/Pistol Snatching Script",
-            description: "A unique original script with custom animations for weapon robbery roleplay. Features include core robbery system with skillchecks, configurable weapon restrictions, cooldown system, weapon retrieval, NPC buyer system, and full ESX/QB compatibility.",
-            images: [
-              "https://i.imgur.com/lCaIfq4.png",
-              "https://i.imgur.com/ykpeH0p.png"
-            ],
-            features: [
-              "Core Robbery System with Skillchecks",
-              "Configurable Weapon Restrictions",
-              "2-hour Cooldown System",
-              "Weapon Retrieval System",
-              "NPC Weapon Buyer System",
-              "Framework Bridge System",
-              "Anti-Abuse Features",
-              "Extensive Configuration Options"
-            ],
-            price: "10.00",
-            compatibility: ["ESX Compatible", "QB Core Ready", "Open Source"],
-            isBestSeller: false,
-            isNew: true,
-            isHot: true
-          },
-          {
-            title: "Gunplug Script",
-            description: "Advanced weapon crafting system with XP progression, job/gang integration, and dynamic crafting queues. Features include proximity-based crafting, success rates, material requirements, and comprehensive admin controls.",
-            images: [
-              "https://i.imgur.com/oUIcbk7.png",
-              "https://i.imgur.com/43DwMiX.png",
-              "https://i.imgur.com/n0MlWYV.png"
-            ],
-            features: [
-              "Advanced XP & Leveling System",
-              "Job/Gang (QBCore) Integration",
-              "Dynamic Crafting Queue System",
-              "Proximity-based Crafting Tables",
-              "Success Rate Mechanics",
-              "Material Requirements",
-              "Admin Control Panel",
-              "Gang-specific Tables & Recipes"
-            ],
-            price: "20.00",
-            compatibility: ["QB Core Ready", "Gang Integration", "Open Source"],
-            isBestSeller: false,
-            isNew: true,
-            isHot: true
-          },
-          // ... rest of the packages ...
-        ];
 
         return (
           <ThemeProvider theme={theme}>
@@ -1285,272 +1381,11 @@
                 </Paper>
 
                 <Grid container spacing={4}>
-                  {/* New Backdoor/Pistol Snatching Script Listing */}
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Card>
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image="https://i.imgur.com/lCaIfq4.png"
-                        alt="Backdoor/Pistol Snatching Script"
-                      />
-                      <CardContent>
-                        <Box display="flex" alignItems="center" mb={1}>
-                          <Typography variant="h6" component="div" style={{marginRight: '8px'}}>
-                            Backdoor/Pistol Snatching Script
-                          </Typography>
-                          <Chip label="New" color="secondary" size="small" />
-                        </Box>
-                        <Typography variant="body2" color="text.secondary">
-                          A unique original script with custom animations for weapon robbery roleplay. Features include:
-                          core robbery system with skillchecks, configurable weapon restrictions, cooldown system,
-                          weapon retrieval, NPC buyer system, and full ESX/QB compatibility.
-                        </Typography>
-                      </CardContent>
-                      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Button size="small" onClick={() => handleOpen('backdoorModal')}>Learn More</Button>
-                        <Button 
-                          variant="contained"
-                          component="a"
-                          href="https://ko-fi.com/s/447ce10c2d"
-                          target="_blank"
-                          onClick={() => handleBuyClick('Backdoor/Pistol Snatching Script', 10.00)}
-                          sx={{ 
-                            fontSize: '1rem',
-                            py: 1
-                          }}
-                        >
-                          Purchase Now - $10.00
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
-
-                  {/* Complete Package (Ambulance Job) */}
-                  <Grid item xs={12} md={4}>
-                    <Card>
-                      <Box className="script-card-media">
-                        <CardMedia
-                          component="img"
-                          height="200"
-                          image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/complete.jpg"
-                          alt="Ambulance Job"
-                        />
-                        <Box sx={{
-                          position: 'absolute',
-                          top: 16,
-                          right: 16,
-                          zIndex: 2,
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: 1,
-                        }}>
-                          <Chip
-                            label="BEST SELLER"
-                            sx={{
-                              background: 'linear-gradient(135deg, #3AECF8 0%, #6366F1 100%)',
-                              color: 'white',
-                              fontWeight: 'bold',
-                            }}
-                          />
-                          <Chip
-                            label="25% OFF"
-                            sx={{ 
-                              background: 'linear-gradient(135deg, #F87171 0%, #EF4444 100%)',
-                              color: 'white',
-                              fontWeight: 'bold',
-                            }}
-                          />
-                        </Box>
-                      </Box>
-                      <CardContent>
-                        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                          Advanced Ambulance Job
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" paragraph>
-                          Complete ambulance and medical system with advanced features for ESX and QB Core servers.
-                        </Typography>
-                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                          <Chip size="small" label="ESX Compatible" />
-                          <Chip size="small" label="QB Core Ready" />
-                          <Chip size="small" label="Regular Updates" />
-                        </Stack>
-                      </CardContent>
-                      <CardActions sx={{ p: 2, pt: 0 }}>
-                        <Button
-                          variant="contained"
-                          fullWidth
-                          href="https://ko-fi.com/nfltemp/shop"
-                          onClick={() => handleBuyClick('Advanced Ambulance Job', 20.00)}
-                          sx={{ 
-                            fontSize: '1.2rem',
-                            py: 1.5
-                          }}
-                        >
-                          Purchase Now - $20.00
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
-
-                  {/* Battle Pass System */}
-                  <Grid item xs={12} md={4}>
-                    <Card>
-                      <Box className="script-card-media">
-                        <CardMedia
-                          component="img"
-                          height="200"
-                          image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/battlepass.PNG"
-                          alt="Battle Pass System"
-                        />
-                      </Box>
-                      <CardContent>
-                        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                          Advanced Drug & Battle Pass System
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" paragraph>
-                          Enhance your SeriousRP/Semi-Serious server with an advanced Drug System and engaging Battle Pass integration.
-                        </Typography>
-                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                          <Chip size="small" label="ESX Compatible" />
-                          <Chip size="small" label="QB Core Ready" />
-                          <Chip size="small" label="Open Source" />
-                        </Stack>
-                      </CardContent>
-                      <CardActions sx={{ p: 2, pt: 0 }}>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          href="https://www.youtube.com/watch?v=wgfSjG06uVY"
-                          target="_blank"
-                          sx={{ 
-                            fontSize: '0.8rem',
-                            mr: 1
-                          }}
-                        >
-                          Preview Video
-                        </Button>
-                        <Button
-                          variant="contained"
-                          fullWidth
-                          href="https://ko-fi.com/nfltemp/shop"
-                          onClick={() => handleBuyClick('Advanced Drug & Battle Pass System', 20.00)}
-                          sx={{ 
-                            fontSize: '1.2rem',
-                            py: 1.5
-                          }}
-                        >
-                          Purchase Now - $20.00
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
-
-                  {/* Police Job */}
-                  <Grid item xs={12} md={4}>
-                    <Card>
-                      <Box className="script-card-media">
-                        <CardMedia
-                          component="img"
-                          height="200"
-                          image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/policejob.PNG"
-                          alt="Police Job"
-                        />
-                      </Box>
-                      <CardContent>
-                        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                          Advanced Police Job
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" paragraph>
-                          Transform your server's law enforcement experience with our comprehensive police job script.
-                        </Typography>
-                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                          <Chip size="small" label="QB Core Only" />
-                          <Chip size="small" label="High Performance" />
-                          <Chip size="small" label="Open Source" />
-                        </Stack>
-                      </CardContent>
-                      <CardActions sx={{ p: 2, pt: 0 }}>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          href="https://www.youtube.com/watch?v=2KTnJ93G2Ho"
-                          target="_blank"
-                          sx={{ 
-                            fontSize: '0.8rem',
-                            mr: 1
-                          }}
-                        >
-                          Preview Video
-                        </Button>
-                        <Button
-                          variant="contained"
-                          fullWidth
-                          href="https://ko-fi.com/nfltemp/shop"
-                          onClick={() => handleBuyClick('Advanced Police Job', 13.00)}
-                          sx={{ 
-                            fontSize: '1.2rem',
-                            py: 1.5
-                          }}
-                        >
-                          Purchase Now - $13.00
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
-
-                  {/* Hitman Script */}
-                  <Grid item xs={12} md={4}>
-                    <Card>
-                      <Box className="script-card-media">
-                        <CardMedia
-                          component="img"
-                          height="200"
-                          image="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/hitman.PNG"
-                          alt="Hitman Script"
-                        />
-                      </Box>
-                      <CardContent>
-                        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-                          Advanced Hitman Script
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" paragraph>
-                          Dive into the thrilling world of FiveM with this professional Hitman Script. Perfect for enhancing your roleplay experience.
-                        </Typography>
-                        <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 2 }}>
-                          <Chip size="small" label="QB Core Only" />
-                          <Chip size="small" label="High Performance" />
-                          <Chip size="small" label="Open Source" />
-                        </Stack>
-                      </CardContent>
-                      <CardActions sx={{ p: 2, pt: 0 }}>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          href="https://www.youtube.com/watch?v=wKVY4gY2XN4"
-                          target="_blank"
-                          sx={{ 
-                            fontSize: '0.8rem',
-                            mr: 1
-                          }}
-                        >
-                          Preview Video
-                        </Button>
-                        <Button
-                          variant="contained"
-                          fullWidth
-                          href="https://ko-fi.com/nfltemp/shop"
-                          onClick={() => handleBuyClick('Advanced Hitman Script', 15.00)}
-                          sx={{ 
-                            fontSize: '1.2rem',
-                            py: 1.5
-                          }}
-                        >
-                          Purchase Now - $15.00
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
+                  {packages.map((packageItem) => (
+                    <Grid item xs={12} sm={6} md={4} key={packageItem.title}>
+                      <PackageCard {...packageItem} />
+                    </Grid>
+                  ))}
                 </Grid>
 
                 <Container maxWidth="lg" sx={{ pt: 6, pb: 8 }}>
