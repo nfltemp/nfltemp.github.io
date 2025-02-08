@@ -1148,7 +1148,7 @@
                 </Paper>
 
                 <Grid container spacing={4}>
-                  {/* New Backdoor/Pistol Snatching Script Listing */}
+                  {/* Backdoor/Pistol Snatching Script Listing */}
                   <Grid item xs={12} sm={6} md={4}>
                     <Card>
                       <CardMedia
@@ -1162,7 +1162,20 @@
                           <Typography variant="h6" component="div" style={{marginRight: '8px'}}>
                             Backdoor/Pistol Snatching Script
                           </Typography>
-                          <Chip label="New" color="secondary" size="small" />
+                          <Box display="flex" alignItems="center" gap={1}>
+                            <Chip label="New" color="secondary" size="small" />
+                            <Chip 
+                              label="HOT" 
+                              size="small"
+                              sx={{
+                                background: 'linear-gradient(-45deg, #FFA500, #FF6B6B, #FF8E53, #FF6B6B)',
+                                backgroundSize: '400% 400%',
+                                animation: 'gradient 3s ease infinite',
+                                color: 'white',
+                                fontWeight: 'bold'
+                              }}
+                            />
+                          </Box>
                         </Box>
                         <Typography variant="body2" color="text.secondary">
                           A unique original script with custom animations for weapon robbery roleplay. Features include:
@@ -1184,6 +1197,52 @@
                           }}
                         >
                           Purchase Now - $10.00
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+
+                  {/* Gun Plug Script Listing */}
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Card>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image="https://i.imgur.com/oUIcbk7.png"
+                        alt="Gun Plug System"
+                      />
+                      <CardContent>
+                        <Box display="flex" alignItems="center" mb={1}>
+                          <Typography variant="h6" component="div" style={{marginRight: '8px'}}>
+                            Gun Plug System
+                          </Typography>
+                          <Chip label="New" color="secondary" size="small" />
+                        </Box>
+                        <Typography variant="body2" color="text.secondary">
+                          A comprehensive weapon crafting and distribution system featuring:
+                          XP & leveling system, crafting queue, job/gang integration, 
+                          proximity crafting, success rates, and extensive admin controls.
+                        </Typography>
+                        <Stack direction="row" spacing={1} mt={2} flexWrap="wrap">
+                          <Chip size="small" label="QB Core" />
+                          <Chip size="small" label="ox_lib" />
+                          <Chip size="small" label="Advanced Features" />
+                        </Stack>
+                      </CardContent>
+                      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Button size="small" onClick={() => handleOpen('gunplugModal')}>Learn More</Button>
+                        <Button 
+                          variant="contained"
+                          component="a"
+                          href="https://ko-fi.com/s/2a355e3c6c"
+                          target="_blank"
+                          onClick={() => handleBuyClick('Gun Plug System', 20.00)}
+                          sx={{ 
+                            fontSize: '1rem',
+                            py: 1
+                          }}
+                        >
+                          Purchase Now - $20.00
                         </Button>
                       </CardActions>
                     </Card>
