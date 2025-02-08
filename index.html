@@ -880,7 +880,7 @@
             compatibility: ["QB Core Ready", "Gang Integration", "Open Source"],
             isBestSeller: false,
             isNew: true,
-            isHot: true
+            isHot: false
           },
           {
             title: "Advanced Drug & Battle Pass System",
@@ -918,6 +918,22 @@
             price: "13.00",
             compatibility: ["QB Core Only", "High Performance", "Open Source"],
             isBestSeller: false
+          },
+          {
+            title: "Advanced Ambulance Job",
+            description: "A comprehensive ambulance job script with advanced features for medical roleplay and emergency services.",
+            image: "path/to/ambulance/image.png",
+            features: [
+              "Advanced Medical System",
+              "Patient Management",
+              "Hospital Integration",
+              "Emergency Dispatch",
+              "Medical Equipment",
+              "Injury Treatment"
+            ],
+            price: "15.00",
+            compatibility: ["QB Core Ready", "High Performance", "Open Source"],
+            isBestSeller: false
           }
         ];
 
@@ -925,6 +941,17 @@
           const [currentImage, setCurrentImage] = React.useState(0);
           const hasMultipleImages = images && images.length > 1;
           const [open, setOpen] = React.useState(false);
+
+          // Add auto transition effect
+          React.useEffect(() => {
+            let interval;
+            if (hasMultipleImages) {
+              interval = setInterval(() => {
+                setCurrentImage(current => (current + 1) % images.length);
+              }, 3000); // Change image every 3 seconds
+            }
+            return () => clearInterval(interval);
+          }, [hasMultipleImages, images]);
 
           return (
             <Card sx={{ 
@@ -954,6 +981,7 @@
                         maxHeight: '400px',
                         objectFit: 'contain',
                         backgroundColor: 'rgba(0,0,0,0.8)',
+                        transition: 'opacity 0.5s ease-in-out'
                       }}
                     />
                     <Box sx={{
