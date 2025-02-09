@@ -1227,10 +1227,11 @@
                           <Chip size="small" label="QB Core" />
                           <Chip size="small" label="ox_lib" />
                           <Chip size="small" label="Advanced Features" />
+                          <Chip size="small" label="Open Source" />
                         </Stack>
                       </CardContent>
                       <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Button size="small" onClick={() => window.location.href = 'packages.html'}>Learn More</Button>
+                        <Button size="small" onClick={() => handleOpen('gunplugModal')}>Learn More</Button>
                         <Button 
                           variant="contained"
                           component="a"
@@ -1550,6 +1551,57 @@
                     <li><strong>Framework Compatibility:</strong> Works with both ESX and QB-Core</li>
                     <li><strong>Anti-Abuse Features:</strong> Various protections and restrictions</li>
                     <li><strong>Highly Configurable:</strong> Extensive options for customization</li>
+                  </ul>
+                </Typography>
+              </Box>
+            </Modal>
+
+            {/* Add Gun Plug Modal */}
+            <Modal
+              open={open === 'gunplugModal'}
+              onClose={handleClose}
+              aria-labelledby="gunplug-modal-title"
+            >
+              <Box sx={modalStyle}>
+                <Typography id="gunplug-modal-title" variant="h6" component="h2" mb={2}>
+                  Gun Plug System - Advanced Weapon Crafting
+                </Typography>
+                
+                <ImageList cols={2} gap={8}>
+                  <ImageListItem>
+                    <img src="https://i.imgur.com/oUIcbk7.png" alt="Gun Plug Preview 1" />
+                  </ImageListItem>
+                  <ImageListItem>
+                    <img src="https://i.imgur.com/n0MlWYV.png" alt="Gun Plug Preview 2" />
+                  </ImageListItem>
+                  <ImageListItem>
+                    <img src="https://i.imgur.com/43DwMiX.png" alt="Gun Plug Preview 3" />
+                  </ImageListItem>
+                </ImageList>
+
+                <Box my={2}>
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="https://www.youtube.com/embed/IVC8iz2lLTo"
+                    title="Gun Plug System Preview"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </Box>
+
+                <Typography variant="h6" gutterBottom>Main Features:</Typography>
+                <Typography variant="body2" component="div">
+                  <ul>
+                    <li><strong>Advanced XP & Leveling System:</strong> Progress through 30 levels with scaling requirements</li>
+                    <li><strong>Dynamic Crafting Queue:</strong> Multi-item queuing with progress tracking</li>
+                    <li><strong>Job/Gang Integration:</strong> Full QBCore compatibility with hierarchy system</li>
+                    <li><strong>Proximity Crafting:</strong> Place and manage personal crafting tables</li>
+                    <li><strong>Success Rate Mechanics:</strong> Level-based success chances and skill requirements</li>
+                    <li><strong>Material Requirements:</strong> Configurable material costs for each recipe</li>
+                    <li><strong>Admin Control Panel:</strong> Comprehensive management tools</li>
+                    <li><strong>Gang-specific Features:</strong> Custom tables, recipes and territory control</li>
                   </ul>
                 </Typography>
               </Box>
