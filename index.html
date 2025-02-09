@@ -635,7 +635,21 @@
 
         function RecentPayments() {
           const recentBuyers = React.useMemo(() => [
-		    {
+            {
+              name: "$10.00",
+              amount: "$20.00",
+              purchase: "Backdoor/Pistol Snatching Script",
+              timestamp: new Date().toISOString(),
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB2.png"
+            },
+            {
+              name: "Jumanji",
+              amount: "$10.00", 
+              purchase: "Backdoor/Pistol Snatching Script",
+              timestamp: new Date().toISOString(),
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB3.png"
+            },
+            {
               name: "FastLifePape⛹🏿♂",
               amount: "$10.00",
               purchase: "Backdoor/Pistol Snatching Script",
@@ -1225,6 +1239,7 @@
                         </Typography>
                         <Stack direction="row" spacing={1} mt={2} flexWrap="wrap">
                           <Chip size="small" label="QB Core" />
+                          <Chip size="small" label="ESX Compatible" />
                           <Chip size="small" label="ox_lib" />
                           <Chip size="small" label="Advanced Features" />
                           <Chip size="small" label="Open Source" />
