@@ -144,6 +144,7 @@
         border-right: 1px solid rgba(148, 163, 184, 0.1);
         transition: width 0.3s ease;
         z-index: 1000;
+        overflow-y: hidden;
       }
 
       .left-panel.collapsed {
@@ -151,8 +152,10 @@
       }
 
       .panel-content {
+        transition: opacity 0.3s ease;
+        overflow: hidden;
         height: 100%;
-        overflow-y: auto;
+        overflow-y: visible;
       }
 
       .panel-content.hidden {
@@ -178,6 +181,9 @@
         padding: 12px 24px;
         border-top: 1px solid rgba(148, 163, 184, 0.1);
         transition: opacity 0.3s ease;
+        height: auto;
+        overflow: visible;
+        position: relative;
       }
 
       .panel-section.hidden {
@@ -257,7 +263,8 @@
         }
         
         .recent-payments-container {
-          height: calc(100vh - 350px);
+          height: calc(100vh - 500px);
+          min-height: 150px;
         }
         
         .panel-section {
@@ -355,60 +362,83 @@
       }
 
       .recent-payments-container {
-        height: calc(100vh - 400px);
-        overflow-y: auto;
+        height: calc(100vh - 600px);
+        min-height: 200px;
+        overflow-y: scroll;
         padding-right: 8px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(58, 236, 248, 0.5) transparent;
         display: flex;
         flex-direction: column;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(58, 236, 248, 0.2) transparent;
-        -webkit-overflow-scrolling: touch;
+        position: relative;
+        touch-action: auto;
+        will-change: auto;
         scroll-behavior: smooth;
       }
 
       .recent-payments-container::-webkit-scrollbar {
-        width: 4px;
+        width: 6px;
       }
 
       .recent-payments-container::-webkit-scrollbar-track {
-        background: transparent;
-        margin: 4px 0;
+        background: rgba(30, 41, 59, 0.8);
+        border-radius: 3px;
       }
 
       .recent-payments-container::-webkit-scrollbar-thumb {
-        background-color: rgba(58, 236, 248, 0.2);
-        border-radius: 4px;
-        transition: background-color 0.2s ease;
-      }
-
-      .recent-payments-container::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(58, 236, 248, 0.4);
-      }
-
-      .recent-payments-container {
-        scrollbar-width: none;
-      }
-
-      .recent-payments-container:hover {
-        scrollbar-width: thin;
-      }
-
-      .recent-payments-container::-webkit-scrollbar {
-        display: none;
-      }
-
-      .recent-payments-container:hover::-webkit-scrollbar {
-        display: block;
+        background-color: rgba(58, 236, 248, 0.5);
+        border-radius: 3px;
+        border: 2px solid rgba(30, 41, 59, 0.8);
       }
 
       .panel-section:hover,
       .recent-payments-container:hover {
-        overflow-y: auto;
+        overflow-y: scroll;
       }
 
       .panel-section:active,
       .recent-payments-container:active {
         pointer-events: auto;
+      }
+
+      @media (max-width: 768px) {
+        .recent-payments-container {
+          height: calc(100vh - 500px);
+          min-height: 150px;
+        }
+      }
+
+      .panel-content {
+        height: 100%;
+        overflow-y: visible;
+      }
+
+      .recent-payments-container {
+        min-height: 200px;
+        max-height: calc(100vh - 550px);
+        overflow-y: auto;
+        padding-right: 8px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(58, 236, 248, 0.5) transparent;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        touch-action: pan-y;
+        will-change: transform;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .recent-payments-container::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .recent-payments-container::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .recent-payments-container::-webkit-scrollbar-thumb {
+        background-color: rgba(58, 236, 248, 0.5);
+        border-radius: 3px;
       }
 
       @keyframes labelPulse {
@@ -756,23 +786,6 @@
         }, []);
 
         function RecentPayments() {
-          const scrollRef = React.useRef(null);
-          
-          // Prevent scroll reset on refresh
-          React.useEffect(() => {
-            if (scrollRef.current) {
-              const savedScrollPos = sessionStorage.getItem('recentPaymentsScroll');
-              if (savedScrollPos) {
-                scrollRef.current.scrollTop = parseInt(savedScrollPos);
-              }
-            }
-          }, []);
-
-          // Save scroll position
-          const handleScroll = (e) => {
-            sessionStorage.setItem('recentPaymentsScroll', e.target.scrollTop);
-          };
-
           const recentBuyers = React.useMemo(() => [
             {
               name: "woadie",
@@ -885,11 +898,7 @@
           return (
             <div className="panel-section">
               <div className="panel-section-title">Recent Payments</div>
-              <div 
-                className="recent-payments-container"
-                ref={scrollRef}
-                onScroll={handleScroll}
-              >
+              <div className="recent-payments-container">
                 {recentBuyers.map((buyer, index) => (
                   <div 
                     key={index} 
@@ -1323,7 +1332,7 @@
                           alt="Backdoor/Pistol Snatching Script"
                         />
                         <Chip 
-                          label="On 10+ active servers"
+                          label="On 10 active servers"
                           size="small"
                           className="stats-label servers-label"
                           sx={{
