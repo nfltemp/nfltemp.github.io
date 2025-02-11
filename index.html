@@ -314,10 +314,10 @@
 
       @keyframes glow {
         0% {
-          text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+          filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.3));
         }
         100% {
-          text-shadow: 0 0 20px rgba(168, 85, 247, 1);
+          filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
         }
       }
 
@@ -355,7 +355,7 @@
         overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
         position: relative;
-        will-change: scroll-position;
+        scroll-behavior: auto;
       }
 
       .recent-payments-container::-webkit-scrollbar {
@@ -393,6 +393,30 @@
       .players-label {
         bottom: 4px;
         right: 4px;
+      }
+
+      @keyframes goldShine {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-3px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
       }
     </style>
   </head>
@@ -720,15 +744,11 @@
           const [isScrolling, setIsScrolling] = React.useState(false);
 
           const handleScroll = (e) => {
+            e.stopPropagation(); // Prevent scroll event bubbling
             if (!isScrolling) {
               setIsScrolling(true);
+              setTimeout(() => setIsScrolling(false), 150);
             }
-            if (e.target.scrollTimeout) {
-              clearTimeout(e.target.scrollTimeout);
-            }
-            e.target.scrollTimeout = setTimeout(() => {
-              setIsScrolling(false);
-            }, 150);
           };
 
           const recentBuyers = React.useMemo(() => [
@@ -737,7 +757,19 @@
               amount: "$10.00",
               purchase: "Backdoor/Pistol Snatching Script",
               timestamp: new Date().toISOString(),
-              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG",
+              nameStyle: {
+                background: 'linear-gradient(45deg, #FFD700, #FFA500, #FF4500, #FFD700)',
+                backgroundSize: '300% 300%',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                animation: 'goldShine 4s ease infinite, float 2s ease-in-out infinite, glow 2s ease-in-out infinite alternate',
+                fontWeight: 'bold',
+                textShadow: '0 0 15px rgba(255, 215, 0, 0.5)',
+                display: 'inline-block',
+                letterSpacing: '1px',
+                filter: 'drop-shadow(0 0 2px rgba(255, 215, 0, 0.3))'
+              }
             },
             {
               name: "woadie",
@@ -855,11 +887,13 @@
                 ref={scrollRef}
                 onScroll={handleScroll}
                 style={{
-                  overflowY: 'auto',
                   maxHeight: '60vh',
+                  overflowY: 'auto',
+                  paddingRight: '8px',
                   scrollBehavior: isScrolling ? 'auto' : 'smooth',
                   WebkitOverflowScrolling: 'touch',
-                  overscrollBehavior: 'contain'
+                  overscrollBehavior: 'contain',
+                  position: 'relative'
                 }}
               >
                 {recentBuyers.map((buyer, index) => (
