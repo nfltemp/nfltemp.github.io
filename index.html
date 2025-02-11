@@ -723,11 +723,9 @@
             if (!isScrolling) {
               setIsScrolling(true);
             }
-            // Clear any existing scroll timeout
             if (e.target.scrollTimeout) {
               clearTimeout(e.target.scrollTimeout);
             }
-            // Set new timeout
             e.target.scrollTimeout = setTimeout(() => {
               setIsScrolling(false);
             }, 150);
@@ -735,9 +733,16 @@
 
           const recentBuyers = React.useMemo(() => [
             {
-              name: "woadie",
+              name: "AB",
               amount: "$10.00",
               purchase: "Backdoor/Pistol Snatching Script",
+              timestamp: new Date().toISOString(),
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB1.png"
+            },
+            {
+              name: "woadie",
+              amount: "$20.00",
+              purchase: "Gun Plug System",
               timestamp: new Date().toISOString(),
               avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB2.png"
             },
