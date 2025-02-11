@@ -178,10 +178,6 @@
         padding: 12px 24px;
         border-top: 1px solid rgba(148, 163, 184, 0.1);
         transition: opacity 0.3s ease;
-        max-height: 70vh;
-        overflow-y: auto;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(58, 236, 248, 0.5) transparent;
       }
 
       .panel-section.hidden {
@@ -351,9 +347,24 @@
       }
 
       .recent-payments-container {
-        max-height: 400px;
+        max-height: calc(100vh - 400px);
         overflow-y: auto;
         padding-right: 8px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(58, 236, 248, 0.5) transparent;
+      }
+
+      .recent-payments-container::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .recent-payments-container::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .recent-payments-container::-webkit-scrollbar-thumb {
+        background-color: rgba(58, 236, 248, 0.5);
+        border-radius: 3px;
       }
 
       @keyframes labelPulse {
