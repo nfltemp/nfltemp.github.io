@@ -347,7 +347,7 @@
         z-index: 2;
         margin: 4px;
         animation: labelPulse 2s infinite ease-in-out;
-        font-size: 0.7rem;
+        font-size: 0.65rem;
       }
 
       .servers-label {
@@ -1233,7 +1233,7 @@
                           alt="Backdoor/Pistol Snatching Script"
                         />
                         <Chip 
-                          label="7 servers"
+                          label="On 7 active servers"
                           size="small"
                           className="stats-label servers-label"
                           sx={{
@@ -1241,7 +1241,12 @@
                             color: 'white',
                             fontWeight: 'bold',
                             '& .MuiChip-icon': {
-                              color: 'white'
+                              color: 'white',
+                              fontSize: '0.8rem'
+                            },
+                            height: '20px',
+                            '& .MuiChip-label': {
+                              padding: '0 6px'
                             }
                           }}
                           icon={<Icon>public</Icon>}
@@ -1255,7 +1260,12 @@
                             color: 'white',
                             fontWeight: 'bold',
                             '& .MuiChip-icon': {
-                              color: 'white'
+                              color: 'white',
+                              fontSize: '0.8rem'
+                            },
+                            height: '20px',
+                            '& .MuiChip-label': {
+                              padding: '0 6px'
                             }
                           }}
                           icon={<Icon>groups</Icon>}
