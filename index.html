@@ -335,6 +335,35 @@
         overflow-y: auto;
         padding-right: 8px;
       }
+
+      @keyframes labelPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+
+      .stats-label {
+        position: absolute;
+        z-index: 2;
+        margin: 8px;
+        animation: labelPulse 2s infinite ease-in-out;
+      }
+
+      .servers-label {
+        top: 0;
+        left: 0;
+      }
+
+      .players-label {
+        top: 0;
+        right: 0;
+      }
+
+      .panel-section {
+        max-height: 70vh;
+        overflow-y: auto;
+        padding-right: 8px;
+      }
     </style>
   </head>
   <body>
@@ -777,7 +806,11 @@
                     title={buyer.name !== "---" ? `Recently purchased: ${buyer.purchase}` : ""}
                     style={{ cursor: buyer.name !== "---" ? 'help' : 'default' }}
                   >
-                    <div className="avatar" style={{ overflow: 'hidden' }}>
+                    <div className="avatar" style={{ 
+                      overflow: 'hidden',
+                      minWidth: '32px',
+                      minHeight: '32px',
+                    }}>
                       <img 
                         src={buyer.avatar}
                         alt=""
@@ -787,7 +820,8 @@
                           objectFit: 'cover',
                           opacity: buyer.name !== "---" ? 1 : 0.15,
                           transform: 'scale(1)',
-                          willChange: 'transform'
+                          willChange: 'transform',
+                          borderRadius: '50%'
                         }} 
                       />
                     </div>
@@ -1190,18 +1224,48 @@
                   {/* Backdoor/Pistol Snatching Script Listing */}
                   <Grid item xs={12} sm={6} md={4}>
                     <Card>
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image="https://i.imgur.com/lCaIfq4.png"
-                        alt="Backdoor/Pistol Snatching Script"
-                      />
+                      <Box sx={{ position: 'relative' }}>
+                        <CardMedia
+                          component="img"
+                          height="140"
+                          image="https://i.imgur.com/lCaIfq4.png"
+                          alt="Backdoor/Pistol Snatching Script"
+                        />
+                        <Chip 
+                          label="7 servers"
+                          size="small"
+                          className="stats-label servers-label"
+                          sx={{
+                            background: 'linear-gradient(135deg, #4CAF50, #45a049)',
+                            color: 'white',
+                            fontWeight: 'bold',
+                            '& .MuiChip-icon': {
+                              color: 'white'
+                            }
+                          }}
+                          icon={<Icon>public</Icon>}
+                        />
+                        <Chip 
+                          label="41 players"
+                          size="small"
+                          className="stats-label players-label"
+                          sx={{
+                            background: 'linear-gradient(135deg, #2196F3, #1976D2)',
+                            color: 'white',
+                            fontWeight: 'bold',
+                            '& .MuiChip-icon': {
+                              color: 'white'
+                            }
+                          }}
+                          icon={<Icon>groups</Icon>}
+                        />
+                      </Box>
                       <CardContent>
                         <Box display="flex" alignItems="center" mb={1}>
                           <Typography variant="h6" component="div" style={{marginRight: '8px'}}>
                             Backdoor/Pistol Snatching Script
                           </Typography>
-                          <Stack spacing={1}>
+                          <Stack direction="row" spacing={1}>
                             <Chip label="New" color="secondary" size="small" />
                             <Chip 
                               label="HOT" 
@@ -1213,32 +1277,6 @@
                                 color: 'white',
                                 fontWeight: 'bold'
                               }}
-                            />
-                            <Chip 
-                              label="Used on 7 servers" 
-                              size="small"
-                              sx={{
-                                background: 'linear-gradient(135deg, #4CAF50, #45a049)',
-                                color: 'white',
-                                fontWeight: 'bold',
-                                '& .MuiChip-icon': {
-                                  color: 'white'
-                                }
-                              }}
-                              icon={<Icon>public</Icon>}
-                            />
-                            <Chip 
-                              label="41 active players" 
-                              size="small"
-                              sx={{
-                                background: 'linear-gradient(135deg, #2196F3, #1976D2)',
-                                color: 'white',
-                                fontWeight: 'bold',
-                                '& .MuiChip-icon': {
-                                  color: 'white'
-                                }
-                              }}
-                              icon={<Icon>groups</Icon>}
                             />
                           </Stack>
                         </Box>
