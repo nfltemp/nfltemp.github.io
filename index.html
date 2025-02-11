@@ -179,10 +179,12 @@
         border-top: 1px solid rgba(148, 163, 184, 0.1);
         transition: opacity 0.3s ease;
         height: auto;
-        max-height: calc(100vh - 300px);
+        max-height: calc(100vh - 350px);
         overflow-y: auto;
+        position: relative;
+        touch-action: pan-y;
+        will-change: transform;
         -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
       }
 
       .panel-section.hidden {
@@ -234,7 +236,7 @@
           overflow-y: auto;
           position: fixed;
           z-index: 1200;
-          touch-action: pan-y;
+          touch-action: pan-y pinch-zoom;
           -webkit-overflow-scrolling: touch;
           overscroll-behavior: contain;
           user-select: none;
@@ -262,12 +264,12 @@
         }
         
         .recent-payments-container {
-          max-height: calc(100vh - 400px);
+          max-height: calc(100vh - 450px);
           min-height: 150px;
         }
         
         .panel-section {
-          max-height: calc(100vh - 250px);
+          max-height: calc(100vh - 300px);
         }
       }
       
@@ -362,15 +364,17 @@
 
       .recent-payments-container {
         min-height: 200px;
-        max-height: calc(100vh - 500px);
+        max-height: calc(100vh - 550px);
         overflow-y: auto;
         padding-right: 8px;
         scrollbar-width: thin;
         scrollbar-color: rgba(58, 236, 248, 0.5) transparent;
         display: flex;
         flex-direction: column;
+        position: relative;
+        touch-action: pan-y;
+        will-change: transform;
         -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
       }
 
       .recent-payments-container::-webkit-scrollbar {
@@ -408,6 +412,17 @@
       .players-label {
         bottom: 4px;
         right: 4px;
+      }
+
+      /* Add these new styles to improve scrollbar interaction */
+      .panel-section:hover,
+      .recent-payments-container:hover {
+        overflow-y: auto;
+      }
+
+      .panel-section:active,
+      .recent-payments-container:active {
+        pointer-events: auto;
       }
     </style>
   </head>
