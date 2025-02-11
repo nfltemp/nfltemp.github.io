@@ -345,18 +345,19 @@
       .stats-label {
         position: absolute;
         z-index: 2;
-        margin: 8px;
+        margin: 4px;
         animation: labelPulse 2s infinite ease-in-out;
+        font-size: 0.7rem;
       }
 
       .servers-label {
-        top: 0;
-        left: 0;
+        bottom: 32px;
+        right: 4px;
       }
 
       .players-label {
-        top: 0;
-        right: 0;
+        bottom: 4px;
+        right: 4px;
       }
 
       .panel-section {
@@ -1265,7 +1266,7 @@
                           <Typography variant="h6" component="div" style={{marginRight: '8px'}}>
                             Backdoor/Pistol Snatching Script
                           </Typography>
-                          <Stack direction="row" spacing={1}>
+                          <Stack direction="column" spacing={1}>
                             <Chip label="New" color="secondary" size="small" />
                             <Chip 
                               label="HOT" 
