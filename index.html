@@ -152,7 +152,7 @@
 
       .panel-content {
         height: 100%;
-        overflow-y: visible;
+        overflow-y: auto;
       }
 
       .panel-content.hidden {
@@ -178,9 +178,6 @@
         padding: 12px 24px;
         border-top: 1px solid rgba(148, 163, 184, 0.1);
         transition: opacity 0.3s ease;
-        height: auto;
-        overflow-y: visible;
-        position: relative;
       }
 
       .panel-section.hidden {
@@ -260,8 +257,7 @@
         }
         
         .recent-payments-container {
-          max-height: calc(100vh - 450px);
-          min-height: 150px;
+          height: calc(100vh - 350px);
         }
         
         .panel-section {
@@ -359,15 +355,13 @@
       }
 
       .recent-payments-container {
-        height: 60vh;
+        height: calc(100vh - 400px);
         overflow-y: auto;
         padding-right: 8px;
         scrollbar-width: thin;
         scrollbar-color: rgba(58, 236, 248, 0.5) transparent;
         display: flex;
         flex-direction: column;
-        position: relative;
-        touch-action: pan-y;
         -webkit-overflow-scrolling: touch;
       }
 
