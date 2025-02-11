@@ -418,6 +418,18 @@
           transform: translateY(0px);
         }
       }
+
+      @keyframes shimmer {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.8;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
     </style>
   </head>
   <body>
@@ -939,7 +951,14 @@
                               background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
                               color: '#000',
                               fontSize: '0.6rem',
-                              height: '20px'
+                              height: '20px',
+                              fontWeight: 'bold',
+                              textShadow: '0 0 1px rgba(0, 0, 0, 0.3)',
+                              '& .MuiChip-label': {
+                                animation: 'shimmer 2s infinite linear',
+                                background: 'linear-gradient(45deg, #000, #333, #000)',
+                                WebkitBackgroundClip: 'text'
+                              }
                             }}
                           />
                         )}
@@ -1148,7 +1167,14 @@
                                 background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
                                 color: '#000',
                                 fontSize: '0.6rem',
-                                height: '20px'
+                                height: '20px',
+                                fontWeight: 'bold',
+                                textShadow: '0 0 1px rgba(0, 0, 0, 0.3)',
+                                '& .MuiChip-label': {
+                                  animation: 'shimmer 2s infinite linear',
+                                  background: 'linear-gradient(45deg, #000, #333, #000)',
+                                  WebkitBackgroundClip: 'text'
+                                }
                               }}
                             />
                           </div>
