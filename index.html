@@ -178,6 +178,7 @@
         padding: 12px 24px;
         border-top: 1px solid rgba(148, 163, 184, 0.1);
         transition: opacity 0.3s ease;
+        height: 100%;
       }
 
       .panel-section.hidden {
@@ -347,11 +348,13 @@
       }
 
       .recent-payments-container {
-        max-height: calc(100vh - 400px);
+        height: calc(100vh - 450px);
         overflow-y: auto;
         padding-right: 8px;
         scrollbar-width: thin;
         scrollbar-color: rgba(58, 236, 248, 0.5) transparent;
+        display: flex;
+        flex-direction: column;
       }
 
       .recent-payments-container::-webkit-scrollbar {
@@ -389,6 +392,12 @@
       .players-label {
         bottom: 4px;
         right: 4px;
+      }
+
+      @media (max-width: 768px) {
+        .recent-payments-container {
+          height: calc(100vh - 350px);
+        }
       }
     </style>
   </head>
