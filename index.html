@@ -714,6 +714,15 @@
         }, []);
 
         function RecentPayments() {
+          const scrollRef = React.useRef(null);
+
+          React.useEffect(() => {
+            // Reset scroll position when component mounts
+            if (scrollRef.current) {
+              scrollRef.current.scrollTop = 0;
+            }
+          }, []);
+
           const recentBuyers = React.useMemo(() => [
             {
               name: "woadie",
@@ -826,7 +835,15 @@
           return (
             <div className="panel-section">
               <div className="panel-section-title">Recent Payments</div>
-              <div className="recent-payments-container">
+              <div 
+                className="recent-payments-container" 
+                ref={scrollRef}
+                style={{
+                  overflowY: 'auto',
+                  maxHeight: '60vh',
+                  scrollBehavior: 'smooth'
+                }}
+              >
                 {recentBuyers.map((buyer, index) => (
                   <div 
                     key={index} 
