@@ -233,6 +233,10 @@
           overflow-y: auto;
           position: fixed;
           z-index: 1200;
+          touch-action: pan-y;
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior: contain;
+          user-select: none;
         }
         
         .left-panel.collapsed {
@@ -242,6 +246,8 @@
         .panel-content {
           min-height: 100vh;
           background: rgba(30, 41, 59, 0.8);
+          touch-action: pan-y;
+          overscroll-behavior: contain;
         }
         
         .MuiContainer-root {
