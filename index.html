@@ -151,8 +151,8 @@
       }
 
       .panel-content {
-        transition: opacity 0.3s ease;
-        overflow: hidden;
+        height: 100%;
+        overflow-y: visible;
       }
 
       .panel-content.hidden {
@@ -179,12 +179,8 @@
         border-top: 1px solid rgba(148, 163, 184, 0.1);
         transition: opacity 0.3s ease;
         height: auto;
-        max-height: calc(100vh - 350px);
-        overflow-y: auto;
+        overflow-y: visible;
         position: relative;
-        touch-action: pan-y;
-        will-change: transform;
-        -webkit-overflow-scrolling: touch;
       }
 
       .panel-section.hidden {
@@ -363,8 +359,7 @@
       }
 
       .recent-payments-container {
-        min-height: 200px;
-        max-height: calc(100vh - 550px);
+        height: 60vh;
         overflow-y: auto;
         padding-right: 8px;
         scrollbar-width: thin;
@@ -373,7 +368,6 @@
         flex-direction: column;
         position: relative;
         touch-action: pan-y;
-        will-change: transform;
         -webkit-overflow-scrolling: touch;
       }
 
@@ -746,6 +740,23 @@
         }, []);
 
         function RecentPayments() {
+          const scrollRef = React.useRef(null);
+          
+          // Prevent scroll reset on refresh
+          React.useEffect(() => {
+            if (scrollRef.current) {
+              const savedScrollPos = sessionStorage.getItem('recentPaymentsScroll');
+              if (savedScrollPos) {
+                scrollRef.current.scrollTop = parseInt(savedScrollPos);
+              }
+            }
+          }, []);
+
+          // Save scroll position
+          const handleScroll = (e) => {
+            sessionStorage.setItem('recentPaymentsScroll', e.target.scrollTop);
+          };
+
           const recentBuyers = React.useMemo(() => [
             {
               name: "woadie",
@@ -858,7 +869,11 @@
           return (
             <div className="panel-section">
               <div className="panel-section-title">Recent Payments</div>
-              <div className="recent-payments-container">
+              <div 
+                className="recent-payments-container"
+                ref={scrollRef}
+                onScroll={handleScroll}
+              >
                 {recentBuyers.map((buyer, index) => (
                   <div 
                     key={index} 
@@ -1292,7 +1307,7 @@
                           alt="Backdoor/Pistol Snatching Script"
                         />
                         <Chip 
-                          label="On 10 active servers"
+                          label="On 10+ active servers"
                           size="small"
                           className="stats-label servers-label"
                           sx={{
