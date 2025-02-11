@@ -347,11 +347,13 @@
       }
 
       .recent-payments-container {
-        max-height: calc(100vh - 400px);
+        max-height: 60vh;
         overflow-y: auto;
         padding-right: 8px;
         scrollbar-width: thin;
         scrollbar-color: rgba(58, 236, 248, 0.5) transparent;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
       }
 
       .recent-payments-container::-webkit-scrollbar {
@@ -1258,7 +1260,7 @@
                           alt="Backdoor/Pistol Snatching Script"
                         />
                         <Chip 
-                          label="On 10 active servers"
+                          label="On 10+ active servers"
                           size="small"
                           className="stats-label servers-label"
                           sx={{
