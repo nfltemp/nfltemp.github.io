@@ -354,6 +354,8 @@
         scrollbar-color: rgba(58, 236, 248, 0.5) transparent;
         overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
+        position: relative;
+        will-change: scroll-position;
       }
 
       .recent-payments-container::-webkit-scrollbar {
@@ -715,13 +717,21 @@
 
         function RecentPayments() {
           const scrollRef = React.useRef(null);
+          const [isScrolling, setIsScrolling] = React.useState(false);
 
-          React.useEffect(() => {
-            // Reset scroll position when component mounts
-            if (scrollRef.current) {
-              scrollRef.current.scrollTop = 0;
+          const handleScroll = (e) => {
+            if (!isScrolling) {
+              setIsScrolling(true);
             }
-          }, []);
+            // Clear any existing scroll timeout
+            if (e.target.scrollTimeout) {
+              clearTimeout(e.target.scrollTimeout);
+            }
+            // Set new timeout
+            e.target.scrollTimeout = setTimeout(() => {
+              setIsScrolling(false);
+            }, 150);
+          };
 
           const recentBuyers = React.useMemo(() => [
             {
@@ -838,10 +848,13 @@
               <div 
                 className="recent-payments-container" 
                 ref={scrollRef}
+                onScroll={handleScroll}
                 style={{
                   overflowY: 'auto',
                   maxHeight: '60vh',
-                  scrollBehavior: 'smooth'
+                  scrollBehavior: isScrolling ? 'auto' : 'smooth',
+                  WebkitOverflowScrolling: 'touch',
+                  overscrollBehavior: 'contain'
                 }}
               >
                 {recentBuyers.map((buyer, index) => (
