@@ -356,6 +356,8 @@
         -webkit-overflow-scrolling: touch;
         position: relative;
         scroll-behavior: auto;
+        outline: none;
+        cursor: default;
       }
 
       .recent-payments-container::-webkit-scrollbar {
@@ -756,10 +758,36 @@
           const [isScrolling, setIsScrolling] = React.useState(false);
 
           const handleScroll = (e) => {
-            e.stopPropagation(); // Prevent scroll event bubbling
+            e.stopPropagation();
             if (!isScrolling) {
               setIsScrolling(true);
               setTimeout(() => setIsScrolling(false), 150);
+            }
+          };
+
+          const handleKeyDown = (e) => {
+            const container = scrollRef.current;
+            if (!container) return;
+
+            const scrollAmount = 50; // Adjust scroll amount as needed
+            
+            switch(e.key) {
+              case 'ArrowDown':
+                e.preventDefault();
+                container.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                break;
+              case 'ArrowUp':
+                e.preventDefault();
+                container.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
+                break;
+              case 'PageDown':
+                e.preventDefault();
+                container.scrollBy({ top: container.clientHeight, behavior: 'smooth' });
+                break;
+              case 'PageUp':
+                e.preventDefault();
+                container.scrollBy({ top: -container.clientHeight, behavior: 'smooth' });
+                break;
             }
           };
 
@@ -898,14 +926,12 @@
                 className="recent-payments-container" 
                 ref={scrollRef}
                 onScroll={handleScroll}
+                onKeyDown={handleKeyDown}
+                tabIndex={0}
                 style={{
                   maxHeight: '60vh',
                   overflowY: 'auto',
-                  paddingRight: '8px',
-                  scrollBehavior: isScrolling ? 'auto' : 'smooth',
-                  WebkitOverflowScrolling: 'touch',
-                  overscrollBehavior: 'contain',
-                  position: 'relative'
+                  paddingRight: '8px'
                 }}
               >
                 {recentBuyers.map((buyer, index) => (
