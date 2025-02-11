@@ -358,24 +358,57 @@
         height: calc(100vh - 400px);
         overflow-y: auto;
         padding-right: 8px;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(58, 236, 248, 0.5) transparent;
         display: flex;
         flex-direction: column;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(58, 236, 248, 0.2) transparent;
         -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
       }
 
       .recent-payments-container::-webkit-scrollbar {
-        width: 6px;
+        width: 4px;
       }
 
       .recent-payments-container::-webkit-scrollbar-track {
         background: transparent;
+        margin: 4px 0;
       }
 
       .recent-payments-container::-webkit-scrollbar-thumb {
-        background-color: rgba(58, 236, 248, 0.5);
-        border-radius: 3px;
+        background-color: rgba(58, 236, 248, 0.2);
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+      }
+
+      .recent-payments-container::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(58, 236, 248, 0.4);
+      }
+
+      .recent-payments-container {
+        scrollbar-width: none;
+      }
+
+      .recent-payments-container:hover {
+        scrollbar-width: thin;
+      }
+
+      .recent-payments-container::-webkit-scrollbar {
+        display: none;
+      }
+
+      .recent-payments-container:hover::-webkit-scrollbar {
+        display: block;
+      }
+
+      .panel-section:hover,
+      .recent-payments-container:hover {
+        overflow-y: auto;
+      }
+
+      .panel-section:active,
+      .recent-payments-container:active {
+        pointer-events: auto;
       }
 
       @keyframes labelPulse {
@@ -400,17 +433,6 @@
       .players-label {
         bottom: 4px;
         right: 4px;
-      }
-
-      /* Add these new styles to improve scrollbar interaction */
-      .panel-section:hover,
-      .recent-payments-container:hover {
-        overflow-y: auto;
-      }
-
-      .panel-section:active,
-      .recent-payments-container:active {
-        pointer-events: auto;
       }
     </style>
   </head>
