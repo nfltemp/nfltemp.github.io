@@ -812,11 +812,13 @@
               badge: {
                 label: "Early Access",
                 style: {
-                  background: 'linear-gradient(135deg, #FFD700, #FFA500)',
+                  background: 'linear-gradient(135deg, #ADD8E6, #FFA500)', // Baby blue to orange gradient
                   color: '#000',
                   fontWeight: 'bold',
                   animation: 'shimmer 2s infinite linear',
                   textShadow: '0 0 1px rgba(0, 0, 0, 0.3)',
+                  fontSize: '0.75rem', // 25% smaller than the default size
+                  height: '20px', // Adjust height if necessary
                 }
               }
             },
@@ -1021,6 +1023,8 @@
                               fontWeight: buyer.badge.style.fontWeight,
                               animation: buyer.badge.style.animation,
                               textShadow: buyer.badge.style.textShadow,
+                              fontSize: buyer.badge.style.fontSize,
+                              height: buyer.badge.style.height,
                             }}
                           />
                         )}
@@ -1202,7 +1206,7 @@
                         border: '2px solid #3AECF8'
                       }}>
                         <img 
-                          src="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB5.jpg"
+                          src="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB6.jpg"
                           alt=""
                           style={{ 
                             width: '100%', 
