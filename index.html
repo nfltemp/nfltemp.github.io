@@ -765,13 +765,39 @@
             }
           };
 
+          const handleKeyDown = (e) => {
+            const container = scrollRef.current;
+            if (!container) return;
+
+            const scrollAmount = 50; // Adjust scroll amount as needed
+            
+            switch(e.key) {
+              case 'ArrowDown':
+                e.preventDefault();
+                container.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                break;
+              case 'ArrowUp':
+                e.preventDefault();
+                container.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
+                break;
+              case 'PageDown':
+                e.preventDefault();
+                container.scrollBy({ top: container.clientHeight, behavior: 'smooth' });
+                break;
+              case 'PageUp':
+                e.preventDefault();
+                container.scrollBy({ top: -container.clientHeight, behavior: 'smooth' });
+                break;
+            }
+          };
+
           const recentBuyers = React.useMemo(() => [
             {
               name: "PoloTheDev",
               amount: "$20.00",
               purchase: "Gun Plug System",
               timestamp: new Date().toISOString(),
-              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB6.PNG",
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB6.png",
               nameStyle: {
                 background: 'linear-gradient(45deg, #FFD700, #FFA500, #FF4500, #FFD700)',
                 backgroundSize: '300% 300%',
@@ -790,7 +816,7 @@
               amount: "$10.00",
               purchase: "Backdoor/Pistol Snatching Script",
               timestamp: new Date().toISOString(),
-              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB5.PNG"
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB5.png"
             },
             {
               name: "AB",
@@ -948,6 +974,8 @@
                 className="recent-payments-container" 
                 ref={scrollRef}
                 onScroll={handleScroll}
+                onKeyDown={handleKeyDown}
+                tabIndex={0}
                 style={{
                   maxHeight: '60vh',
                   overflowY: 'auto',
@@ -1126,7 +1154,7 @@
                   <div className="panel-item" onClick={() => window.location.href = '/about.html'}>About</div>
 
                   <div className={`panel-section ${isSidebarCollapsed ? 'hidden' : ''}`}>
-                    <div className="panel-section-title">Top Customer of the Month</div>
+                    <div className="panel-section-title">Top Supporter of the Month: PoloTheDev</div>
                     <div className="recent-payment">
                       <div className="avatar" style={{ 
                         width: '48px',
@@ -1136,8 +1164,8 @@
                         border: '2px solid #3AECF8'
                       }}>
                         <img 
-                          src="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB.PNG"
-                          alt=""
+                          src="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB5.png"
+                          alt="PoloTheDev"
                           style={{ 
                             width: '100%', 
                             height: '100%', 
@@ -1155,24 +1183,7 @@
                             alignItems: 'center',
                             gap: '8px'
                           }}>
-                            AB
-                            <Chip 
-                              label="First Supporter" 
-                              size="small"
-                              sx={{
-                                background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
-                                color: '#000',
-                                fontSize: '0.6rem',
-                                height: '20px',
-                                fontWeight: 'bold',
-                                textShadow: '0 0 1px rgba(0, 0, 0, 0.3)',
-                                '& .MuiChip-label': {
-                                  animation: 'shimmer 2s infinite linear',
-                                  background: 'linear-gradient(45deg, #000, #333, #000)',
-                                  WebkitBackgroundClip: 'text'
-                                }
-                              }}
-                            />
+                            PoloTheDev
                           </div>
                           <div style={{ color: '#94A3B8', fontSize: '0.8rem' }}>$20.00</div>
                         </div>
