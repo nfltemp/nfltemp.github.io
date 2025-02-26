@@ -797,17 +797,27 @@
               amount: "$20.00",
               purchase: "Gun Plug System",
               timestamp: new Date().toISOString(),
-              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB5.png",
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB6.jpg",
               nameStyle: {
-                background: 'linear-gradient(45deg, #a855f7, #6366f1, #8b5cf6, #d946ef, #8b5cf6)',
+                background: 'linear-gradient(45deg, #FF5733, #FFC300)',
                 backgroundSize: '300% 300%',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 animation: 'dance 1.5s ease-in-out infinite',
                 fontWeight: 'bold',
-                textShadow: '0 0 10px rgba(168, 85, 247, 0.5)',
+                textShadow: '0 0 10px rgba(255, 87, 51, 0.5)',
                 display: 'inline-block',
                 cursor: 'pointer',
+              },
+              badge: {
+                label: "Early Access",
+                style: {
+                  background: 'linear-gradient(135deg, #FFD700, #FFA500)',
+                  color: '#000',
+                  fontWeight: 'bold',
+                  animation: 'shimmer 2s infinite linear',
+                  textShadow: '0 0 1px rgba(0, 0, 0, 0.3)',
+                }
               }
             },
             {
@@ -815,7 +825,7 @@
               amount: "$10.00",
               purchase: "Backdoor/Pistol Snatching Script",
               timestamp: new Date().toISOString(),
-              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB6.png"
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB5.png"
             },
             {
               name: "Nathan",
@@ -1001,22 +1011,16 @@
                         color: buyer.nameStyle ? undefined : (buyer.name !== "---" ? '#fff' : 'rgba(148, 163, 184, 0.3)')
                       }}>
                         {buyer.name}
-                        {buyer.name === "AB" && (
+                        {buyer.badge && (
                           <Chip 
-                            label="First Supporter" 
+                            label={buyer.badge.label} 
                             size="small"
                             sx={{
-                              background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
-                              color: '#000',
-                              fontSize: '0.6rem',
-                              height: '20px',
-                              fontWeight: 'bold',
-                              textShadow: '0 0 1px rgba(0, 0, 0, 0.3)',
-                              '& .MuiChip-label': {
-                                animation: 'shimmer 2s infinite linear',
-                                background: 'linear-gradient(45deg, #000, #333, #000)',
-                                WebkitBackgroundClip: 'text'
-                              }
+                              background: buyer.badge.style.background,
+                              color: buyer.badge.style.color,
+                              fontWeight: buyer.badge.style.fontWeight,
+                              animation: buyer.badge.style.animation,
+                              textShadow: buyer.badge.style.textShadow,
                             }}
                           />
                         )}
@@ -1198,7 +1202,7 @@
                         border: '2px solid #3AECF8'
                       }}>
                         <img 
-                          src="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB5.png"
+                          src="https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB5.jpg"
                           alt=""
                           style={{ 
                             width: '100%', 
@@ -1222,7 +1226,7 @@
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                           }}>
-                            PolotheDev
+                            PoloTheDev
                           </div>
                           <div style={{ color: '#94A3B8', fontSize: '0.8rem' }}>$20.00</div>
                         </div>
