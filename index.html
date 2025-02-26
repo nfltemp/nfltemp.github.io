@@ -765,34 +765,33 @@
             }
           };
 
-          const handleKeyDown = (e) => {
-            const container = scrollRef.current;
-            if (!container) return;
-
-            const scrollAmount = 50; // Adjust scroll amount as needed
-            
-            switch(e.key) {
-              case 'ArrowDown':
-                e.preventDefault();
-                container.scrollBy({ top: scrollAmount, behavior: 'smooth' });
-                break;
-              case 'ArrowUp':
-                e.preventDefault();
-                container.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
-                break;
-              case 'PageDown':
-                e.preventDefault();
-                container.scrollBy({ top: container.clientHeight, behavior: 'smooth' });
-                break;
-              case 'PageUp':
-                e.preventDefault();
-                container.scrollBy({ top: -container.clientHeight, behavior: 'smooth' });
-                break;
-            }
-          };
-
           const recentBuyers = React.useMemo(() => [
-		    {
+            {
+              name: "PoloTheDev",
+              amount: "$20.00",
+              purchase: "Gun Plug System",
+              timestamp: new Date().toISOString(),
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB6.PNG",
+              nameStyle: {
+                background: 'linear-gradient(45deg, #FF0080, #FF8C00, #FFD700)',
+                backgroundSize: '300% 300%',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                animation: 'gradient 4s ease infinite, float 2s ease-in-out infinite',
+                fontWeight: 'bold',
+                textShadow: '0 0 15px rgba(255, 215, 0, 0.5)',
+                display: 'inline-block',
+                letterSpacing: '1px',
+              }
+            },
+            {
+              name: "🤑💰$𝖈𝖔💰🤑",
+              amount: "$10.00",
+              purchase: "Backdoor/Pistol Snatching Script",
+              timestamp: new Date().toISOString(),
+              avatar: "https://raw.githubusercontent.com/nfltemp/nfltemp.github.io/refs/heads/main/public/images/packages/AB5.PNG"
+            },
+            {
               name: "Nathan",
               amount: "$10.00",
               purchase: "Backdoor/Pistol Snatching Script",
@@ -933,8 +932,6 @@
                 className="recent-payments-container" 
                 ref={scrollRef}
                 onScroll={handleScroll}
-                onKeyDown={handleKeyDown}
-                tabIndex={0}
                 style={{
                   maxHeight: '60vh',
                   overflowY: 'auto',
@@ -942,17 +939,8 @@
                 }}
               >
                 {recentBuyers.map((buyer, index) => (
-                  <div 
-                    key={index} 
-                    className="recent-payment"
-                    title={buyer.name !== "---" ? `Recently purchased: ${buyer.purchase}` : ""}
-                    style={{ cursor: buyer.name !== "---" ? 'help' : 'default' }}
-                  >
-                    <div className="avatar" style={{ 
-                      overflow: 'hidden',
-                      minWidth: '32px',
-                      minHeight: '32px',
-                    }}>
+                  <div className="recent-payment" key={index}>
+                    <div className="avatar">
                       <img 
                         src={buyer.avatar}
                         alt=""
@@ -960,49 +948,17 @@
                           width: '100%', 
                           height: '100%', 
                           objectFit: 'cover',
-                          opacity: buyer.name !== "---" ? 1 : 0.15,
-                          transform: 'scale(1)',
-                          willChange: 'transform',
                           borderRadius: '50%'
                         }} 
                       />
                     </div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ 
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        ...(buyer.nameStyle || {}),
-                        color: buyer.nameStyle ? undefined : (buyer.name !== "---" ? '#fff' : 'rgba(148, 163, 184, 0.3)')
-                      }}>
+                    <div>
+                      <Typography variant="body1" sx={buyer.name === "PoloTheDev" ? buyer.nameStyle : {}}>
                         {buyer.name}
-                        {buyer.name === "AB" && (
-                          <Chip 
-                            label="First Supporter" 
-                            size="small"
-                            sx={{
-                              background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
-                              color: '#000',
-                              fontSize: '0.6rem',
-                              height: '20px',
-                              fontWeight: 'bold',
-                              textShadow: '0 0 1px rgba(0, 0, 0, 0.3)',
-                              '& .MuiChip-label': {
-                                animation: 'shimmer 2s infinite linear',
-                                background: 'linear-gradient(45deg, #000, #333, #000)',
-                                WebkitBackgroundClip: 'text'
-                              }
-                            }}
-                          />
-                        )}
-                      </div>
-                      <div style={{ 
-                        color: '#94A3B8', 
-                        fontSize: '0.75rem',
-                        marginTop: '2px'
-                      }}>
-                        {buyer.purchase}
-                      </div>
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {buyer.amount} - {buyer.purchase}
+                      </Typography>
                     </div>
                   </div>
                 ))}
